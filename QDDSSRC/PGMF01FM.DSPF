@@ -1,0 +1,115 @@
+000100160929     A*%%TS  SD  20150713  134652  DEVOD       REL-V6R1M0  5761-WDS
+000200160929     A*%%EC
+000300160929     A                                      DSPSIZ(24 80 *DS3)
+000400160929     A                                      MSGLOC(24)
+000500160929     A                                      PRINT
+000600160929     A                                      HLPTITLE('Aide générale sur PGMF01')
+000700160929     A                                      HLPPNLGRP(PGMF01 PGMF01)
+000800160929     A                                      INDARA
+000900160929     A                                      ALTHELP(CA01)
+001000160929     A                                      HELP
+001100160929     A          R SFL01                     SFL
+001200160929     A  08                                  SFLNXTCHG
+001300160929     A            ZOPT           2   B  8  2
+001400160929     A  20                                  DSPATR(PR)
+001500160929     A            ZNOM          35   O  8  6
+001600160929     A  30                                  COLOR(RED)
+001700160929     A            ZPR1          10   O  8 42
+001800160929     A            ZFONC         10   O  8 53
+001900160929     A            ZMATR         10  0O  8 64
+002000160929     A                                      EDTCDE(Z)
+002100160929     A            ZCPO           5   O  8 75
+002200160929     A            HNREC         10  0H
+002300160929     A            HTOUT          1   H
+002400160929     A            HMATR         10  0H
+002500160929     A          R FORE1                     SFLCTL(SFL01)
+002600160929     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+002700160929     A                                      OVERLAY
+002800160929     A                                      PUTOVR
+002900160929     A N07                                  ROLLUP(02)
+003000160929     A                                      CSRLOC(WLIGN WCOLN)
+003100160929     A                                      CHANGE(91)
+003200160929     A N04                                  ERASE(SFL01)
+003300160929     A  04                                  SFLDSP
+003400160929
+003500160929     A  05                                  SFLDSPCTL
+003600160929     A  06                                  SFLCLR
+003700160929     A  07                                  SFLEND
+003800160929     A                                      SFLSIZ(15)
+003900160929     A                                      SFLPAG(14)
+004000160929     A                                      SFLCSRRRN(&WRACSR)
+004100160929     A            WRACSR         5S 0H
+004200160929     A            WRAN01         4S 0H      SFLRCDNBR
+004300160929     A            ZPGM          10   O  1  2
+004400160929     A                                      OVRDTA
+004500160929     A                                  1 31'Liste du personnel'
+004600160929     A                                      COLOR(WHT)
+004700160929     A            ZUSER         10   O  1 70
+004800160929     A                                      OVRDTA
+004900160929     A            ZDATE          8  0O  2  2
+005000160929     A                                      EDTWRD('  /  /    ')
+005100160929     A                                      OVRDTA
+005200160929     A            ZHEUR          6  0O  2 14
+005300160929     A                                      EDTWRD('  :  :  ')
+005400160929     A                                      OVRDTA
+005500160929     A            ZJOB          10   O  2 70
+005600160929     A                                      OVRDTA
+005700160929     A                                  4  3'Indiquez vos options, puis appuyez-
+005800160929     A                                       sur ENTREE.'
+005900160929     A                                      COLOR(BLU)
+006000160929     A                                  5  3'2=Modifier  3=Copier -
+006100160929     A                                      4=Supprimer   5=Afficher  -
+006200160929     A                                      6=Imprimer  99=Fin de contrat'
+006300160929     A                                      COLOR(BLU)
+006400160929     A                                  6  3'Selection par nom :'
+006500160929     A            ZSNOM         35   B  6 23
+006600160929     A                                      CHECK(LC)
+006700160929     A                                      COLOR(WHT)
+006800160929     A                                      OVRDTA
+006900160929     A                                  7  2'Opt Nom                           -
+007000160929     A                                            Prénom     Fonction   Matricu-
+007100160929     A                                      le  CP'
+007200160929     A                                      COLOR(WHT)
+007300160929     A            WLICSR        10A  H
+007400160929     A            WZOCSR        10A  H
+007500160929     A            WPRCSR         4S 0H
+007600160929     A            WLIGN          3S 0H
+007700160929     A            WCOLN          3S 0H
+007800160929     A          R FORB1
+007900160929     A                                      CF03
+008000160929     A                                      CF05
+008100160929     A                                      CF06
+008200160929     A                                      CF08
+008300160929     A                                      CF12
+008400160929     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+008500160929     A                                      OVERLAY
+008600160929     A                                      PUTOVR
+008700160929     A                                      CSRLOC(WLIGN WCOLN)
+008800160929     A                                      CHANGE(91)
+008900160929     A                                      HLPCLR
+009000160929     A          H                           HLPARA(6 23 6 58)
+009100160929     A                                      HLPPNLGRP('ZSNOM' PGMF01)
+009200160929     A          H                           HLPARA(8 2 22 3)
+009300160929     A                                      HLPPNLGRP('ZOPT' PGMF01)
+009400160929     A                                 23  3'F3=Exit  F5=Réafficher  -
+009500160929     A                                      F6=Créer  F8=Imprimer  -
+009600160929     A                                      F12=Annuler'
+009700160929     A                                      COLOR(BLU)
+009800160929     A            WLICSR        10A  H
+009900160929     A            WZOCSR        10A  H
+010000160929     A            WPRCSR         4S 0H
+010100160929     A            WLIGN          3S 0H
+010200160929     A            WCOLN          3S 0H
+010300160929     A          R WSFMSG                    SFL
+010400160929     A                                      SFLMSGRCD(24)
+010500160929     A            WMGKEY                    SFLMSGKEY
+010600160929     A            WPGMQ                     SFLPGMQ
+010700160929     A          R WSFCTL                    SFLCTL(WSFMSG)
+010800160929     A                                      SFLSIZ(2)
+010900160929     A                                      SFLPAG(1)
+011000160929     A                                      OVERLAY
+011100160929     A  10                                  SFLINZ
+011200160929     A                                      SFLDSP
+011300160929     A                                      SFLDSPCTL
+011400160929     A  09                                  SFLEND
+011500160929     A            WPGMQ                     SFLPGMQ

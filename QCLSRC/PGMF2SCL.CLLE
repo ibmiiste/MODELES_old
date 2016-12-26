@@ -1,0 +1,38 @@
+000100160929            /*******************************************************************/
+000200160929            /*          ROUTAGE D'UN SPOULE VERS UNE OUT Q                     */
+000300160929            /*******************************************************************/
+000400160929             PGM        PARM(&PMAT)
+000500160929             /*          DECLARATION DES VARIABLES                                        */
+000600160929             DCL        VAR(&PMAT) TYPE(*CHAR) LEN(10)
+000700160929             DCL        VAR(&PUSR) TYPE(*CHAR) LEN(10)
+000800160929             DCL        VAR(&PNREC) TYPE(*DEC) LEN(10)
+000900160929             /*          LE FICHIER D'IMPRESSION                                          */
+001000160929             DCLF       FILE(FIO00P) OPNID(A1)
+001100160929             DCLF       FILE(QTEMP/FIO00P) OPNID(A2)
+001200160929             /*          LE PROFIL UTILISATEUR                                            */
+001300160929             RTVJOBA    USER(&PUSR)
+001400160929             /*          METHODE PAR LECTURE DU FICHIER DES OUTQ                          */
+001500160929 LECT:       RCVF       OPNID(A1)
+001600160929/* TEST SI FIN DE FICHIER DONC PAS DE ROUTAGE                      */
+001700160929             MONMSG     MSGID(CPF0864) EXEC(GOTO CMDLBL(APPEL))
+001800160929             IF         COND((&PUSR = &A1_FOUSR) *AND (&A1_FODOC = 'PGMF20PR')) THEN(DO)
+001900160929/* ON A TROUVE L'UTILISATEUR DANS FICHIER                          */
+002000160929                OVRPRTF    FILE(PGMF20PR) TOFILE(PGMF20PR) OUTQ(*LIBL/&A1_FOOUQ)
+002100160929                GOTO       CMDLBL(COPIE)
+002200160929
+002300160929             ENDDO
+002400160929/* PAS TROUVE ON RECOMMENCE                                        */
+002500160929             GOTO       CMDLBL(LECT)
+002600160929/* AUTRE METHODE NON UTILISEE                                      */
+002700160929 COPIE:      CPYF       FROMFILE(FIO00P) TOFILE(QTEMP/FIO00P) MBROPT(*REPLACE) CRTFILE(*YES) +
+002800160929                          INCREL((*IF FOUSR *EQ &PUSR) (*AND FODOC *EQ 'PGMF20PR'))
+002900160929             RTVMBRD    FILE(QTEMP/FIO00P) NBRCURRCD(&PNREC)
+003000160929             IF         COND(&PNREC *NE 0) THEN(DO)
+003100160929/* ON A TROUVE L'UTILISATEUR DANS FICHIER                          */
+003200160929                RCVF       OPNID(A2)
+003300160929
+003400160929                OVRPRTF    FILE(PGMF20PR) TOFILE(PGMF20PR) OUTQ(*LIBL/&A2_FOOUQ)
+003500160929             ENDDO
+003600160929
+003700160929 APPEL:      CALL       PGM(PGMF20) PARM(&PMAT)
+003800160929             ENDPGM
