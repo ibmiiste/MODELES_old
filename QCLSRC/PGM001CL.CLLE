@@ -1,36 +1,36 @@
-000100160929           /*********************************************************************/
-000200160929           /*          AFFICHAGE DES MESSAGES CC LE 15/01/2009                  */
-000300160929           /*********************************************************************/
-000400160929             PGM        PARM(&PTYP &PFICM &PMGID &PMGDT)
-000500160929 /* DECLARATION DES VARIABLES                                      */
-000600160929             DCL        VAR(&PTYP) TYPE(*CHAR) LEN(1)
-000700160929             DCL        VAR(&PFICM) TYPE(*CHAR) LEN(10)
-000800160929             DCL        VAR(&PMGID) TYPE(*CHAR) LEN(7)
-000900160929             DCL        VAR(&PMGDT) TYPE(*CHAR) LEN(99)
-001000160929 /* MESSAGE TYPE 1 = DEF = INFO                                */
-001100160929             IF         COND(&PTYP = '1') THEN(DO)
-001200160929                SNDPGMMSG  MSGID(&PMGID) MSGF(*LIBL/&PFICM) MSGDTA(&PMGDT)
-001300160929                MONMSG     MSGID(CPF0000)
-001400160929                GOTO       CMDLBL(FINI)
-001500160929             ENDDO
-001600160929 /* MESSAGE TYPE 2   *STATUS                                   */
-001700160929             IF         COND(&PTYP = '2') THEN(DO)
-001800160929                SNDPGMMSG  MSGID(&PMGID) MSGF(*LIBL/&PFICM) MSGDTA(&PMGDT) TOPGMQ(*EXT) +
-001900160929                             MSGTYPE(*STATUS)
-002000160929                MONMSG     MSGID(CPF0000)
-002100160929                GOTO       CMDLBL(FINI)
-002200160929             ENDDO
-002300160929 /* NETTOYAGE VIEUX MESSAGES                                   */
-002400160929             IF         COND(&PTYP = '3') THEN(DO)
-002500160929                RMVMSG     PGMQ(*PRV) CLEAR(*OLD)
-002600160929                MONMSG     MSGID(CPF0000)
-002700160929                GOTO       CMDLBL(FINI)
-002800160929             ENDDO
-002900160929 /* NETTOYAGE TOTAL                                            */
-003000160929             IF         COND(&PTYP = '4') THEN(DO)
-003100160929                RMVMSG     PGMQ(*PRV) CLEAR(*ALL)
-003200160929                MONMSG     MSGID(CPF0000)
-003300160929                GOTO       CMDLBL(FINI)
-003400160929             ENDDO
-003500160929 /* LA FIN */
-003600160929 FINI:       ENDPGM
+           /*********************************************************************/
+           /*          AFFICHAGE DES MESSAGES CC LE 15/01/2009                  */
+           /*********************************************************************/
+             PGM        PARM(&PTYP &PFICM &PMGID &PMGDT)
+ /* DECLARATION DES VARIABLES                                      */
+             DCL        VAR(&PTYP) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&PFICM) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PMGID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&PMGDT) TYPE(*CHAR) LEN(99)
+ /* MESSAGE TYPE 1 = DEF = INFO                                */
+             IF         COND(&PTYP = '1') THEN(DO)
+                SNDPGMMSG  MSGID(&PMGID) MSGF(*LIBL/&PFICM) MSGDTA(&PMGDT)
+                MONMSG     MSGID(CPF0000)
+                GOTO       CMDLBL(FINI)
+             ENDDO
+ /* MESSAGE TYPE 2   *STATUS                                   */
+             IF         COND(&PTYP = '2') THEN(DO)
+                SNDPGMMSG  MSGID(&PMGID) MSGF(*LIBL/&PFICM) MSGDTA(&PMGDT) TOPGMQ(*EXT) +
+                             MSGTYPE(*STATUS)
+                MONMSG     MSGID(CPF0000)
+                GOTO       CMDLBL(FINI)
+             ENDDO
+ /* NETTOYAGE VIEUX MESSAGES                                   */
+             IF         COND(&PTYP = '3') THEN(DO)
+                RMVMSG     PGMQ(*PRV) CLEAR(*OLD)
+                MONMSG     MSGID(CPF0000)
+                GOTO       CMDLBL(FINI)
+             ENDDO
+ /* NETTOYAGE TOTAL                                            */
+             IF         COND(&PTYP = '4') THEN(DO)
+                RMVMSG     PGMQ(*PRV) CLEAR(*ALL)
+                MONMSG     MSGID(CPF0000)
+                GOTO       CMDLBL(FINI)
+             ENDDO
+ /* LA FIN */
+ FINI:       ENDPGM
