@@ -1,48 +1,44 @@
-     A*%%TS  SD  20150713  134652  DEVOD       REL-V6R1M0  5761-WDS
-     A*%%EC
      A                                      DSPSIZ(24 80 *DS3)
      A                                      MSGLOC(24)
      A                                      PRINT
-     A                                      HLPTITLE('Aide g√©n√©rale sur PGMF01')
-     A                                      HLPPNLGRP(PGMF01 PGMF01)
-     A                                      INDARA
-     A                                      ALTHELP(CA01)
      A                                      HELP
+     A                                      HLPPNLGRP('XX' XX)
+     A                                      HLPTITLE('Liste fonction')
+     A                                      ALTHELP(CA01)
      A          R SFL01                     SFL
      A  08                                  SFLNXTCHG
-     A            ZOPT           2   B  8  2
-     A  20                                  DSPATR(PR)
-     A            ZNOM          35   O  8  6
-     A  30                                  COLOR(RED)
-     A            ZPR1          10   O  8 42
-     A            ZFONC         10   O  8 53
-     A            ZMATR         10  0O  8 64
+     A            ZOPT           1   B  7  3
+     A  12                                  DSPATR(RI PC)
+     A                                      COLOR(WHT)
+     A            ZCOD           3   O  7  6
+     A            ZLIB          30   O  7 11
+     A            ZDAC           8  0O  7 42
+     A                                      EDTWRD('  /  /    ')
+     A            ZDAM           8  0O  7 53
+     A                                      EDTWRD('  /  /    ')
+     A            ZNBEM          6  0O  7 67
      A                                      EDTCDE(Z)
-     A            ZCPO           5   O  8 75
      A            HNREC         10  0H
-     A            HTOUT          1   H
-     A            HMATR         10  0H
      A          R FORE1                     SFLCTL(SFL01)
      A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
      A                                      OVERLAY
      A                                      PUTOVR
      A N07                                  ROLLUP(02)
-     A                                      CSRLOC(WLIGN WCOLN)
+     A                                      CSRLOC(WLIGN  WCOLN)
      A                                      CHANGE(91)
      A N04                                  ERASE(SFL01)
      A  04                                  SFLDSP
-
      A  05                                  SFLDSPCTL
      A  06                                  SFLCLR
      A  07                                  SFLEND
-     A                                      SFLSIZ(15)
-     A                                      SFLPAG(14)
+     A                                      SFLSIZ(16)
+     A                                      SFLPAG(15)
      A                                      SFLCSRRRN(&WRACSR)
      A            WRACSR         5S 0H
      A            WRAN01         4S 0H      SFLRCDNBR
      A            ZPGM          10   O  1  2
      A                                      OVRDTA
-     A                                  1 31'Liste du personnel'
+     A                                  1 31'Liste des fonctions'
      A                                      COLOR(WHT)
      A            ZUSER         10   O  1 70
      A                                      OVRDTA
@@ -54,21 +50,15 @@
      A                                      OVRDTA
      A            ZJOB          10   O  2 70
      A                                      OVRDTA
-     A                                  4  3'Indiquez vos options, puis appuyez-
+     A                                  4  3'Indiquez vos options, puis
      A                                       sur ENTREE.'
      A                                      COLOR(BLU)
-     A                                  5  3'2=Modifier  3=Copier -
-     A                                      4=Supprimer   5=Afficher  -
-     A                                      6=Imprimer  99=Fin de contrat'
+     A                                  5  3'2=Modifier      3=Copier  -
+     A                                      4=Supprimer    5=Afficher'
      A                                      COLOR(BLU)
-     A                                  6  3'Selection par nom :'
-     A            ZSNOM         35   B  6 23
-     A                                      CHECK(LC)
-     A                                      COLOR(WHT)
-     A                                      OVRDTA
-     A                                  7  2'Opt Nom                           -
-     A                                            Pr√©nom     Fonction   Matricu-
-     A                                      le  CP'
+     A                                  6  2'Opt Code LibellÈ        -
+     A                                      CrÈation   Modification  Nb e-
+     A                                      mployÈs'
      A                                      COLOR(WHT)
      A            WLICSR        10A  H
      A            WZOCSR        10A  H
@@ -79,21 +69,14 @@
      A                                      CF03
      A                                      CF05
      A                                      CF06
-     A                                      CF08
      A                                      CF12
      A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
      A                                      OVERLAY
      A                                      PUTOVR
-     A                                      CSRLOC(WLIGN WCOLN)
+     A                                      CSRLOC(WLIGN  WCOLN)
      A                                      CHANGE(91)
-     A                                      HLPCLR
-     A          H                           HLPARA(6 23 6 58)
-     A                                      HLPPNLGRP('ZSNOM' PGMF01)
-     A          H                           HLPARA(8 2 22 3)
-     A                                      HLPPNLGRP('ZOPT' PGMF01)
-     A                                 23  3'F3=Exit  F5=R√©afficher  -
-     A                                      F6=Cr√©er  F8=Imprimer  -
-     A                                      F12=Annuler'
+     A                                 23  3'F3=Exit  F5=RÈafficher  F6=Cr-
+     A                                      Èer      F12=Annuler'
      A                                      COLOR(BLU)
      A            WLICSR        10A  H
      A            WZOCSR        10A  H

@@ -1,8 +1,8 @@
      A*******************************************************
-     A* Compteur                                            *
+     A* Fichier fonction                                    *
      A*                                                     *
      A*******************************************************
      A                                      UNIQUE
-     A          R FCPF                      PFILE(FCP00P)
-     A                                      FORMAT(FCP00P)
-     A          K CPCOD
+     A          R FIFF                      PFILE(FIF00P)
+     A                                      FORMAT(FIF00P)
+     A          K MIFON
