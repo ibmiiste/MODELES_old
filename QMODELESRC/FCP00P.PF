@@ -1,0 +1,23 @@
+     A*******************************************************
+     A* Compteur                                            *
+     A*                                                     *
+     A*******************************************************
+     A          R FCPF                      TEXT('Compteur')
+     A            CPCOD          3          TEXT('Code Compteur')
+     A                                      COLHDG('Code')
+     A            CPCP1          6S 0       TEXT('Compteur 1')
+     A                                      COLHDG('Compteur 1')
+     A            CPCP2         10S 0       TEXT('Compteur 2')
+     A                                      COLHDG('Compteur 2')
+     A            CPDAC           L         TEXT('Date de création')
+     A                                      COLHDG('Date création')
+     A            CPHEC           T         TEXT('Heure de création')
+     A                                      COLHDG('heure')
+     A            CPUSC         10          TEXT('User création')
+     A                                      COLHDG('User')
+     A            CPDAM           L         TEXT('Date modif')
+     A                                      COLHDG('Date modif')
+     A            CPHEM           T         TEXT('Heure modif')
+     A                                      COLHDG('heure')
+     A            CPUSM         10          TEXT('User modif')
+     A                                      COLHDG('User modif')

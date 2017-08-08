@@ -1,0 +1,8 @@
+     A*******************************************************
+     A* Fichier du personnel                                *
+     A*                                                     *
+     A*******************************************************
+     A                                      UNIQUE
+     A          R FICF                      PFILE(FIC00P)
+     A                                      FORMAT(FIC00P)
+     A          K FIMAT
