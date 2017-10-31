@@ -1,133 +1,137 @@
-     h debug decedit('0,') datedit(*dmy.) bnddir('SERVICES')
-     h option(*srcstmt)
-     h/if defined(*crtbndrpg)
-     h DFTACTGRP(*no) actgrp(*caller)
-     h/Endif
+       ctl-opt debug decedit('0,') datedit(*dmy.) bnddir('SERVICES');
+       ctl-opt option(*srcstmt);
+      /if defined(*crtbndrpg)
+       ctl-opt DFTACTGRP(*no) actgrp(*caller);
+      /Endif
       //*********************************************************************
       // OD 21/07/2015
       // liste du personnel
       //*********************************************************************
-      // d√©claration des fichiers
-     fpgmf01fm  cf   e             workstn
-     f                                     sfile(sfl01 :wran01)
-     f                                     infds(dssfl1)
-     f                                     indds(IndDS)
-     ffic02l    if   e           k disk
-     f                                     infds(fic)
+      // dÈclaration des fichiers
+       dcl-f pgmf01fm workstn sfile(sfl01 :wran01) infds(dssfl1) indds(IndDS);
+
+       dcl-f fic02l keyed infds(fic);
 
       // main function prototype
       // prototype fonction principale
-     dliste_personnel  pr                  extpgm('PGMF01')
-     dliste_personnel  pi
+       dcl-pr liste_personnel extpgm('PGMF01') end-pr;
+       dcl-pi liste_personnel end-pi;
 
       // external functions prototypes
       // prototype fonctions externes
       * Gestion des messages
-     dgst_message      pr                  extpgm('PGM001CL')
-     d a_typ                               like(r_typmsg)
-     d a_fim                               like(r_nomobj)
-     d a_mid                               like(r_msgid)
-     d a_mdt                               like(r_msgdta)
+       dcl-pr gst_message extpgm('PGM001CL');
+         a_typ like(r_typmsg);
+         a_fim like(r_nomobj);
+         a_mid like(r_msgid);
+         a_mdt like(r_msgdta);
+       end-pr;
 
-      * Appel de l'√©cran d√©tail du personnel
-     ddetail_personnel...
-     d                 pr                  extpgm('PGMF02')
-     d a_chx                               like(r_operation)
-     d a_nrec                              like(r_matricule)
+      * Appel de l'Ècran dÈtail du personnel
+       dcl-pr detail_personnel extpgm('PGMF02');
+         a_chx like(r_operation);
+         a_nrec like(r_matricule);
+       end-pr;
 
-     d* Impression
-     dimpression       pr                  extpgm('PGMF2SCL')
-     d a_mat                               like(r_matricule)
+      * Impression
+       dcl-pr impression extpgm('PGMF2SCL');
+         a_mat like(r_matricule);
+       end-pr;
 
-      // Gestion des erreurs non pr√©vues
-     d gest_erreur     pr
+      // Gestion des erreurs non prÈvues
+       dcl-pr gest_erreur end-pr;
 
       // program status data structure
       // structure information programme
-     d/copy qcpysrc,psds
+        /copy qcpysrc,psds
 
       // local functions prototypes
       // prototypes fonctions locales
 
       // global variables
       // variables globales
-     dg_snom           s                   like(r_nom)
-     dg_wsnop          s                   like(r_nom)
+       dcl-s g_snom like(r_nom);
+       dcl-s g_wsnop like(r_nom);
 
-     dg_nblis1         s                   like(r_nblign)
-     dg_lstlig         s                   like(r_nblign)
-     dg_nbrlig         s                   like(r_nblign)
-     dg_i              s              3p 0
-     dg_xnom           s                   like(r_nom)
-     da_typ            s                   like(r_typmsg)
-     da_fim            s                   like(r_nomobj)
-     da_mid            s                   like(r_msgid)
-     da_mdt            s                   like(r_msgdta)
+       dcl-s g_nblis1 like(r_nblign);
+       dcl-s g_lstlig like(r_nblign);
+       dcl-s g_nbrlig like(r_nblign);
+       dcl-s g_i packed(3:0);
+       dcl-s g_xnom like(r_nom);
+       dcl-s a_typ like(r_typmsg);
+       dcl-s a_fim like(r_nomobj);
+       dcl-s a_mid like(r_msgid);
+       dcl-s a_mdt like(r_msgdta);
 
-     d a_chx           s              2a
-     d a_nrec          s                   like(r_matricule)
-     d a_mat           s                   like(r_matricule)
+       dcl-s a_chx char(2);
+       dcl-s a_nrec like(r_matricule);
+       dcl-s a_mat like(r_matricule);
 
       // Indicateurs
-     d g_sortie        s               n
-     d g_trt_opt       s               n
-     d g_selection     s               n
-     d g_alimsfl       s               n
-     d g_filtre        s               n
+       dcl-s g_sortie ind;
+       dcl-s g_trt_opt ind;
+       dcl-s g_selection ind;
+       dcl-s g_alimsfl ind;
+       dcl-s g_filtre ind;
 
       // Touches de fonction
       /copy qcpysrc,fonction
 
       // data-structures
-      // structures de donn√©es
-      // Indicateurs renomm√©s avec Indara et INDDS
-     D IndDS           ds
-     D  ROLLUP                         N   Overlay(IndDS:2)
-     D  SFLDSP                         N   Overlay(IndDS:4)
-     D  SFLDSPCTL                      N   Overlay(IndDS:5)
-     D  SFLCLR                         N   Overlay(IndDS:6)
-     d  SFLEND                         N   Overlay(IndDS:7)
-     d  SFLNXTCHG                      N   Overlay(IndDS:8)
-     d  SFLENDMSG                      N   Overlay(IndDS:9)
-     D  SFLINZ                         N   Overlay(IndDS:10)
-     D  PROTECT                        N   Overlay(IndDS:20)
-     D  ROUGE                          N   Overlay(IndDS:30)
+      // structures de donnÈes
+      // Indicateurs renommÈs avec Indara et INDDS
+       Dcls-ds IndDS;
+         ROLLUP ind pos(2);
+         SFLDSP ind pos(4);
+         SFLDSPCTL ind pos(5);
+         SFLCLR ind pos(6);
+         SFLEND ind pos(7);
+         SFLNXTCHG ind pos(8);
+         SFLENDMSG ind pos(9);
+         SFLINZ ind pos(10);
+         PROTECT ind pos(20);
+         ROUGE ind pos(30);
+       end-ds;
 
       // la ds du sous=fichier
-     ddssfl1           ds
-     dwposc                  370    371b 0
-     dwrrng                  376    377b 0
-     dwrngp                  378    379b 0
-     dwnbrsf                 380    381b 0
+       dcl-ds dssfl1;
+         wposc bindec(2:0) pos(370);
+         wrrng bindec(2:0) pos(376);
+         wrngp bindec(2:0) pos(378);
+         wnbrsf bindec(2:0) pos(380);
+       end-ds;
 
       // la ds du fichier
-     dfic              ds
-     dwnrc01                 397    400b 0
-     dwdsfic           ds
-     dwcdfil                   1      8
-     dwopenf                   9      9
-     dwstsfi                  11     15  0
-     dwopcod                  16     21
-     dwrpgsq                  30     37
-     dwrpgnr                  38     45
-     dwerrfi                  46     52
-     dwnfich                  83     92
-     dwnlibr                  93    102
-     dwspnam                 103    112
-     dwsplib                 113    122
-     dwspnum                 123    124b 0
-     dwlimbr                 129    138
-     dwnbput                 243    246b 0
-     dwnbget                 247    250b 0
-     dwnbpg                  251    254b 0
-     dwnbio                  255    258b 0
-     dwrcdft                 261    270
-     dwnbrcd                 283    286b 0
-     dwnrcfi                 397    400b 0
+       dcl-ds fic;
+         wnrc01 bindec(4:0) pos(397);
+       end-ds;
+
+       dcl-ds wdsfic;
+         wcdfil char(8);
+         wopenf char(1);
+         wstsfi packed(5:0);
+         wopcod char(5);
+         wrpgsq char(8);
+         wrpgnr char(8);
+         werrfi char(7);
+         wnfich char(10);
+         wnlibr char(10);
+         wspnam char(10);
+         wsplib char(10);
+         wspnum bindec(2:0);
+         wlimbr char(10);
+         wnbput bindec(4:0);
+         wnbget bindec(4:0);
+         wnbpg bindec(4:0);
+         wnbio bindec(4:0);
+         wrcdft char(10);
+         wnbrcd bindec(4:0);
+         wnrcfi bindec(4:0);
+       end-ds;
 
       // inherited variables
-      // h√©ritage des types
-     d/copy QINHLESRC,INH32766
+      // hÈritage des types
+      /copy QINHLESRC,INH32766
 
       // constants
       // constantes
@@ -136,9 +140,9 @@
       * fonction principale
       /free
        monitor;
-       // le nombre de lignes affichables, d√©claration √† la vol√©e
+       // le nombre de lignes affichables, dÈclaration √† la volÈe
          g_nblis1=14;
-         // initialisation des variables g√©n√©rales
+         // initialisation des variables gÈnÈrales
          zpgm=PROCEDURE;
          zdate=%dec(%date():*eur);
          zheur=%dec(%time():*eur);
@@ -151,22 +155,22 @@
          sflinz = *on;
          // indicateur fin
          g_sortie = *off;
-         // d√©but du traitement,
+         // dÈbut du traitement,
          exsr initsf;
          // boucle d'attente de sortie
          dow not g_sortie;
            exsr trtsfl;
          enddo;
 
-         on-error;
-           dump(a);
-           gest_erreur();
-         endmon;
+       on-error;
+         dump(a);
+         gest_erreur();
+       endmon;
 
        // indicateur de fin de programme
        *inlr = *on;
-       // les proc√©dures
-       // traitement de l'√©cran
+       // les procÈdures
+       // traitement de l'Ècran
        begsr trtsfl;
          // effacement du sous=fichier de messages
           a_typ='3';
@@ -177,7 +181,7 @@
                       : a_mid
                       : a_mdt);
          write wsfctl;
-         // ecriture de l'√©cran
+         // ecriture de l'Ècran
          sfldsp = *on;
          sfldspctl = *on;
          write fore1;
@@ -186,7 +190,7 @@
          // attente lecture
          read fore1;
 
-         // une touche a √©t√© actionn√©e
+         // une touche a ÈtÈ actionnÈe
          // chargement de l'heure
          zheur=%dec(%time());
          // indicateur pour ne pas tester d'autres actions
@@ -199,26 +203,26 @@
          //
          if g_wsnop <> zsnom
          and g_trt_opt;
-         // test si selection/ si chang√© on initialise
+         // test si selection/ si changÈ on initialise
            exsr initsf;
            g_trt_opt = *off;
          endif;
          // touches f3 et f12
          if sortie or
                cancel;
-           // on met l'indicateur  off = fin du programme
+           // on met l'indicateur ‡ off = fin du programme
            g_sortie = *on;
            g_trt_opt = *off;
          endif;
          //
          if refresh;
-           // f5 rafraichissement de l'√©cran
+           // f5 rafraichissement de l'Ècran
            exsr initsf;
            g_trt_opt = *off;
          endif;
          //
          if creer;
-           // f6 cr√©ation d'un nouveau matricule
+           // f6 crÈation d'un nouveau matricule
             a_chx='CR';
             a_nrec=*zero;
             detail_personnel(a_chx:a_nrec);
@@ -242,16 +246,16 @@
        begsr initsf;
          //    l'indicateur 20 conditionne la zone opt (protection)
          protect = *off;
-         // initialisation de la variable de s√©lection
+         // initialisation de la variable de sÈlection
          g_wsnop=zsnom;
          g_snom=*blank;
-         // initialisation de la cl√© pour positionnement
+         // initialisation de la clÈ pour positionnement
          fifon=*blank;
          finom=*blank;
          g_selection = *off;
          g_filtre = *off;
          if zsnom <> *blank;
-           // si diff√©rent de blank il y a s√©lection
+           // si diffÈrent de blank il y a sÈlection
            g_selection = *on;
            g_i=0;
            g_i=%scan('*':zsnom);
@@ -260,12 +264,12 @@
               g_filtre=*on;
               g_i=g_i-1;
               g_snom=%subst(zsnom:1:g_i);
-              // on est dans le cas d'une s√©lection g√©n√©rique
+              // on est dans le cas d'une sÈlection gÈnÈrique
              // on se positionnera juste au bon endroit dans le fichier
               finom=g_snom;
            endif;
          endif;
-         // la derni√®re ligne √©crite
+         // la derni√®re ligne Ècrite
 
          g_lstlig=0;
          // le compteur de ligne par page
@@ -281,23 +285,23 @@
          sflclr = *off;
          sfldsp = *on;
          sfldspctl = *on;
-         // positionnement en d√©but de fichier
+         // positionnement en dÈbut de fichier
          setll ( fifon: finom) fic02l;
          // chargement de la premi√®re page
          exsr chgpag;
        endsr;
-       // traitement des options, on ne lit que les enregistrements modifi√©s
+       // traitement des options, on ne lit que les enregistrements modifiÈs
        begsr trtopt;
-         // lecture des enregistrements modifi√©s
+         // lecture des enregistrements modifiÈs
           wran01=1;
-          // top pour rafrachir l'√©cran, si besoin
+          // top pour rafrachir l'Ècran, si besoin
          g_alimsfl = *off;
          readc sfl01;
          dow not %eof;
              a_nrec=hnrec;
              if htout='1';
                 if zopt='2' or zopt='3' or zopt='4' or zopt='5';
-               // si l'employ√©  quitt√© on ne peut plus rien modifier
+               // si l'employÈ  quittÈ on ne peut plus rien modifier
                    zopt='5';
                 endif;
              endif;
@@ -360,17 +364,17 @@
          // lecture de l'enregistrement suivant
          read fic02l;
 
-         // remise √† z√©ro du compteur de ligne, mais on pourrait faire autrement
+         // remise √† zÈro du compteur de ligne, mais on pourrait faire autrement
          g_nbrlig=0;
 
          dow not %eof(fic02l)
          and g_nbrlig < 14;
-           // remplissage des zones √©cran
+           // remplissage des zones Ècran
            g_alimsfl = *on;
-           // test s'il y a s√©lection
+           // test s'il y a sÈlection
            if g_selection or g_filtre;
              if g_selection and not g_filtre;
-               // on recherche la stricte √©galit√© de nom
+               // on recherche la stricte ÈgalitÈ de nom
                if finom <> zsnom;
                  g_alimsfl = *off;
                endif;
@@ -382,7 +386,7 @@
                endif;
              endif;
            endif;
-           // l'indicateur est  '1' si s√©lection ok ou pas de s√©lection
+           // l'indicateur est  '1' si sÈlection ok ou pas de sÈlection
            if g_alimsfl;
               znom=finom;
               zpr1=fipr1;
@@ -393,7 +397,7 @@
               hnrec=wnrcfi;
               hmatr=fimat;
               if fidas = 0;
-               // top salari√© licenci√©
+               // top salariÈ licenciÈ
               htout = *off;
               rouge = *off;
             else;
@@ -428,7 +432,7 @@
             // pas de saisie d'option
            protect = *on;
            if zsnom = *blank;
-             znom = 's√©lection vide';
+             znom = 'sÈlection vide';
            else;
              znom = 'Fichier vide';
            endif;
