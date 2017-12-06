@@ -1,0 +1,33 @@
+     A                                      REF(CUSTOMERS)
+     A                                      INDARA
+     A          R CUSTSEL
+     A                                      CA03(03 'F3=Exit')
+     A                                  1 33'Customer Inquiry'
+     A                                  3  2'Type value, press Enter.'
+     A                                  5  2'Customer identifier...'
+     A            CUSTNO    R        I  5 29
+     A                                 23  2'F3=Exit'
+     A          R CUSTINQ
+     A                                      CA03(03 'F3=exit')
+     A                                      CA12(12 'F12=Cancel')
+     A                                  1 31'Customer Information'
+     A                                  3  2'Customer Identifier:'
+     A            CUSTNO    R        O  3 24
+     A                                  4  2'First name . . . . :'
+     A            CFNAME    R        O  4 24
+     A                                  5  2'Last name  . . . . :'
+     A            CLNAME    R        O  5 24
+     A                                  3  2'Address  . . . . . :'
+     A            CADDR     R        O  6 24
+     A                                  6  2'Postal code  . . . :'
+     A            CZIP      R        O  7 27
+     A                                      'telephone  . . . . :'
+     A            CPHONE    R        O  8 24
+     A                                  9  2'Email  . . . . . . :'
+     A            CEMAIL    R        O  9 24
+     A            CDOB      R        O 10 24EDTCDE(Y)
+     A                                 11  2'gender  . . . . . . :'
+     A            CGENDER   R        O 11 24
+     A                                 21  2'Press enter to continue.'
+     A                                 23  2'F3=Exit'
+     A                                 23 11'F12=Cancel'
