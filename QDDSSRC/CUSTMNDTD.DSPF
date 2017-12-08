@@ -1,12 +1,44 @@
-000001171208     A                                      DSPSIZ(*DS4)
-000002171208     A                                      INDARA
-000003171208     A                                      CA03('03 F3=Exit')
-000004171208     A                                      VLDCMDKEY(25)
-000005171208     A          R CUSTSEL
-000006171208     A                                  1 31'Text constant'
-000100      
-000101171208     A*%%RS+<record-sequences>
-000102171208     A*%%RS+ <sequence name="custmntd">
-000103171208     A*%%RS+  <device type="display" width="132" height="27" />
-000104171208     A*%%RS+ </sequence>
-000105171208     A*%%RS </record-sequences>
+     A                                      DSPSIZ(*DS3)
+     A                                      INDARA
+     A                                      CA03('03 F3=Exit')
+     A                                      VLDCMDKEY(25)
+     A                                      REF(CUSTOMERS)
+     A          R CUSTSEL
+     A                                  1 31'Customer Maintenance'
+     A                                  3  2'Type values, press Enter.'
+     A                                  5  2'Customer Identifier . . .'
+     A            CUSTNO    R    9   B  5 29
+     A  30                                  ERRMSG('Customer already exists')
+     A  31                                  ERRMSG('Customer not found')
+     A  32                                  ERRMSG('Custumer not found')
+     A                                  7  2'Action code . . . . . . .'
+     A            ACTION         1   I  7 29VALUES('A' 'C' 'D')
+     A                                  7 41'A=Add'
+     A                                  8 41'C=Change'
+     A                                  9 41'D=Delete'
+     A                                 23  2'F3=Exit'
+     A          R CUSTMNT                   CA12
+     A  42                                  CA10
+     A  40                              1 32'Add a New customer'
+     A  41                              1 27'Change Customer Information'
+     A  42                              1 27'Delete Customer'
+     A  40                              3  2'Type values, press Enter.'
+     A  41                              3  2'Type changes, press Enter.'
+     A  42                              3  2'Press F10 to delete record, or F12-
+     A                                       to cancel'
+     A                                  5  2'Customer Identifier:'
+     A            CUSTNO    R    9   O  5 24
+     A                                  7  2'First Name . . . . . '
+     A            CFNAME         9   B  7 24
+     A  42                                  DSPATR(PR)
+     A                                  8  2'Last Name  . . . . . '
+     A            CLNAME         9   B  8 24
+     A  42                                  DSPATR(PR)
+     A                                 13  2'Date of Birth  . . .'
+     A            CDOB           9N 0B 13 24EDTCDE(Y)
+     A  42                                  DSPATR(PR)
+     A                                 14  2'Gender . . . . . . .'
+     A            CGENDER        9   B 14 24
+     A  42                                  DSPATR(PR)
+     A N42                             23  2'F3=Exit  F12=Cancel'
+     A  42                             23  2'F3=Exit  F10=Delete  F12=Cancel'
