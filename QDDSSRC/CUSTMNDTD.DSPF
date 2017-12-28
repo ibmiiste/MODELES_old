@@ -8,14 +8,14 @@
      /* >>END-PRE-COMPILER<<                                             */
      A                                      DSPSIZ(*DS3)
      A                                      INDARA
-     A                                      CA03('03 F3=Exit')
+     A                                      CA03(03 'F3=Exit')
      A                                      VLDCMDKEY(25)
      A                                      REF(CUSTOMERS)
      A          R CUSTSEL
      A                                  1 31'Customer Maintenance'
      A                                  3  2'Type values, press Enter.'
      A                                  5  2'Customer Identifier . . .'
-     A            CUSTNO    R    9   B  5 29
+     A            CUSTNO    R        B  5 29
      A  30                                  ERRMSG('Customer already exists')
      A  31                                  ERRMSG('Customer not found')
      A  32                                  ERRMSG('Custumer not found')
@@ -35,18 +35,18 @@
      A  42                              3  2'Press F10 to delete record, or F12-
      A                                       to cancel'
      A                                  5  2'Customer Identifier:'
-     A            CUSTNO    R    9   O  5 24
+     A            CUSTNO    R        O  5 24
      A                                  7  2'First Name . . . . . '
-     A            CFNAME         9   B  7 24
+     A            CFNAME    R        B  7 24
      A  42                                  DSPATR(PR)
      A                                  8  2'Last Name  . . . . . '
-     A            CLNAME         9   B  8 24
+     A            CLNAME    R        B  8 24
      A  42                                  DSPATR(PR)
      A                                 13  2'Date of Birth  . . .'
-     A            CDOB           9N 0B 13 24EDTCDE(Y)
+     A            CDOB      R        B 13 24EDTCDE(Y)
      A  42                                  DSPATR(PR)
      A                                 14  2'Gender . . . . . . .'
-     A            CGENDER        9   B 14 24
+     A            CGENDER   R        B 14 24
      A  42                                  DSPATR(PR)
      A N42                             23  2'F3=Exit  F12=Cancel'
      A  42                             23  2'F3=Exit  F10=Delete  F12=Cancel'
