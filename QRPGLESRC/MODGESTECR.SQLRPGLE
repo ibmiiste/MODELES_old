@@ -15,9 +15,23 @@
          Dltmode  Ind Pos(42);
        End-Ds;
 
+       // --------------------------------------------------
+       // Prototype for procedure: Addrecord
+       // --------------------------------------------------
+       DCL-PR Addrecord ;
+       END-PR ;
+
+
+       // --------------------------------------------------
+       // Prototype for procedure: Chgrecord
+       // --------------------------------------------------
+       DCL-PR Chgrecord ;
+       END-PR ;
+
+
        //----------------------------------------------------------------------------Main procedure
        Dow not Exit;
-         Exfmt Custsel:
+         Exfmt Custsel;
 
          Select;
            When Exit;
@@ -36,12 +50,97 @@
        Return;
 
 
-       //----------------------------------------------------------------------------------Addrecord
-       Dcl-proc Addrecord;
+       // --------------------------------------------------
+       // Procedure name: Addrecord
+       // Purpose:        Add a customer record
+       // Returns:
+       // --------------------------------------------------
+       DCL-PROC Addrecord ;
+       Dcl-pi Addrecord End-pi;
+         Dcl-ds Ds_Customers Extname('CUSTOMERS') Qualified End-ds;
+
          Setmode();
-         Chain Custno Custumers;
+         EXEC SQL
+           SELECT Custno,
+                  Cfname,
+                  Clname,
+                  Caddr,
+                  Czip,
+                  Cphonet,
+                  Cemail,
+                  Cdobl,
+                  Cgender
+             INTO Ds_Customers.Custno,
+                  Ds_Customers.Cfname,
+                  Ds_Customers.Clname,
+                  Ds_Customers.Caddr,
+                  Ds_Customers.Czip,
+                  Ds_Customers.Cphonet,
+                  Ds_Customers.Cemail,
+                  Ds_Customers.Cdobl,
+                  Ds_Customers.Cgender
+             FROM Customers
+             WHERE Custno = :Custno;
+
+         Adderror = Sqlcode = 0;
+
+         If Not Adderror;
+           Resetdata();
+           Custmnt();
+
+           If Not Fkey;
+             Insert into Custrec ;
+
+             Reset Action;
+             Reset Custno;
+           EndIf;
+
+         EndIf;
+
+         Return;
 
        End-Proc;
 
+       // --------------------------------------------------
+       // Procedure name: Chgrecord
+       // Purpose:        Change a customer record
+       // Returns:
+       // --------------------------------------------------
+       DCL-PROC Chgrecord ;
 
+         Setmode();
+
+         EXEC SQL
+           SELECT Custno,
+                  Cfname,
+                  Clname,
+                  Caddr,
+                  Czip,
+                  Cphonet,
+                  Cemail,
+                  Cdobl,
+                  Cgender
+             INTO Ds_Customers.Custno,
+                  Ds_Customers.Cfname,
+                  Ds_Customers.Clname,
+                  Ds_Customers.Caddr,
+                  Ds_Customers.Czip,
+                  Ds_Customers.Cphonet,
+                  Ds_Customers.Cemail,
+                  Ds_Customers.Cdobl,
+                  Ds_Customers.Cgender
+             FROM Customers
+             WHERE Custno = :Custno;
+
+             Chgerror = Sqlcode = 100;
+
+             If Not Chgerror;
+               Exfmt Custmnt;
+
+               If Not Fkey;
+
+               EndIf;
+             EndIf;
+         return ;
+       END-PROC ;
 
