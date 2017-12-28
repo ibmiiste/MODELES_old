@@ -21,7 +21,7 @@ CREATE TABLE CUSTOMERS ( CUSTNO CHAR(9) NOT NULL PRIMARY KEY,
                          CPHONE CHAR(10) DEFAULT,
                          CEMAIL CHAR(50) DEFAULT,
                          CDOB DECIMAL( 8, 0) NOT NULL,
-                         CGENDER CHAR(1) NON NULL)
+                         CGENDER CHAR(1) NOT NULL)
                   RCDFMT CUSTSREC
 ;
 
