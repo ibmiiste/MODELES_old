@@ -29,7 +29,7 @@
      A            CADDR     R        O  6 24
      A                                  6  2'Postal code  . . . :'
      A            CZIP      R        O  7 27
-     A                                      'telephone  . . . . :'
+     A                                  8  2'telephone  . . . . :'
      A            CPHONE    R        O  8 24
      A                                  9  2'Email  . . . . . . :'
      A            CEMAIL    R        O  9 24
