@@ -1,0 +1,97 @@
+0001.00      A                                      DSPSIZ(24 80 *DS3)
+0002.00      A                                      MSGLOC(24)
+0003.00      A                                      PRINT
+0004.00      A                                      HELP
+0005.00      A                                      HLPPNLGRP(’XX’ XX)
+0006.00      A                                      HLPTITLE(’Liste fonction’)
+0007.00      A                                      ALTHELP(CA01)
+0008.00      A          R SFL01                     SFL
+0009.00      A  08                                  SFLNXTCHG
+0010.00      A            ZOPT           1   B  7  3
+0011.00      A  12                                  DSPATR(RI PC)
+0012.00      A                                      COLOR(WHT)
+0013.00      A            ZCOD           3   O  7  6
+0014.00      A            ZLIB          30   O  7 11
+0015.00      A            ZDAC           8  0O  7 42
+0016.00      A                                      EDTWRD(’  /  /    ’)
+0017.00      A            ZDAM           8  0O  7 53
+0018.00      A                                      EDTWRD(’  /  /    ’)
+0019.00      A            ZNBEM          6  0O  7 67
+0020.00      A                                      EDTCDE(Z)
+0022.00      A          R FORE1                     SFLCTL(SFL01)
+0023.00      A                                   RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+0024.00      A                                      OVERLAY
+0025.00      A                                      PUTOVR
+0026.00      A N07                                  ROLLUP(02)
+0027.00      A                                      CSRLOC(WLIGN  WCOLN)
+0028.00      A                                      CHANGE(91)
+0029.00      A N04                                  ERASE(SFL01)
+0030.00      A  04                                  SFLDSP
+0031.00      A  05                                  SFLDSPCTL
+0032.00      A  06                                  SFLCLR
+0033.00      A  07                                  SFLEND
+0034.00      A                                      SFLSIZ(16)
+0035.00      A                                      SFLPAG(15)
+0036.00      A                                      SFLCSRRRN(&WRACSR)
+0037.00      A            WRACSR         5S 0H
+0038.00      A            WRAN01         4S 0H      SFLRCDNBR
+0039.00      A            ZPGM          10   O  1  2
+0040.00      A                                      OVRDTA
+0041.00      A                                  1 31’Liste des fonctions’
+0042.00      A                                      COLOR(WHT)
+0043.00      A            ZUSER         10   O  1 70
+0044.00      A                                      OVRDTA
+0045.00      A            ZDATE          8  0O  2  2
+0046.00      A                                      EDTWRD(’  /  /    ’)
+0047.00      A                                      OVRDTA
+0048.00      A            ZHEUR          6  0O  2 14
+0049.00      A                                      EDTWRD(’  :  :  ’)
+0050.00      A                                      OVRDTA
+0051.00      A            ZJOB          10   O  2 70
+0052.00      A                                      OVRDTA
+0053.00      A                                  4  3’Indiquez vos options, puis
+0054.00      A                                       sur ENTREE.’
+0055.00      A                                      COLOR(BLU) 
+0056.00      A                                  5  3’2=Modifier      3=Copier  -
+0057.00      A                                      4=Supprimer    5=Afficher’
+0058.00      A                                      COLOR(BLU)
+0059.00      A                                  6  2’Opt Code Libellé        -
+0060.00      A                                      Création   Modification  Nb e-
+0061.00      A                                      mployés’
+0062.00      A                                      COLOR(WHT)
+0063.00      A            WLICSR        10A  H
+0064.00      A            WZOCSR        10A  H
+0065.00      A            WPRCSR         4S 0H
+0066.00      A            WLIGN          3S 0H
+0067.00      A            WCOLN          3S 0H
+0068.00      A          R FORB1
+0069.00      A                                      CF03
+0070.00      A                                      CF05
+0071.00      A                                      CF06
+0072.00      A                                      CF12
+0073.00     A                                    RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+0074.00      A                                      OVERLAY
+0075.00      A                                      PUTOVR
+0076.00      A                                      CSRLOC(WLIGN  WCOLN)
+0077.00      A                                      CHANGE(91)
+0078.00      A                                 23  3’F3=Exit  F5=Réafficher  F6=Cr-
+0079.00      A                                      éer      F12=Annuler’
+0080.00      A                                      COLOR(BLU)
+0081.00      A            WLICSR        10A  H
+0082.00      A            WZOCSR        10A  H
+0083.00      A            WPRCSR         4S 0H
+0084.00      A            WLIGN          3S 0H
+0085.00      A            WCOLN          3S 0H
+0086.00      A          R WSFMSG                    SFL
+0087.00      A                                      SFLMSGRCD(24)
+0088.00      A            WMGKEY                    SFLMSGKEY
+0089.00      A            WPGMQ                     SFLPGMQ
+0090.00      A          R WSFCTL                    SFLCTL(WSFMSG)
+0091.00      A                                      SFLSIZ(2)
+0092.00      A                                      SFLPAG(1)
+0093.00      A                                      OVERLAY
+0094.00      A  10                                  SFLINZ
+0095.00      A                                      SFLDSP
+0096.00      A                                      SFLDSPCTL
+0097.00      A  09                                  SFLEND
+0098.00      A            WPGMQ                     SFLPGMQ
