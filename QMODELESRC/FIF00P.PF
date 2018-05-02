@@ -1,17 +1,17 @@
-     A*******************************************************
-     A* Fichier fonction                                    *
-     A*                                                     *
-     A*******************************************************
-     A          R FIFF                      TEXT('Fichier fonction')
-     A            MIFON          3          TEXT('Fonction')
-     A                                      COLHDG('Fonction')
-     A            MILIB         35          TEXT('Libellé')
-     A                                      COLHDG('Libellé fonction')
-     A            MITSC         26          TEXT('Time stamp création')
-     A                                      COLHDG('Création')
-     A            MIUSC         10          TEXT('User création')
-     A                                      COLHDG('User création')
-     A            MITSM         26          TEXT('Time stamp modif')
-     A                                      COLHDG('Modif')
-     A            MIUSM         10          TEXT('User modif')
-     A                                      COLHDG('User modif')
+000100180502     A*******************************************************
+000200180502     A* Fichier fonction                                    *
+000300180502     A*                                                     *
+000400180502     A*******************************************************
+000500180502     A          R FIFF                      TEXT('Fichier fonction')
+000600180502     A            MIFON          3          TEXT('Fonction')
+000700180502     A                                      COLHDG('Fonction')
+000800180502     A            MILIB         35          TEXT('Libellé')
+000900180502     A                                      COLHDG('Libellé fonction')
+001000180502     A            MITSC         26          TEXT('Time stamp création')
+001100180502     A                                      COLHDG('Création')
+001200180502     A            MIUSC         10          TEXT('User création')
+001300180502     A                                      COLHDG('User création')
+001400180502     A            MITSM         26          TEXT('Time stamp modif')
+001500180502     A                                      COLHDG('Modif')
+001600180502     A            MIUSM         10          TEXT('User modif')
+001700180502     A                                      COLHDG('User modif')

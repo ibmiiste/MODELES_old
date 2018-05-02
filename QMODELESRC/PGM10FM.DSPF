@@ -1,98 +1,98 @@
-     A                                      DSPSIZ(24 80 *DS3)
-     A                                      MSGLOC(24)
-     A                                      PRINT
-     A                                      HELP
-     A                                      HLPPNLGRP('XX' XX)
-     A                                      HLPTITLE('Liste fonction')
-     A                                      ALTHELP(CA01)
-     A          R SFL01                     SFL
-     A  08                                  SFLNXTCHG
-     A            ZOPT           1   B  7  3
-     A  12                                  DSPATR(RI PC)
-     A                                      COLOR(WHT)
-     A            ZCOD           3   O  7  6
-     A            ZLIB          30   O  7 11
-     A            ZDAC           8  0O  7 42
-     A                                      EDTWRD('  /  /    ')
-     A            ZDAM           8  0O  7 53
-     A                                      EDTWRD('  /  /    ')
-     A            ZNBEM          6  0O  7 67
-     A                                      EDTCDE(Z)
-     A            HNREC         10  0H
-     A          R FORE1                     SFLCTL(SFL01)
-     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
-     A                                      OVERLAY
-     A                                      PUTOVR
-     A N07                                  ROLLUP(02)
-     A                                      CSRLOC(WLIGN  WCOLN)
-     A                                      CHANGE(91)
-     A N04                                  ERASE(SFL01)
-     A  04                                  SFLDSP
-     A  05                                  SFLDSPCTL
-     A  06                                  SFLCLR
-     A  07                                  SFLEND
-     A                                      SFLSIZ(16)
-     A                                      SFLPAG(15)
-     A                                      SFLCSRRRN(&WRACSR)
-     A            WRACSR         5S 0H
-     A            WRAN01         4S 0H      SFLRCDNBR
-     A            ZPGM          10   O  1  2
-     A                                      OVRDTA
-     A                                  1 31'Liste des fonctions'
-     A                                      COLOR(WHT)
-     A            ZUSER         10   O  1 70
-     A                                      OVRDTA
-     A            ZDATE          8  0O  2  2
-     A                                      EDTWRD('  /  /    ')
-     A                                      OVRDTA
-     A            ZHEUR          6  0O  2 14
-     A                                      EDTWRD('  :  :  ')
-     A                                      OVRDTA
-     A            ZJOB          10   O  2 70
-     A                                      OVRDTA
-     A                                  4  3'Indiquez vos options, puis
-     A                                       sur ENTREE.'
-     A                                      COLOR(BLU)
-     A                                  5  3'2=Modifier      3=Copier  -
-     A                                      4=Supprimer    5=Afficher'
-     A                                      COLOR(BLU)
-     A                                  6  2'Opt Code Libellé        -
-     A                                      Création   Modification  Nb e-
-     A                                      mployés'
-     A                                      COLOR(WHT)
-     A            WLICSR        10A  H
-     A            WZOCSR        10A  H
-     A            WPRCSR         4S 0H
-     A            WLIGN          3S 0H
-     A            WCOLN          3S 0H
-     A          R FORB1
-     A                                      CF03
-     A                                      CF05
-     A                                      CF06
-     A                                      CF12
-     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
-     A                                      OVERLAY
-     A                                      PUTOVR
-     A                                      CSRLOC(WLIGN  WCOLN)
-     A                                      CHANGE(91)
-     A                                 23  3'F3=Exit  F5=Réafficher  F6=Cr-
-     A                                      éer      F12=Annuler'
-     A                                      COLOR(BLU)
-     A            WLICSR        10A  H
-     A            WZOCSR        10A  H
-     A            WPRCSR         4S 0H
-     A            WLIGN          3S 0H
-     A            WCOLN          3S 0H
-     A          R WSFMSG                    SFL
-     A                                      SFLMSGRCD(24)
-     A            WMGKEY                    SFLMSGKEY
-     A            WPGMQ                     SFLPGMQ
-     A          R WSFCTL                    SFLCTL(WSFMSG)
-     A                                      SFLSIZ(2)
-     A                                      SFLPAG(1)
-     A                                      OVERLAY
-     A  10                                  SFLINZ
-     A                                      SFLDSP
-     A                                      SFLDSPCTL
-     A  09                                  SFLEND
-     A            WPGMQ                     SFLPGMQ
+000100180502     A                                      DSPSIZ(24 80 *DS3)
+000200180502     A                                      MSGLOC(24)
+000300180502     A                                      PRINT
+000400180502     A                                      HELP
+000500180502     A                                      HLPPNLGRP('XX' XX)
+000600180502     A                                      HLPTITLE('Liste fonction')
+000700180502     A                                      ALTHELP(CA01)
+000800180502     A          R SFL01                     SFL
+000900180502     A  08                                  SFLNXTCHG
+001000180502     A            ZOPT           1   B  7  3
+001100180502     A  12                                  DSPATR(RI PC)
+001200180502     A                                      COLOR(WHT)
+001300180502     A            ZCOD           3   O  7  6
+001400180502     A            ZLIB          30   O  7 11
+001500180502     A            ZDAC           8  0O  7 42
+001600180502     A                                      EDTWRD('  /  /    ')
+001700180502     A            ZDAM           8  0O  7 53
+001800180502     A                                      EDTWRD('  /  /    ')
+001900180502     A            ZNBEM          6  0O  7 67
+002000180502     A                                      EDTCDE(Z)
+002100180502     A            HNREC         10  0H
+002200180502     A          R FORE1                     SFLCTL(SFL01)
+002300180502     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+002400180502     A                                      OVERLAY
+002500180502     A                                      PUTOVR
+002600180502     A N07                                  ROLLUP(02)
+002700180502     A                                      CSRLOC(WLIGN  WCOLN)
+002800180502     A                                      CHANGE(91)
+002900180502     A N04                                  ERASE(SFL01)
+003000180502     A  04                                  SFLDSP
+003100180502     A  05                                  SFLDSPCTL
+003200180502     A  06                                  SFLCLR
+003300180502     A  07                                  SFLEND
+003400180502     A                                      SFLSIZ(16)
+003500180502     A                                      SFLPAG(15)
+003600180502     A                                      SFLCSRRRN(&WRACSR)
+003700180502     A            WRACSR         5S 0H
+003800180502     A            WRAN01         4S 0H      SFLRCDNBR
+003900180502     A            ZPGM          10   O  1  2
+004000180502     A                                      OVRDTA
+004100180502     A                                  1 31'Liste des fonctions'
+004200180502     A                                      COLOR(WHT)
+004300180502     A            ZUSER         10   O  1 70
+004400180502     A                                      OVRDTA
+004500180502     A            ZDATE          8  0O  2  2
+004600180502     A                                      EDTWRD('  /  /    ')
+004700180502     A                                      OVRDTA
+004800180502     A            ZHEUR          6  0O  2 14
+004900180502     A                                      EDTWRD('  :  :  ')
+005000180502     A                                      OVRDTA
+005100180502     A            ZJOB          10   O  2 70
+005200180502     A                                      OVRDTA
+005300180502     A                                  4  3'Indiquez vos options, puis
+005400180502     A                                       sur ENTREE.'
+005500180502     A                                      COLOR(BLU)
+005600180502     A                                  5  3'2=Modifier      3=Copier  -
+005700180502     A                                      4=Supprimer    5=Afficher'
+005800180502     A                                      COLOR(BLU)
+005900180502     A                                  6  2'Opt Code Libellé        -
+006000180502     A                                      Création   Modification  Nb e-
+006100180502     A                                      mployés'
+006200180502     A                                      COLOR(WHT)
+006300180502     A            WLICSR        10A  H
+006400180502     A            WZOCSR        10A  H
+006500180502     A            WPRCSR         4S 0H
+006600180502     A            WLIGN          3S 0H
+006700180502     A            WCOLN          3S 0H
+006800180502     A          R FORB1
+006900180502     A                                      CF03
+007000180502     A                                      CF05
+007100180502     A                                      CF06
+007200180502     A                                      CF12
+007300180502     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+007400180502     A                                      OVERLAY
+007500180502     A                                      PUTOVR
+007600180502     A                                      CSRLOC(WLIGN  WCOLN)
+007700180502     A                                      CHANGE(91)
+007800180502     A                                 23  3'F3=Exit  F5=Réafficher  F6=Cr-
+007900180502     A                                      éer      F12=Annuler'
+008000180502     A                                      COLOR(BLU)
+008100180502     A            WLICSR        10A  H
+008200180502     A            WZOCSR        10A  H
+008300180502     A            WPRCSR         4S 0H
+008400180502     A            WLIGN          3S 0H
+008500180502     A            WCOLN          3S 0H
+008600180502     A          R WSFMSG                    SFL
+008700180502     A                                      SFLMSGRCD(24)
+008800180502     A            WMGKEY                    SFLMSGKEY
+008900180502     A            WPGMQ                     SFLPGMQ
+009000180502     A          R WSFCTL                    SFLCTL(WSFMSG)
+009100180502     A                                      SFLSIZ(2)
+009200180502     A                                      SFLPAG(1)
+009300180502     A                                      OVERLAY
+009400180502     A  10                                  SFLINZ
+009500180502     A                                      SFLDSP
+009600180502     A                                      SFLDSPCTL
+009700180502     A  09                                  SFLEND
+009800180502     A            WPGMQ                     SFLPGMQ
