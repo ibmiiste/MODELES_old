@@ -1,0 +1,210 @@
+0001.00      A                                      DSPSIZ(24 80 *DS3)
+0002.00      A                                      MSGLOC(24)
+0003.00      A                                      PRINT
+0004.00      A                                      HELP
+0005.00      A                                      HLPPNLGRP(’PGMF02’ PGMF02)
+0006.00      A                                      HLPTITLE(’Détail personnel’
+0007.00      A                                      ALTHELP(CA01)
+0008.00      A          R FORE1
+0009.00      A                                      CF03
+0010.00      A                                      CF04
+0011.00      A                                      CF12
+0012.00      A                                      CF15
+0013.00      A                                      RTNCSRLOC(&WFMCUR &WZOCUR &WPRCUR)
+0014.00      A                                      PUTOVR
+0015.00      A                                      CSRLOC(WNMLGN WNMCOL)
+0016.00      A                                      CHANGE(91)
+0017.00      A                                      HLPCLR
+0018.00      A          H                           HLPARA(5 19 5 29)
+0019.00      A                                      HLPPNLGRP(’ZMATR’ PGMF02)
+0020.00      A          H                           HLPARA(5 44 5 47)
+0021.00      A                                      HLPPNLGRP(’ZFCOD’ PGMF02)
+0022.00      A          H                           HLPARA(6 19 6 54)
+0023.00      A                                      HLPPNLGRP(’ZNOM’ PGMF02)
+0024.00      A          H                           HLPARA(7 19 7 54)
+0025.00      A                                      HLPPNLGRP(’ZPR1’ PGMF02)
+0026.00      A          H                           HLPARA(8 19 8 54)
+0027.00      A                                      HLPPNLGRP(’ZPR2’ PGMF02)
+0028.00      A          H                           HLPARA(9 19 9 54)
+0029.00      A                                      HLPPNLGRP(’ZAD1’ PGMF02)
+0030.00      A          H                           HLPARA(10 19 10 54)
+0031.00      A                                      HLPPNLGRP(’ZAD2’ PGMF02)
+0032.00      A          H                           HLPARA(11 19 11 54)
+0033.00      A                                      HLPPNLGRP(’ZAD3’ PGMF02)
+0034.00      A          H                           HLPARA(12 19 12 29)
+0035.00      A                                      HLPPNLGRP(’ZCPO’ PGMF02)
+0036.00      A          H                           HLPARA(13 19 13 54)
+0037.00      A                                      HLPPNLGRP(’ZVIL’ PGMF02)
+0038.00      A          H                           HLPARA(14 19 14 39)
+0039.00      A                                      HLPPNLGRP(’ZTEL’ PGMF02)
+0040.00      A          H                           HLPARA(14 52 14 72)
+0041.00      A                                      HLPPNLGRP(’ZPOR’ PGMF02)
+0042.00      A          H                           HLPARA(16 19 16 29)
+0043.00      A                                      HLPPNLGRP(’ZDAE’ PGMF02)
+0044.00      A          H                           HLPARA(16 48 16 58)
+0045.00      A                                      HLPPNLGRP(’ZDAS’ PGMF02)
+0046.00      A            ZPGM          10   O  1  2
+0047.00      A                                      OVRDTA
+0048.00      A                                  1 31’Détail fiche personnel’
+0049.00      A                                      COLOR(WHT)
+0050.00      A            ZUSER         10   O  1 70
+0051.00      A                                      OVRDTA
+0052.00      A            ZDATE          8  0O  2  2
+0053.00      A                                      EDTWRD(’  /  /    ’)
+0054.00      A                                      OVRDTA
+0055.00      A            ZHEUR          6  0O  2 14
+0056.00      A                                      EDTWRD(’  :  :  ’)
+0057.00      A                                      OVRDTA
+0058.00      A            ZMODE         30   O  2 27
+0059.00      A                                      COLOR(WHT)
+0060.00      A                                      OVRDTA
+0061.00      A            ZJOB          10   O  2 70
+0062.00      A                                      OVRDTA
+0063.00      A                                  5  7’Matricule :’
+0064.00      A            ZMATR         10Y 0   5 19
+0065.00      A                                      EDTCDE(Z)
+0066.00      A                                      COLOR(WHT)
+0067.00      A                                      OVRDTA
+0068.00      A                                  5 33’Fonction :’
+0069.00      A            ZFCOD          3   B  5 44
+0070.00      A N14                                  DSPATR(UL)
+0071.00      A  14                                  DSPATR(PR)
+0072.00      A                                      COLOR(WHT)
+0073.00      A                                      OVRDTA
+0074.00      A                                      OVRATR
+0075.00      A            ZFLIB         20   O  5 49
+0076.00      A                                      OVRDTA
+0077.00      A                                  6 13’Nom :’
+0078.00      A            ZNOM          35   B  6 19
+0079.00      A N15                                  DSPATR(UL)
+0080.00      A  15                                  DSPATR(PR)
+0081.00      A                                      CHECK(LC)
+0082.00      A                                      COLOR(WHT)
+0083.00      A                                      OVRDTA
+0084.00      A                                      OVRATR
+0085.00      A                                  7 10’Prénom :’
+0086.00      A            ZPR1          35   B  7 19
+0087.00      A N16                                  DSPATR(UL)
+0088.00      A  16                                  DSPATR(PR)
+0089.00      A                                      CHECK(LC)
+0090.00      A                                      COLOR(WHT)
+0091.00      A                                      OVRDTA
+0092.00      A                                      OVRATR
+0093.00      A            ZPR2          35   B  8 19
+0094.00      A N16                                  DSPATR(UL)
+0095.00      A  16                                  DSPATR(PR)
+0096.00      A                                      CHECK(LC)
+0097.00      A                                      COLOR(WHT)
+0098.00      A                                      OVRDTA
+0099.00      A                                      OVRATR
+0100.00      A                                  9  9’Adresse :’
+0101.00      A            ZAD1          35   B  9 19
+0102.00      A N16                                  DSPATR(UL)
+0103.00      A  16                                  DSPATR(PR)
+0104.00      A                                      CHECK(LC)
+0105.00      A                                      COLOR(WHT)
+0106.00      A                                      OVRDTA
+0107.00      A                                      OVRATR
+0108.00      A            ZAD2          35   B 10 19
+0109.00      A N16                                  DSPATR(UL)
+0110.00      A  16                                  DSPATR(PR)
+0111.00      A                                      CHECK(LC)
+0112.00      A                                      COLOR(WHT)
+0113.00      A                                      OVRDTA
+0114.00      A                                      OVRATR
+0115.00      A            ZAD3          35   B 11 19
+0116.00      A N16                                  DSPATR(UL)
+0117.00      A  16                                  DSPATR(PR)
+0118.00      A                                      CHECK(LC)
+0119.00      A                                      COLOR(WHT)
+0120.00      A                                      OVRDTA
+0121.00      A                                      OVRATR
+0122.00      A                                 12  5’Code postal :’
+0123.00      A            ZCPO          10   B 12 19
+0124.00      A N16                                  DSPATR(UL)
+0125.00      A  16                                  DSPATR(PR)
+0126.00      A                                      COLOR(WHT)
+0127.00      A                                      OVRDTA
+0128.00      A                                      OVRATR
+0129.00      A                                 13 11’Ville :’
+0130.00      A            ZVIL          35   B 13 19
+0131.00      A N16                                  DSPATR(UL)
+0132.00      A  16                                  DSPATR(PR)
+0133.00      A                                      CHECK(LC)
+0134.00      A                                      COLOR(WHT)
+0135.00      A                                      OVRDTA
+0136.00      A                                      OVRATR
+0137.00      A                                 14  7’Téléphone :’
+0138.00      A            ZTEL          20   B 14 19
+0139.00      A N16                                  DSPATR(UL)
+0140.00      A  16                                  DSPATR(PR)
+0141.00      A                                      COLOR(WHT)
+0142.00      A                                      OVRDTA
+0143.00      A                                      OVRATR
+0144.00      A                                 14 41’Portable :’
+0145.00      A            ZPOR          20   B 14 52
+0146.00      A N16                                  DSPATR(UL)
+0147.00      A  16                                  DSPATR(PR)
+0148.00      A                                      COLOR(WHT)
+0149.00      A                                      OVRDTA
+0150.00      A                                      OVRATR
+0151.00      A                                 16  3’Date d’’entrée :’
+0152.00      A            ZDAE           8Y 0B 16 19
+0153.00      A N17                                  DSPATR(UL)
+0154.00      A  17                                  DSPATR(PR)
+0155.00      A                                      EDTWRD(’  /  /    ’)
+0156.00      A                                      COLOR(WHT)
+0157.00      A                                      OVRDTA
+0158.00      A                                      OVRATR
+0159.00      A                                 16 31’Date de départ :’
+0160.00      A            ZDAS           8Y 0B 16 48
+0161.00      A N18                                  DSPATR(UL)
+0162.00      A  18                                  DSPATR(PR)
+0163.00      A                                      EDTWRD(’  /  /    ’)
+0164.00      A                                      COLOR(WHT)
+0165.00      A                                      OVRDTA
+0166.00      A                                      OVRATR
+0167.00      A                                 18 13’Crée le :’
+0168.00      A            ZDAC           8  0O 18 25
+0169.00      A                                      EDTWRD(’  /  /    ’)
+0170.00      A                                      COLOR(GRN)
+0171.00      A                                      OVRDTA
+0172.00      A                                 18 37’à :’
+0173.00      A            ZHEC           6  0O 18 41
+0174.00      A                                      EDTWRD(’  :  :  ’)
+0175.00      A                                      OVRDTA
+0176.00      A                                 18 51’par :’
+0177.00      A            ZUSC          10   O 18 57
+0178.00      A                                      OVRDTA
+0179.00      A                                 19 10’Modifié le :’
+0180.00      A            ZDAM           8  0O 19 25
+0181.00      A                                      EDTWRD(’  /  /    ’)
+0182.00      A                                      COLOR(GRN)
+0183.00      A                                      OVRDTA
+0184.00      A                                 19 37’à :’
+0185.00      A            ZHEM           6  0O 19 41
+0186.00      A                                      EDTWRD(’  :  :  ’)
+0187.00      A                                      OVRDTA
+0188.00      A                                 19 51’par :’
+0189.00      A            ZUSM          10   O 19 57
+0190.00      A                                      OVRDTA
+0191.00      A                                 23  3’F3=Exit   F4=Invite  F12=Annuler’
+0192.00      A                                      COLOR(BLU)
+0193.00      A            WFMCUR        10A  H
+0194.00      A            WZOCUR        10A  H
+0195.00      A            WPRCUR         4S 0H
+0196.00      A            WNMLGN         3S 0H
+0197.00      A            WNMCOL         3S 0H
+0198.00      A          R WMGSFL                    SFL
+0199.00      A                                      SFLMSGRCD(24)
+0200.00      A            WMGKEY                    SFLMSGKEY
+0201.00      A            WPGMQ                     SFLPGMQ
+0202.00      A          R WMGCTL                    SFLCTL(WMGSFL)
+0203.00      A                                      SFLSIZ(2)
+0204.00      A                                      SFLPAG(1)
+0205.00      A                                      OVERLAY
+0206.00      A  10                                  SFLINZ
+0207.00      A                                      SFLDSP
+0208.00      A                                      SFLDSPCTL
+0209.00      A  09                                  SFLEND
+0210.00      A            WPGMQ                     SFLPGMQ
