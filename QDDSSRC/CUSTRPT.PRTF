@@ -1,0 +1,21 @@
+000100180502     A*================================================================*
+000200180502     A* FILE NAME     : CUSTRPT
+000300180502     A* RELATED PGMS  : ARRSRPT
+000400180502     A* DESCRIPTIONS  : THIS IS THE PRINTER FILE CUSTRPT.  IT HAS
+000500180502     A*                 ONE RECORD FORMAT CALLED ARREARS.
+000600180502     A*================================================================*
+000700180502     A          R ARREARS
+000800180502     A                                  2  6
+000900180502     A                                      'Customer number:'
+001000180502     A            RPTNUM         5  0   2 23
+001100180502     A                                      TEXT('CUSTOMER NUMBER')
+001200180502     A            RPTNAME      100A     3 10
+001300180502     A                                      TEXT('CUSTOMER NAME')
+001400180502     A            RPTADDR      100A     4 10
+001500180502     A                                      TEXT('CUSTOMER ADDRESS')
+001600180502     A                                  5 10'Amount outstanding:'
+001700180502     A            AMOUNT        10  2   5 35EDTWRD('       $0.  ')
+001800180502     A                                      TEXT('AMOUNT OUTSTANDING')
+001900180502     A                                  5 50'Due date:'
+002000180502     A            DUEDATE       10      5 60
+002100180502     A                                      TEXT('DATE DUE')

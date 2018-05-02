@@ -1,0 +1,101 @@
+000100180502     A*****************************************************************
+000200180502     A*     FILE NAME:  MNTMENU                                       *
+000300180502     A*  RELATED PGMS:  CUSMNT                                        *
+000400180502     A* RELATED FILES:  CUSMSTL1   (LOGICAL FILE)                     *
+000500180502     A*   DESCRIPTION:  THIS IS THE DISPLAY FILE MNTMENU. IT HAS 3    *
+000600180502     A*                 RECORD FORMATS.                               *
+000700180502     A*****************************************************************
+000800180502     A                                      REF(CUSMSTL1)
+000900180502     A                                      CHGINPDFT(CS)
+001000180502     A                                      PRINT(QSYSPRT)
+001100180502     A                                      INDARA
+001200180502     A          R HDRSCN
+001300180502     A                                      TEXT('PROMPT FOR CUST NUMBER')
+001400180502     A                                      CA03(03 'END MAINTENANCE')
+001500180502     A                                      CF05(05 'ADD MODE')
+001600180502     A                                      CF06(06 'UPDATE MODE')
+001700180502     A                                      CF07(07 'DELETE MODE')
+001800180502     A                                      CF08(08 'DISPLAY MODE')
+001900180502     A            MODE           8A  O  1  4DSPATR(HI)
+002000180502     A                                  1 13'MODE'
+002100180502     A                                      DSPATR(HI)
+002200180502     A                                  2  4TIME
+002300180502     A                                      DSPATR(HI)
+002400180502     A                                  2 28'CUSTOMER FILE MAINTENANCE'
+002500180502     A                                      DSPATR(HI RI)
+002600180502     A                                  2 70DATE
+002700180502     A                                      EDTCDE(Y)
+002800180502     A                                      DSPATR(HI)
+002900180502     A            CUST      R     Y  I 10 25DSPATR(CS)
+003000180502     A                                      CHECK(RZ)
+003100180502     A  51                                  ERRMSG('CUSTOMER ALREADY ON +
+003200180502     A                                      FILE' 51)
+003300180502     A  52                                  ERRMSG('CUSTOMER NOT ON FILE' +
+003400180502     A                                      52)
+003500180502     A                                 10 33'<--Enter Customer Number'
+003600180502     A                                      DSPATR(HI)
+003700180502     A                                 23  4'F3 End Job'
+003800180502     A                                 23 21'F5 Add'
+003900180502     A                                 23 34'F6 Update'
+004000180502     A                                 23 50'F7 Delete'
+004100180502     A                                 23 66'F8 Display'
+004200180502     A          R CSTINQ
+004300180502     A                                      TEXT('DISPLAY CUST INFO')
+004400180502     A                                      CA12(12 'PREVIOUS SCREEN')
+004500180502     A            MODE           8A  O  1  4DSPATR(HI)
+004600180502     A                                  1 13'MODE'
+004700180502     A                                      DSPATR(HI)
+004800180502     A                                  2  4TIME
+004900180502     A                                      DSPATR(HI)
+005000180502     A                                  2 28'CUSTOMER FILE MAINTENANCE'
+005100180502     A                                      DSPATR(HI)
+005200180502     A                                      DSPATR(RI)
+005300180502     A                                  2 70DATE
+005400180502     A                                      EDTCDE(Y)
+005500180502     A                                      DSPATR(HI)
+005600180502     A                                  4 14'Customer:'
+005700180502     A                                      DSPATR(HI)
+005800180502     A                                      DSPATR(UL)
+005900180502     A            CUST      R        O  4 25DSPATR(HI)
+006000180502     A            NAME      R        B  6 25DSPATR(CS)
+006100180502     A  04                                  DSPATR(PR)
+006200180502     A            ADDR1     R        B  7 25DSPATR(CS)
+006300180502     A  04                                  DSPATR(PR)
+006400180502     A            ADDR2     R        B  8 25DSPATR(CS)
+006500180502     A  04                                  DSPATR(PR)
+006600180502     A            CITY      R        B  9 25DSPATR(CS)
+006700180502     A  04                                  DSPATR(PR)
+006800180502     A            STATE     R        B 10 25DSPATR(CS)
+006900180502     A  04                                  DSPATR(PR)
+007000180502     A            ZIP       R        B 10 40DSPATR(CS)
+007100180502     A                                      EDTCDE(Z)
+007200180502     A  04                                  DSPATR(PR)
+007300180502     A                                 23  2'F12 Cancel'
+007400180502     A            MODE1          8   O 23 13
+007500180502     A          R CSTBLD                    TEXT('ADD CUST RECORD')
+007600180502     A                                      CA12(12 'PREVIOUS SCREEN')
+007700180502     A            MODE           8   O  1  4DSPATR(HI)
+007800180502     A                                  1 13'MODE'     DSPATR(HI)
+007900180502     A                                  2  4TIME
+008000180502     A                                      DSPATR(HI)
+008100180502     A                                  2 28'CUSTOMER FILE MAINTENANCE'
+008200180502     A                                      DSPATR(HI RI)
+008300180502     A                                  2 70DATE
+008400180502     A                                      EDTCDE(Y)
+008500180502     A                                      DSPATR(HI)
+008600180502     A                                  4 14'Customer:' DSPATR(HI UL)
+008700180502     A            CUST      R        O  4 25DSPATR(HI)
+008800180502     A                                  6 20'Name'     DSPATR(HI)
+008900180502     A            NAME      R        I  6 25
+009000180502     A                                  7 17'Address'  DSPATR(HI)
+009100180502     A            ADDR1     R        I  7 25
+009200180502     A                                  8 17'Address'  DSPATR(HI)
+009300180502     A            ADDR2     R        I  8 25
+009400180502     A                                  9 20'City'     DSPATR(HI)
+009500180502     A            CITY      R        I  9 25
+009600180502     A                                 10 19'State'    DSPATR(HI)
+009700180502     A            STATE     R        I 10 25
+009800180502     A                                 10 36'Zip'      DSPATR(HI)
+009900180502     A            ZIP       R     Y  I 10 40
+010000180502     A                                 23  2'F12 Cancel Addition'
+010100180502

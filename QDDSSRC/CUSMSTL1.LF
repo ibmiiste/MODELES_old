@@ -1,0 +1,18 @@
+000100180502     A*****************************************************************
+000200180502     A*     FILE NAME:  CUSMSTL1                                      *
+000300180502     A*  RELATED PGMS:  CUSMNT                                        *
+000400180502     A* RELATED FILES:  CUSMST  (PHYSICAL FILE)                       *
+000500180502     A*   DESCRIPTION:  THIS IS LOGICAL FILE CUSMSTL1.                *
+000600180502     A*                 IT CONTAINS ONE RECORD FORMAT CALLED CMLREC1. *
+000700180502     A*                 LOGICAL VIEW OF CUSTOMER MASTER FILE (CUSMST) *
+000800180502     A*                 BY CUSTOMER NUMBER (CUST)                     *
+000900180502     A*****************************************************************
+001000180502     A          R CMLREC1                   PFILE(CUSMST)
+001100180502     A            CUST
+001200180502     A            NAME
+001300180502     A            ADDR1
+001400180502     A            ADDR2
+001500180502     A            CITY
+001600180502     A            STATE
+001700180502     A            ZIP
+001800180502     A          K CUST

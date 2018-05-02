@@ -1,0 +1,17 @@
+000100180502     A*****************************************************************
+000200180502     A* FILE NAME: CUSMST                                             *
+000300180502     A* RELATED PGMS: CUSMNT, SCHZIP, SCHNAM                          *
+000400180502     A* RELATED FILES: CUSMSTL1, CUSMSTL2, CUSMSTL3 (LOGICAL FILES)   *
+000500180502     A* DESCRIPTION: THIS IS THE PHYSICAL FILE CUSMST. IT HAS         *
+000600180502     A* ONE RECORD FORMAT CALLED CUSREC.                              *
+000700180502     A*****************************************************************
+000800180502     A* CUSTOMER MASTER FILE -- CUSMST
+000900180502     A          R CUSREC
+001000180502     A            CUST           5          TEXT('CUSTOMER NUMBER')
+001100180502     A            NAME          20          TEXT('CUSTOMER NAME')
+001200180502     A            ADDR1         20          TEXT('CUSTOMER ADDRESS')
+001300180502     A            ADDR2         20          TEXT('CUSTOMER ADDRESS')
+001400180502     A            CITY          20          TEXT('CUSTOMER CITY')
+001500180502     A            STATE          2          TEXT('CUSTOMER STATE')
+001600180502     A            ZIP            5  0       TEXT('CUSTOMER ZIP CODE')
+001700180502     A            ARBAL         10  2       TEXT('ACCOUNTS RECEIVABLE BALANCE')

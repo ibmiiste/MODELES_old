@@ -1,0 +1,14 @@
+000100180502     A*****************************************************************
+000200180502     A* DESCRIPTION:  This is the DDS for the physical file EMPMST.   *
+000300180502     A*               It contains one record format called EMPREC.    *
+000400180502     A*               This file contains one record for each employee *
+000500180502     A*               of the company.                                 *
+000600180502     A*****************************************************************
+000700180502     A*
+000800180502     A          R EMPREC
+000900180502     A            ENUM           5  0       TEXT('EMPLOYEE NUMBER')
+001000180502     A            ENAME         20          TEXT('EMPLOYEE NAME')
+001100180502     A            ETYPE          1          TEXT('EMPLOYEE TYPE')
+001200180502     A            EDEPT          3  0       TEXT('EMPLOYEE DEPARTMENT')
+001300180502     A            ENHRS          3  1       TEXT('EMPLOYEE NORMAL WEEK HOURS')
+001400180502     A          K ENUM
