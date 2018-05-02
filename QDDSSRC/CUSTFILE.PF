@@ -1,0 +1,17 @@
+     A*================================================================*
+     A* FILE NAME     : CUSTFILE
+     A* RELATED PGMS  : ARRSRPT
+     A* DESCRIPTIONS  : THIS IS THE PHYSICAL FILE CUSTFILE.  IT HAS
+     A*                 ONE RECORD FORMAT CALLED CUSTREC.
+     A*================================================================*
+     A* CUSTOMER MASTER FILE -- CUSTFILE
+     A          R CUSTREC
+     A            CUSTNUM        5  0       TEXT('CUSTOMER NUMBER')
+     A            CUSTNAME      20          TEXT('CUSTOMER NAME')
+     A            STREETNUM      5  0       TEXT('CUSTOMER ADDRESS')
+     A            STREETNAME    20          TEXT('CUSTOMER ADDRESS')
+     A            CITY          20          TEXT('CUSTOMER CITY')
+     A            STATE          2          TEXT('CUSTOMER STATE')
+     A            ZIP            5  0       TEXT('CUSTOMER ZIP CODE')
+     A            AMOUNTC       15          TEXT('AMOUNT OUTSTANDING')
+     A            DUEDATE       10          TEXT('DATE DUE')

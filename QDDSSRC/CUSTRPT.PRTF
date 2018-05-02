@@ -1,0 +1,21 @@
+     A*================================================================*
+     A* FILE NAME     : CUSTRPT
+     A* RELATED PGMS  : ARRSRPT
+     A* DESCRIPTIONS  : THIS IS THE PRINTER FILE CUSTRPT.  IT HAS
+     A*                 ONE RECORD FORMAT CALLED ARREARS.
+     A*================================================================*
+     A          R ARREARS
+     A                                  2  6
+     A                                      'Customer number:'
+     A            RPTNUM         5  0   2 23
+     A                                      TEXT('CUSTOMER NUMBER')
+     A            RPTNAME      100A     3 10
+     A                                      TEXT('CUSTOMER NAME')
+     A            RPTADDR      100A     4 10
+     A                                      TEXT('CUSTOMER ADDRESS')
+     A                                  5 10'Amount outstanding:'
+     A            AMOUNT        10  2   5 35EDTWRD('       $0.  ')
+     A                                      TEXT('AMOUNT OUTSTANDING')
+     A                                  5 50'Due date:'
+     A            DUEDATE       10      5 60
+     A                                      TEXT('DATE DUE')
