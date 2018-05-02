@@ -1,0 +1,5 @@
+     A          R EMP_REC
+     A            EMP_NUMBER     5          TEXT(’EMPLOYEE NUMBER’)
+     A            EMP_NAME      16          TEXT(’EXPLOYEE NAME’)
+     A            EMP_RATE       5  2       TEXT(’EXPLOYEE RATE’)
+     A          K EMP_NUMBER

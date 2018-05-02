@@ -1,0 +1,4 @@
+     A          R TRN_REC
+     A            TRN_NUMBER     5          TEXT(’EMPLOYEE NUMBER’)
+     A            TRN_HOURS      4  1       TEXT(’HOURS WORKED’)
+     A            TRN_BONUS      6  2       TEXT(’BONUS’)
