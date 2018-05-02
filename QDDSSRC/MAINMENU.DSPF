@@ -1,0 +1,29 @@
+     A*****************************************************************
+     A* FILE NAME: MAINMENU                                           *
+     A* RELATED PGMS: CUSMAIN                                         *
+     A* DESCRIPTION: THIS IS THE DISPLAY FILE MAINMENU. IT HAS 1      *
+     A* RECORD FORMAT CALLED HDRSCN.                                  *
+     A*****************************************************************
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CHGINPDFT(CS)
+     A                                      PRINT(QSYSPRT)
+     A                                      INDARA
+     A          R                           HDRSCN
+     A                                      CA03(03 'END OF INQUIRY')
+     A                                      CA05(05 'MAINTENANCE MODE')
+     A                                      CA06(06 'SEARCH BY ZIP MODE')
+     A                                      CA07(07 'SEARCH BY NAME MODE')
+     A                                  2  4TIME
+     A                                      DSPATR(HI)
+     A                                  2 28'CUSTOMER MAIN INQUIRY'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(RI)
+     A                                  2 70DATE
+     A                                      EDTCDE(Y)
+     A                                      DSPATR(HI)
+     A                                  6  5'Press one of the following'
+     A                                  6 32'PF keys.'
+     A                                  8 22'F3 End Job'
+     A                                  9 22'F5 Maintain Customer File'
+     A                                 10 22'F6 Search Customer by Zip Code'
+     A                                 11 22'F7 Search Customer by Name'
