@@ -1,0 +1,91 @@
+0001.00      A                                      DSPSIZ(24 80 *DS3)
+0002.00      A                                      MSGLOC(24)
+0003.00      A                                      PRINT
+0004.00      A                                      HELP
+0005.00      A                                      HLPPNLGRP(’XX’ XX)
+0006.00      A                                      HLPTITLE(’Détail fonction’)
+0007.00      A                                      ALTHELP(CA01)
+0008.00      A          R FORE1
+0009.00      A                                      CF03
+0010.00      A                                      CF12
+0011.00      A                                      CF15
+0012.00      A                                      RTNCSRLOC(&WFMCUR &WZOCUR &
+0013.00      A                                      PUTOVR
+0014.00      A                                      CSRLOC(WNMLGN WNMCOL)
+0015.00      A                                      CHANGE(91)
+0016.00      A            ZPGM          10   O  1  2
+0017.00      A                                      OVRDTA
+0018.00      A                                  1 31’Détail fonction’
+0019.00      A                                      COLOR(WHT)
+0020.00      A            ZUSER         10   O  1 70
+0021.00      A                                      OVRDTA
+0022.00      A            ZDATE          8  0O  2  2
+0023.00      A                                      EDTWRD(’  /  /    ’)
+0024.00      A                                      OVRDTA
+0025.00      A            ZHEUR          6  0O  2 14
+0026.00      A                                      EDTWRD(’  :  :  ’)
+0027.00      A                                      OVRDTA
+0028.00      A            ZMODE         30   O  2 27
+0029.00      A                                      COLOR(WHT)
+0030.00      A                                      OVRDTA
+0031.00      A            ZJOB          10   O  2 70
+0032.00      A                                      OVRDTA
+0033.00      A                                  6 15’Fonction :’
+0034.00      A            ZFCOD          3   B  6 27
+0035.00      A  12                                  DSPATR(UL)
+0036.00      A N12                                  DSPATR(PR)
+0037.00      A                                      COLOR(WHT)
+0038.00      A                                      OVRDTA
+0039.00      A                                      OVRATR
+0040.00      A                                  7 16’Libellé :’
+0041.00      A            ZFLIB         35   B  7 27
+0042.00      A  13                                  DSPATR(UL)
+0043.00      A N13                                  DSPATR(PR)
+0044.00      A                                      CHECK(LC)
+0045.00      A                                      COLOR(WHT)
+0046.00      A                                      OVRDTA
+0047.00      A                                      OVRATR
+0048.00      A                                 18 13’Crée le :’
+0049.00      A            ZDAC           8  0O 18 25
+0050.00      A                                      EDTWRD(’  /  /    ’)
+0051.00      A                                      COLOR(GRN)
+0052.00      A                                      OVRDTA
+0053.00      A                                 18 37’à :’
+0054.00      A            ZHEC           6  0O 18 41
+0055.00      A                                      EDTWRD(’  :  :  ’)
+0056.00      A                                      OVRDTA
+0057.00      A                                 18 51’par :’
+0058.00      A            ZUSC          10   O 18 57
+0059.00      A                                      OVRDTA
+0060.00      A                                 19 10’Modifié le :’
+0061.00      A            ZDAM           8  0O 19 25
+0062.00      A                                      EDTWRD(’  /  /    ’)
+0063.00      A                                      COLOR(GRN)
+0064.00      A                                      OVRDTA
+0065.00      A                                 19 37’à :’
+0066.00      A            ZHEM           6  0O 19 41
+0067.00      A                                      EDTWRD(’  :  :  ’)
+0068.00      A                                      OVRDTA
+0069.00      A                                 19 51’par :’
+0070.00      A            ZUSM          10   O 19 57
+0071.00      A                                      OVRDTA
+0072.00      A                                 23  3’F3=Exit   F12=Annuler’
+0073.00      A                                      COLOR(BLU)
+0074.00      A            WFMCUR        10A  H
+0075.00      A            WZOCUR        10A  H
+0076.00      A            WPRCUR         4S 0H
+0077.00      A            WNMLGN         3S 0H
+0078.00      A            WNMCOL         3S 0H
+0079.00      A          R WMGSFL                    SFL
+0080.00      A                                      SFLMSGRCD(24)
+0081.00      A            WMGKEY                    SFLMSGKEY
+0082.00      A            WPGMQ                     SFLPGMQ
+0083.00      A          R WMGCTL                    SFLCTL(WMGSFL)
+0084.00      A                                      SFLSIZ(2)
+0085.00      A                                      SFLPAG(1)
+0086.00      A                                      OVERLAY
+0087.00      A  10                                  SFLINZ
+0088.00      A                                      SFLDSP
+0089.00      A                                      SFLDSPCTL
+0090.00      A  09                                  SFLEND
+0091.00      A            WPGMQ                     SFLPGMQ
