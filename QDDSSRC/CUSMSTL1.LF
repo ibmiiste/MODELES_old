@@ -1,0 +1,18 @@
+     A*****************************************************************
+     A*     FILE NAME:  CUSMSTL1                                      *
+     A*  RELATED PGMS:  CUSMNT                                        *
+     A* RELATED FILES:  CUSMST  (PHYSICAL FILE)                       *
+     A*   DESCRIPTION:  THIS IS LOGICAL FILE CUSMSTL1.                *
+     A*                 IT CONTAINS ONE RECORD FORMAT CALLED CMLREC1. *
+     A*                 LOGICAL VIEW OF CUSTOMER MASTER FILE (CUSMST) *
+     A*                 BY CUSTOMER NUMBER (CUST)                     *
+     A*****************************************************************
+     A          R CMLREC1                   PFILE(CUSMST)
+     A            CUST
+     A            NAME
+     A            ADDR1
+     A            ADDR2
+     A            CITY
+     A            STATE
+     A            ZIP
+     A          K CUST

@@ -1,0 +1,17 @@
+     A*****************************************************************
+     A* FILE NAME: CUSMST                                             *
+     A* RELATED PGMS: CUSMNT, SCHZIP, SCHNAM                          *
+     A* RELATED FILES: CUSMSTL1, CUSMSTL2, CUSMSTL3 (LOGICAL FILES)   *
+     A* DESCRIPTION: THIS IS THE PHYSICAL FILE CUSMST. IT HAS         *
+     A* ONE RECORD FORMAT CALLED CUSREC.                              *
+     A*****************************************************************
+     A* CUSTOMER MASTER FILE -- CUSMST
+     A          R CUSREC
+     A            CUST           5          TEXT('CUSTOMER NUMBER')
+     A            NAME          20          TEXT('CUSTOMER NAME')
+     A            ADDR1         20          TEXT('CUSTOMER ADDRESS')
+     A            ADDR2         20          TEXT('CUSTOMER ADDRESS')
+     A            CITY          20          TEXT('CUSTOMER CITY')
+     A            STATE          2          TEXT('CUSTOMER STATE')
+     A            ZIP            5  0       TEXT('CUSTOMER ZIP CODE')
+     A            ARBAL         10  2       TEXT('ACCOUNTS RECEIVABLE BALANCE')
