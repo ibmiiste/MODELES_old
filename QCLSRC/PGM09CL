@@ -1,0 +1,36 @@
+0001.00 /******************************************************************/
+0002.00 /* AFFICHAGE DES MESSAGES CC LE 15/01/2009                        */
+0003.00 /******************************************************************/
+0004.00             PGM        PARM(&PTYP &PFICM &PMGID &PMGDT)
+0005.00  /* DECLARATION DES VARIABLES                                     */
+0006.00             DCL        VAR(&PTYP) TYPE(*CHAR) LEN(1)
+0007.00             DCL        VAR(&PFICM) TYPE(*CHAR) LEN(10)
+0008.00             DCL        VAR(&PMGID) TYPE(*CHAR) LEN(7)
+0009.00             DCL        VAR(&PMGDT) TYPE(*CHAR) LEN(99)
+0010.00  /* MESSAGE TYPE 1 = DEF = INFO                                */
+0011.00             IF         COND(&PTYP = ’1’) THEN(DO)
+0012.00             SNDPGMMSG  MSGID(&PMGID) MSGF(*LIBL/&PFICM) MSGDTA(&PMGDT)
+0013.00             MONMSG     MSGID(CPF0000)
+0014.00             GOTO       CMDLBL(FINI)
+0015.00             ENDDO
+0016.00  /* MESSAGE TYPE 2   *STATUS                                   */
+0017.00             IF         COND(&PTYP = ’2’) THEN(DO)
+0018.00             SNDPGMMSG  MSGID(&PMGID) MSGF(*LIBL/&PFICM) +
+0019.00                          MSGDTA(&PMGDT) TOPGMQ(*EXT) MSGTYPE(*STATUS)
+0020.00             MONMSG     MSGID(CPF0000)
+0021.00             GOTO       CMDLBL(FINI)
+0022.00             ENDDO
+0023.00  /* NETTOYAGE VIEUX MESSAGES                                   */
+0024.00             IF         COND(&PTYP = ’3’) THEN(DO)
+0025.00             RMVMSG     PGMQ(*PRV) CLEAR(*OLD)
+0026.00             MONMSG     MSGID(CPF0000)
+0027.00             GOTO       CMDLBL(FINI)
+0028.00             ENDDO
+0029.00  /* NETTOYAGE TOTAL                                            */
+0030.00             IF         COND(&PTYP = ’4’) THEN(DO)
+0031.00             RMVMSG     PGMQ(*PRV) CLEAR(*ALL)
+0032.00             MONMSG     MSGID(CPF0000)
+0033.00             GOTO       CMDLBL(FINI)
+0034.00             ENDDO
+0035.00  /* LA FIN */
+0036.00 FINI:       ENDPGM
