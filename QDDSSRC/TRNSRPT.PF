@@ -1,0 +1,10 @@
+     A*****************************************************************
+     A* RELATED FILES:  TRNSRPT                                       *
+     A* DESCRIPTION:    This is the physical file TRNSDTA. It has     *
+     A*                 one record format called TRNSREC.             *
+     A*****************************************************************
+     A* PARTS TRANSACTION FILE -- TRNSDTA
+     A          R TRNSREC
+     A            PROD          10S 0       TEXT('Product')
+     A            QTY            5S 0       TEXT('Quantity')
+     A            DISCOUNT       2S 2       TEXT('Discount')
