@@ -1,0 +1,14 @@
+     A*****************************************************************
+     A* DESCRIPTION:  This is the DDS for the physical file EMPMST.   *
+     A*               It contains one record format called EMPREC.    *
+     A*               This file contains one record for each employee *
+     A*               of the company.                                 *
+     A*****************************************************************
+     A*
+     A          R EMPREC
+     A            ENUM           5  0       TEXT('EMPLOYEE NUMBER')
+     A            ENAME         20          TEXT('EMPLOYEE NAME')
+     A            ETYPE          1          TEXT('EMPLOYEE TYPE')
+     A            EDEPT          3  0       TEXT('EMPLOYEE DEPARTMENT')
+     A            ENHRS          3  1       TEXT('EMPLOYEE NORMAL WEEK HOURS')
+     A          K ENUM
