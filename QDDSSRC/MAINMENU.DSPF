@@ -27,3 +27,8 @@
      A                                  9 22'F5 Maintain Customer File'
      A                                 10 22'F6 Search Customer by Zip Code'
      A                                 11 22'F7 Search Customer by Name'
+     A*%%RS+<record-sequences>
+     A*%%RS+ <sequence name="Sans titre">
+     A*%%RS+  <device type="display" width="80" height="24" />
+     A*%%RS+ </sequence>
+     A*%%RS </record-sequences>
