@@ -1,0 +1,93 @@
+0001.00     A         R ENTETE
+0002.00     A                                     SKIPB(1)
+0003.00     A                                     SPACEB(1)
+0004.00     A                                    2’Programme d’’édition :’
+0005.00     A           ZPGM          10        23
+0006.00     A                                  120’Page :’
+0007.00     A           ZPAG           4  0    127
+0008.00     A                                     EDTCDE(Z)
+0009.00     A                                     SPACEA(1)
+0010.00     A                                    2’Demandé le :’
+0011.00     A           ZDATE          8  0     15
+0012.00     A                                     EDTWRD(’  /  /    ’)
+0013.00     A                                   26’par :’
+0014.00     A           ZUSR          10        32
+0015.00     A                                     SPACEA(1)
+0016.00     A           ZTITRE        30        46
+0017.00     A         R COLON
+0018.00     A                                     SPACEB(1)
+0019.00     A                                    1’Matricule’
+0020.00     A                                   12’Nom’
+0021.00     A                                   38’Prénom’
+0022.00     A                                   64’Adresse’
+0023.00     A                                   95’CP’
+0024.00     A                                  101’Ville’
+0025.00     A         R DETLIG
+0026.00     A                                     SPACEB(1)
+0027.00     A           ZMATR         10  0      1
+0028.00     A                                     EDTCDE(Z)
+0029.00     A           ZNOMC         25        12
+0030.00     A           ZPRE1C        25        38
+0031.00     A           ZADR1C        30        64
+0032.00     A           ZCPO           5        95
+0033.00     A           ZVILC         30       101
+0034.00     A         R DETGEN
+0035.00     A                                     SPACEB(1)
+0036.00     A                                    3’Matricule’
+0037.00     A           ZMATR         10  0     13
+0038.00     A                                     EDTCDE(Z)
+0039.00     A                                   27’Fonction’
+0040.00     A           ZCODF          3        36
+0041.00     A           ZLIF          35        40
+0042.00     A                                     SPACEA(1)
+0043.00     A                                    9’Nom’
+0044.00     A           ZNOM          35        13
+0045.00     A                                   49’Prénom’
+0046.00     A           ZPRE1         35        56
+0047.00     A           ZPRE2         35        92
+0048.00     A                                     SPACEA(1)
+0049.00     A                                    5’Adresse’
+0050.00     A           ZAD1          35        13
+0051.00     A           ZAD2          35        49
+0052.00     A           ZAD3          35        85
+0053.00     A                                     SPACEA(1)
+0054.00     A                                   10’CP’
+0055.00     A           ZCPO           5        13
+0056.00     A                                   19’Ville’
+0057.00     A           ZVIL          35        25
+0058.00     A                                   61’Téléphone’
+0059.00     A           ZTEL          20        71
+0060.00     A                                   92’Portable’
+0061.00     A           ZPOR          20       101
+0062.00     A                                     SPACEA(1)
+0063.00     A                                   10’Date d’’entrée’
+0064.00     A           ZDAE           8  0     26
+0065.00     A                                     EDTWRD(’  /  /    ’)
+0066.00     A                                   41’Date de départ’
+0067.00     A           ZDAS           8  0     57
+0068.00     A                                     EDTWRD(’  /  /    ’)
+0069.00     A                                     SPACEA(1)
+0070.00     A                                   14’Création le’
+0071.00     A           ZDAC           8  0     26
+0072.00     A                                     EDTWRD(’  /  /    ’)
+0073.00     A                                   37’à’
+0074.00     A           ZHEC           6  0     39
+0075.00     A                                     EDTWRD(’  :  :  ’)
+0076.00     A                                   48’par’
+0077.00     A           ZUSC          10        52
+0078.00     A                                     SPACEA(1)
+0079.00     A                                   10’Modification le’
+0080.00     A           ZDAM           8  0     26
+0081.00     A                                     EDTWRD(’  /  /    ’)
+0082.00     A                                   37’à’
+0083.00     A           ZHEM           6  0     39
+0084.00     A                                     EDTWRD(’  :  :  ’)
+0085.00     A                                   48’par’
+0086.00     A           ZUSM          10        52
+0087.00     A                                     SPACEA(1)
+0088.00     A         R FIN
+0089.00     A                                     SPACEB(1)
+0090.00     A                                    2’Nombre total de lignes :’
+0091.00     A           ZLIG          10  0     27
+0092.00     A                                     EDTCDE(Z)
+0093.00     A                                     SPACEA(1)
