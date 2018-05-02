@@ -1,0 +1,37 @@
+     A* Free Form Menu: PAYROL
+     A*
+     A                                      DSPSIZ(24 80 *DS3                  -
+     A                                             27 132 *DS4)
+     A                                      CHGINPDFT
+     A                                      INDARA
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A          R PAYROL
+     A                                      DSPMOD(*DS3)
+     A                                      LOCK
+     A                                      SLNO(01)
+     A                                      CLRL(*ALL)
+     A                                      ALWROL
+     A                                      CF03
+     A                                      HELP
+     A                                      HOME
+     A                                      HLPRTN
+     A                                  1 34'PAYROLL DEPARTMENT MENU'
+     A                                      DSPATR(HI)
+     A                                  3  2'Select one of the following:'
+     A                                      COLOR(BLU)
+     A                                  5  7'1.'
+     A                                  6  7'2.'
+     A                                  7  7'3.'
+     A* CMDPROMPT  Do not delete this DDS spec.
+     A                                019  2'Selection or command              -
+     A                                          '
+     A                                  5 11'Inquire'
+     A                                  5 19'into'
+     A                                  5 24'employee'
+     A                                  5 33'master'
+     A                                  6 11'Change'
+     A                                  6 18'employee'
+     A                                  6 27'master'
+     A                                  7 11'Add'
+     A                                  7 15'new'
+     A                                  7 19'employee'
