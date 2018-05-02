@@ -1,0 +1,94 @@
+0001.00 :PNLGRP.
+0002.00 :HELP NAME = ’PGMF02’ .Aide étendue.
+0003.00 :XH1.Ecran PGMF02.
+0004.00 :P.
+0005.00 Cet écran permet d’éditer les données d’un employé.
+0006.00 :P.
+0007.00 En mode création, le numéro de matricule sera calculé.
+0008.00 :P.
+0009.00 Les seules zones obligatoires sont le nom et la fonction.
+0010.00 La date d’entrée sera, par défaut, la date du jour de saisie.
+0011.00 :P.
+0012.00 Les touches de fonction.
+0013.00 :UL.
+0014.00 :LI. F3 et F12 pour quitter le programme.
+0015.00 :LI. F4 invite sur la fonction.
+0016.00 :LI. F15 valide la suppression d’un enregistrement.
+0017.00 :EUL.
+0018.00 :EHELP.
+0019.00 :HELP NAME = ’ZMATR’ .PGMF02.
+0020.00 :H1.Matricule.
+0021.00 :P.
+0022.00 Le numéro de matricule est calculé automatiquement lors de la création.
+0023.00 Aucune modification n’est admise.
+0024.00 :EHELP.
+0025.00 :HELP NAME = ’ZFCOD’.PGMF02.
+0026.00 :H1.Code fonction.
+0027.00 :P.
+0028.00 Ce code est obligatoire et doit correspondre à un code existant.
+0029.00 :EHELP.
+0030.00 :HELP NAME = ’ZNOM’.PGMF02.
+0031.00 :H1.Nom de l’employé.
+0032.00 :P.
+0033.00 Cette zone est obligatoire.
+0034.00 :EHELP.
+0035.00 :HELP NAME = ’ZPR1’.PGMF02.
+0036.00 :H1.Prénom.
+0037.00 :P.
+0038.00 Zone facultative. Ne saisir qu’un seul prénom.
+0039.00 :EHELP.
+0040.00 :HELP NAME = ’ZPR2’.PGMF02.
+0041.00 :H1.Autres prénoms.
+0042.00 :P.
+0043.00 Zone facultative. On peut saisir plusieurs prénoms,
+0044.00 séparés par une virgule.
+0045.00 :EHELP.
+0046.00 :HELP NAME = ’ZAD1’.PGMF02.
+0047.00 :H1.Adresse 1.
+0048.00 :P.
+0049.00 Zone obligatoire. Modification autoris
+0050.00 :EHELP.
+0051.00 :HELP NAME = ’ZAD2’.PGMF02.
+0052.00 :H1.Adresse 2.
+0053.00 :P.
+0054.00 Zone facultative.
+0055.00 :EHELP.
+0056.00 :HELP NAME = ’ZAD3’.PGMF02.
+0057.00 :H1.Adresse 3.
+0058.00 :P.
+0059.00 Zone facultative.
+0060.00 :EHELP.
+0061.00 :HELP NAME = ’ZCPO’.PGMF02.
+0062.00 :H1.Code postal.
+0063.00 :P.
+0064.00 Zone recommandée. Il n’y a pas de contrôle.
+0065.00 :EHELP.
+0066.00 :HELP NAME = ’ZVIL’.PGMF02.
+0067.00 :H1.Ville.
+0068.00 :P.
+0069.00 Zone recommandée. Il n’y a pas de contrôle.
+0070.00 :EHELP.
+0071.00 :HELP NAME = ’ZTEL’.PGMF02.
+0072.00 :H1.Téléphone.
+0073.00 :P.
+0074.00 Zone recommandée. Il n’y a pas de contrôle.
+0075.00 :EHELP.
+0076.00 :HELP NAME = ’ZPOR’.PGMF02.
+0077.00 :H1.Portable.
+0078.00 :P.
+0079.00 Zone recommandée. Il n’y a pas de contrôle.
+0080.00 Mais il vaut mieux saisir en cas d’urgence.
+0081.00 :EHELP.
+0082.00 :HELP NAME = ’ZDAE’.PGMF02.
+0083.00 :H1.Date d’entrée dans la société.
+0084.00 :P.
+0085.00 Zone obligatoire. Il n’y a pas de contrôle en cas de saisie
+0086.00 par défaut c’est la date du jour.
+0087.00 :EHELP.
+0088.00 :HELP NAME = ’ZDAS’.PGMF02.
+0089.00 :H1.Date de sortie de la société.
+0090.00 :P.
+0091.00 Zone obligatoire lors du licenciement.
+0092.00 Ou de fin de contrat.
+0093.00 :EHELP.
+0094.00 :EPNLGRP.
