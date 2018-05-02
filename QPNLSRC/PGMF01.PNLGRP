@@ -1,1 +1,47 @@
-000100180502 zs
+0001.00 :PNLGRP.
+0002.00 :HELP NAME = ’PGMF01’ .Aide étendue.
+0003.00 :XH1.Ecran PGMF01.
+0004.00 :P.
+0005.00 Cet écran donne la liste des employés.
+0006.00 :P.
+0007.00 Les options
+0008.00 :OL.
+0009.00 :LI. Le choix 2 permet de modifier la fiche employé.
+0010.00 :LI. Le choix 3 permet de créer une copie.
+0011.00 :LI. Le choix 4 permet de supprimer une fiche, opération irrémédiable.
+0012.00 :LI. Le choix 5 permet de visualiser une fiche.
+0013.00 :LI. Le choix 6 lance l’édition d’une fiche. Routage sur imprimante.
+0014.00 :LI. Le choix 99 est utilisé lorsqu’un employé quitte l’entreprise.
+0015.00 :EOL.
+0016.00 :P.
+0017.00 Les touches de fonction.
+0018.00 :UL.
+0019.00 :LI. F3 et F12 pour quitter le programme.
+0020.00 :LI. F5 fait un réaffichage de la liste.
+0021.00 :LI. F6 permet de créer une fiche employé.
+0022.00 :LI. F8 lance l’édition de toute la liste.
+0023.00 :EUL.
+0024.00 :P.
+0025.00 Sélection par nom.
+0026.00 :P.
+0027.00 Saisir un nom complet, ou une partie en terminant par *.
+0028.00 Les majuscules et minuscules sont prises en compte.
+0029.00 :EHELP.
+0030.00 :HELP NAME = ’ZSNOM’ .PGMF01.
+0031.00 :H1.Sélection.
+0032.00 :P.
+0033.00 Saisir le nom de l’employé recherché, ou le début d’un nom en terminant
+0034.00 par ’*’.
+0035.00 :XMP. Si la recherche n’a pas abouti, Sélection vide sera affiché.
+0036.00 :EXMP.
+0037.00 :EHELP.
+0038.00 :HELP NAME = ’ZOPT’ .PGMF01.
+0039.00 :H1.Options.
+0040.00 :P.
+0041.00 Saisir une option devant la ligne choisie.
+0042.00 Il est possible de saisir des options sur plusieurs lignes.
+0043.00 Elles seront exécutées successivement.
+0044.00 :P.
+0045.00 Si l’option n’existe pas, un message s’affichera.
+0046.00 :EHELP.
+0047.00 :EPNLGRP.
