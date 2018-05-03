@@ -1,0 +1,31 @@
+:PNLGRP.
+:HELP NAME = 'PGM000' .Aide étendue.
+:XH1.Ecran PGMF02.
+:P.
+Cet écran permet la saisie, l'affichage et la création
+de la fiche d'un employé.
+:P.
+Liste 1.
+:OL.
+:LI. Essai 1.
+:LI. Essai 2.
+:EOL.
+:P.
+Liste 2.
+:UL.
+:LI. Essai 1.
+:LI. Essai 2.
+:EUL.
+:EHELP.
+:HELP NAME = 'ZNOM' .PGMF02.
+:H1.Zone nom.
+:P.
+Saisir le nom de l'employé.
+:NT. Il n'y a pas d'option cachée.
+:ENT.
+:XMP. Par exemple 44.
+:EXMP.
+:HP1.Bon courage.
+:EHP1.
+:EHELP.
+:EPNLGRP.

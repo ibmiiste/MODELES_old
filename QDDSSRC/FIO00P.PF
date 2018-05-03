@@ -1,10 +1,11 @@
-000100180502     A*******************************************************
-000200180502     A* Fichier outq                                        *
-000300180502     A*                                                     *
-000400180502     A*******************************************************
-000500180502     A                                      UNIQUE
-000600180502     A          R FIOF                      PFILE(FIO00P)
-000700180502     A                                      FORMAT(FIO00P)
-000800180502     A          K FOUSR
-000900180502     A          K FODOC
-001000180502     A          K FOOUQ
+     A*******************************************************
+     A* Fichier outq                                        *
+     A*                                                     *
+     A*******************************************************
+     A          R FIOF                      TEXT('Fichier outq')
+     A            FOUSR         10          TEXT('Utilisateur')
+     A                                      COLHDG('User')
+     A            FODOC         10          TEXT('Nom document')
+     A                                      COLHDG('Document')
+     A            FOOUQ         10          TEXT('Outq')
+     A                                      COLHDG('Outq')

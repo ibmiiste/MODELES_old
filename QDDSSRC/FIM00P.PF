@@ -1,0 +1,17 @@
+     A*******************************************************
+     A* Fichier matricule                                   *
+     A*                                                     *
+     A*******************************************************
+     A          R FIMF                      TEXT('Fichier matricule')
+     A            MIMAT         10S 0       TEXT('Matricule')
+     A                                      COLHDG('Matricule')
+     A            MILIB         35          TEXT('Libellé')
+     A                                      COLHDG('Libellé')
+     A            MITSC           Z         TEXT('Time stamp création')
+     A                                      COLHDG('Création')
+     A            MIUSC         10          TEXT('User création')
+     A                                      COLHDG('User création')
+     A            MITSM           Z         TEXT('Time stamp modif')
+     A                                      COLHDG('Modif')
+     A            MIUSM         10          TEXT('User modif')
+     A                                      COLHDG('User modif')

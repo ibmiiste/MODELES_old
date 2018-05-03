@@ -1,4 +1,4 @@
-000100180502     A          R TRN_REC
-000200180502     A            TRN_NUMBER     5          TEXT(’EMPLOYEE NUMBER’)
-000300180502     A            TRN_HOURS      4  1       TEXT(’HOURS WORKED’)
-000400180502     A            TRN_BONUS      6  2       TEXT(’BONUS’)
+     A          R TRN_REC
+     A            TRN_NUMBER     5          TEXT(’EMPLOYEE NUMBER’)
+     A            TRN_HOURS      4  1       TEXT(’HOURS WORKED’)
+     A            TRN_BONUS      6  2       TEXT(’BONUS’)

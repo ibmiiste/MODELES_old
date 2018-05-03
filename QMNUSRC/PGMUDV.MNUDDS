@@ -1,0 +1,59 @@
+     A* Menu de format libre : PGMUDV
+     A*%%TS  SD  20091019  214111  CCANTIE     REL-V5R4M0  5722-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3                  -
+     A                                             27 132 *DS4)
+     A                                      CHGINPDFT
+     A                                      INDARA
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A          R PGMUDV
+     A*%%TS  SD  20091019  212657  CCANTIE     REL-V5R4M0  5722-WDS
+     A                                      DSPMOD(*DS3)
+     A                                      LOCK
+     A                                      SLNO(01)
+     A                                      CLRL(*ALL)
+     A                                      ALWROL
+     A                                      CF03
+     A                                      HELP
+     A                                      HOME
+     A                                      HLPRTN
+     A                                  1  2'PGMUDV'
+     A                                      DSPATR(HI)
+     A                                  1 34'Le menu du développeur'
+     A                                      DSPATR(HI)
+     A                                  3  2'Choisir une des options suivantes -
+     A                                      :'
+     A                                      COLOR(BLU)
+     A* CMDPROMPT  Ne pas supprimer cette spécification DDS.
+     A                                019  2'Option ou commande'
+     A                                  5 17'1.Compiler un Fichier'
+     A                                      COLOR(PNK)
+     A                                  6 17'2.Compiler un CL'
+     A                                      COLOR(PNK)
+     A                                  7 17'3.Compiler un RPG'
+     A                                      COLOR(PNK)
+     A                                  8 17'4.Voir ma log'
+     A                                  9 17'5.Voir travaux actifs'
+     A                                 10 17'6.Voir une OUTQ'
+     A                                 11 17'7.Menu utilisateur'
+     A                                      COLOR(WHT)
+     A                                 12 17'8.Menu système'
+     A                                      COLOR(WHT)
+     A                                 13 17'9.Voir mon spoule'
+     A                                 14 16'10.Vider mon spoule'
+     A          R £H0109
+     A*%%TS  SD  20091019  194342  CCANTIE     REL-V5R4M0  5722-WDS
+     A                                      TEXT('Aide pour les options 01 à 09-
+     A                                      ')
+     A                                      CLRL(*ALL)
+     A                                  1  2'HELP'
+     A                                      COLOR(BLU)
+     A                                  1 26'Aide pour les options 01 à 09'
+     A                                      DSPATR(HI)
+     A                                  3  5'Les'
+     A                                  3  9'option'
+     A                                  3 16'permettent'
+     A                                  3 27'de'
+     A                                  3 30'réaliser'
+     A                                  3 39'les'
+     A                                  3 43'fonctions'

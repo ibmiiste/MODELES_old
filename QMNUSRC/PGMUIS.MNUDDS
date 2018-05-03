@@ -1,0 +1,32 @@
+     A* Menu de format libre : PGMUIS
+     A*%%TS  SD  20090811  161728  CCANTIE     REL-V5R4M0  5722-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3                  -
+     A                                             27 132 *DS4)
+     A                                      CHGINPDFT
+     A                                      INDARA
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A          R PGMUIS
+     A*%%TS  SD  20090731  161506  CCANTIE     REL-V5R4M0  5722-WDS
+     A                                      DSPMOD(*DS3)
+     A                                      LOCK
+     A                                      SLNO(01)
+     A                                      CLRL(*ALL)
+     A                                      ALWROL
+     A                                      CF03
+     A                                      HELP
+     A                                      HOME
+     A                                      HLPRTN
+     A                                  1  2'PGMUIS'
+     A                                      DSPATR(HI)
+     A                                  1 32' Le Menu du Chef '
+     A                                      DSPATR(HI)
+     A                                  3  2'Choisir un des options -
+     A                                       suivantes :'
+     A                                      COLOR(BLU)
+     A* CMDPROMPT  Ne pas supprimer cette spécification DDS.
+     A                                019  2'Option ou commande'
+     A                                  5 17'1.Envoyer un message'
+     A                                  6 17'2.Arrêt total du système'
+     A                                  7 17'3.Créer une OUTQ'
+     A                                  8 17'4.Gérer les Devices'

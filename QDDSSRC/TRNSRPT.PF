@@ -1,10 +1,10 @@
-000100180502     A*****************************************************************
-000200180502     A* RELATED FILES:  TRNSRPT                                       *
-000300180502     A* DESCRIPTION:    This is the physical file TRNSDTA. It has     *
-000400180502     A*                 one record format called TRNSREC.             *
-000500180502     A*****************************************************************
-000600180502     A* PARTS TRANSACTION FILE -- TRNSDTA
-000700180502     A          R TRNSREC
-000800180502     A            PROD          10S 0       TEXT('Product')
-000900180502     A            QTY            5S 0       TEXT('Quantity')
-001000180502     A            DISCOUNT       2S 2       TEXT('Discount')
+     A*****************************************************************
+     A* RELATED FILES:  TRNSRPT                                       *
+     A* DESCRIPTION:    This is the physical file TRNSDTA. It has     *
+     A*                 one record format called TRNSREC.             *
+     A*****************************************************************
+     A* PARTS TRANSACTION FILE -- TRNSDTA
+     A          R TRNSREC
+     A            PROD          10S 0       TEXT('Product')
+     A            QTY            5S 0       TEXT('Quantity')
+     A            DISCOUNT       2S 2       TEXT('Discount')

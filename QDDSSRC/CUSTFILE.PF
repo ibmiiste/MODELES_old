@@ -1,17 +1,17 @@
-000100180502     A*================================================================*
-000200180502     A* FILE NAME     : CUSTFILE
-000300180502     A* RELATED PGMS  : ARRSRPT
-000400180502     A* DESCRIPTIONS  : THIS IS THE PHYSICAL FILE CUSTFILE.  IT HAS
-000500180502     A*                 ONE RECORD FORMAT CALLED CUSTREC.
-000600180502     A*================================================================*
-000700180502     A* CUSTOMER MASTER FILE -- CUSTFILE
-000800180502     A          R CUSTREC
-000900180502     A            CUSTNUM        5  0       TEXT('CUSTOMER NUMBER')
-001000180502     A            CUSTNAME      20          TEXT('CUSTOMER NAME')
-001100180502     A            STREETNUM      5  0       TEXT('CUSTOMER ADDRESS')
-001200180502     A            STREETNAME    20          TEXT('CUSTOMER ADDRESS')
-001300180502     A            CITY          20          TEXT('CUSTOMER CITY')
-001400180502     A            STATE          2          TEXT('CUSTOMER STATE')
-001500180502     A            ZIP            5  0       TEXT('CUSTOMER ZIP CODE')
-001600180502     A            AMOUNTC       15          TEXT('AMOUNT OUTSTANDING')
-001700180502     A            DUEDATE       10          TEXT('DATE DUE')
+     A*================================================================*
+     A* FILE NAME     : CUSTFILE
+     A* RELATED PGMS  : ARRSRPT
+     A* DESCRIPTIONS  : THIS IS THE PHYSICAL FILE CUSTFILE.  IT HAS
+     A*                 ONE RECORD FORMAT CALLED CUSTREC.
+     A*================================================================*
+     A* CUSTOMER MASTER FILE -- CUSTFILE
+     A          R CUSTREC
+     A            CUSTNUM        5  0       TEXT('CUSTOMER NUMBER')
+     A            CUSTNAME      20          TEXT('CUSTOMER NAME')
+     A            STREETNUM      5  0       TEXT('CUSTOMER ADDRESS')
+     A            STREETNAME    20          TEXT('CUSTOMER ADDRESS')
+     A            CITY          20          TEXT('CUSTOMER CITY')
+     A            STATE          2          TEXT('CUSTOMER STATE')
+     A            ZIP            5  0       TEXT('CUSTOMER ZIP CODE')
+     A            AMOUNTC       15          TEXT('AMOUNT OUTSTANDING')
+     A            DUEDATE       10          TEXT('DATE DUE')

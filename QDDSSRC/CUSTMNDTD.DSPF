@@ -1,52 +1,52 @@
-000100180502     /* >>PRE-COMPILER<<                                                 */
-000200180502     /*   >>CRTCMD<<  CRTDSPF FILE(&LI/&OB) SRCFILE(&SL/&SF) +           */
-000300180502     /*                 SRCMBR(&SM);                                     */
-000400180502     /*   >>IMPORTANT<<                                                  */
-000500180502     /*     >>PARM<<  OPTION(*EVENTF);                                   */
-000600180502     /*   >>END-IMPORTANT<<                                              */
-000700180502     /*   >>EXECUTE<<                                                    */
-000800180502     /* >>END-PRE-COMPILER<<                                             */
-000900180502     A                                      DSPSIZ(*DS3)
-001000180502     A                                      INDARA
-001100180502     A                                      CA03(03 'F3=Exit')
-001200180502     A                                      VLDCMDKEY(25)
-001300180502     A                                      REF(CUSTOMERS)
-001400180502     A          R CUSTSEL
-001500180502     A                                  1 31'Customer Maintenance'
-001600180502     A                                  3  2'Type values, press Enter.'
-001700180502     A                                  5  2'Customer Identifier . . .'
-001800180502     A            CUSTNO    R        B  5 29
-001900180502     A  30                                  ERRMSG('Customer already exists')
-002000180502     A  31                                  ERRMSG('Customer not found')
-002100180502     A  32                                  ERRMSG('Custumer not found')
-002200180502     A                                  7  2'Action code . . . . . . .'
-002300180502     A            ACTION         1   I  7 29VALUES('A' 'C' 'D')
-002400180502     A                                  7 41'A=Add'
-002500180502     A                                  8 41'C=Change'
-002600180502     A                                  9 41'D=Delete'
-002700180502     A                                 23  2'F3=Exit'
-002800180502     A          R CUSTMNT                   CA12
-002900180502     A  42                                  CA10
-003000180502     A  40                              1 32'Add a New customer'
-003100180502     A  41                              1 27'Change Customer Information'
-003200180502     A  42                              1 27'Delete Customer'
-003300180502     A  40                              3  2'Type values, press Enter.'
-003400180502     A  41                              3  2'Type changes, press Enter.'
-003500180502     A  42                              3  2'Press F10 to delete record, or F12-
-003600180502     A                                       to cancel'
-003700180502     A                                  5  2'Customer Identifier:'
-003800180502     A            CUSTNO    R        O  5 24
-003900180502     A                                  7  2'First Name . . . . . '
-004000180502     A            CFNAME    R        B  7 24
-004100180502     A  42                                  DSPATR(PR)
-004200180502     A                                  8  2'Last Name  . . . . . '
-004300180502     A            CLNAME    R        B  8 24
-004400180502     A  42                                  DSPATR(PR)
-004500180502     A                                 13  2'Date of Birth  . . .'
-004600180502     A            CDOB      R        B 13 24EDTCDE(Y)
-004700180502     A  42                                  DSPATR(PR)
-004800180502     A                                 14  2'Gender . . . . . . .'
-004900180502     A            CGENDER   R        B 14 24
-005000180502     A  42                                  DSPATR(PR)
-005100180502     A N42                             23  2'F3=Exit  F12=Cancel'
-005200180502     A  42                             23  2'F3=Exit  F10=Delete  F12=Cancel'
+     /* >>PRE-COMPILER<<                                                 */
+     /*   >>CRTCMD<<  CRTDSPF FILE(&LI/&OB) SRCFILE(&SL/&SF) +           */
+     /*                 SRCMBR(&SM);                                     */
+     /*   >>IMPORTANT<<                                                  */
+     /*     >>PARM<<  OPTION(*EVENTF);                                   */
+     /*   >>END-IMPORTANT<<                                              */
+     /*   >>EXECUTE<<                                                    */
+     /* >>END-PRE-COMPILER<<                                             */
+     A                                      DSPSIZ(*DS3)
+     A                                      INDARA
+     A                                      CA03(03 'F3=Exit')
+     A                                      VLDCMDKEY(25)
+     A                                      REF(CUSTOMERS)
+     A          R CUSTSEL
+     A                                  1 31'Customer Maintenance'
+     A                                  3  2'Type values, press Enter.'
+     A                                  5  2'Customer Identifier . . .'
+     A            CUSTNO    R        B  5 29
+     A  30                                  ERRMSG('Customer already exists')
+     A  31                                  ERRMSG('Customer not found')
+     A  32                                  ERRMSG('Custumer not found')
+     A                                  7  2'Action code . . . . . . .'
+     A            ACTION         1   I  7 29VALUES('A' 'C' 'D')
+     A                                  7 41'A=Add'
+     A                                  8 41'C=Change'
+     A                                  9 41'D=Delete'
+     A                                 23  2'F3=Exit'
+     A          R CUSTMNT                   CA12
+     A  42                                  CA10
+     A  40                              1 32'Add a New customer'
+     A  41                              1 27'Change Customer Information'
+     A  42                              1 27'Delete Customer'
+     A  40                              3  2'Type values, press Enter.'
+     A  41                              3  2'Type changes, press Enter.'
+     A  42                              3  2'Press F10 to delete record, or F12-
+     A                                       to cancel'
+     A                                  5  2'Customer Identifier:'
+     A            CUSTNO    R        O  5 24
+     A                                  7  2'First Name . . . . . '
+     A            CFNAME    R        B  7 24
+     A  42                                  DSPATR(PR)
+     A                                  8  2'Last Name  . . . . . '
+     A            CLNAME    R        B  8 24
+     A  42                                  DSPATR(PR)
+     A                                 13  2'Date of Birth  . . .'
+     A            CDOB      R        B 13 24EDTCDE(Y)
+     A  42                                  DSPATR(PR)
+     A                                 14  2'Gender . . . . . . .'
+     A            CGENDER   R        B 14 24
+     A  42                                  DSPATR(PR)
+     A N42                             23  2'F3=Exit  F12=Cancel'
+     A  42                             23  2'F3=Exit  F10=Delete  F12=Cancel'

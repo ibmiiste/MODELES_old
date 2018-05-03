@@ -1,0 +1,37 @@
+     A* Menu de format libre : PGMUUT
+     A*%%TS  SD  20090806  112021  CCANTIE     REL-V5R4M0  5722-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3                  -
+     A                                             27 132 *DS4)
+     A                                      CHGINPDFT
+     A                                      INDARA
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A          R PGMUUT
+     A*%%TS  SD  20090729  113432  CCANTIE     REL-V5R4M0  5722-WDS
+     A                                      DSPMOD(*DS3)
+     A                                      LOCK
+     A                                      SLNO(01)
+     A                                      CLRL(*ALL)
+     A                                      ALWROL
+     A                                      CF03
+     A                                      HELP
+     A                                      HOME
+     A                                      HLPRTN
+     A                                  1  2'PGMUUT'
+     A                                      DSPATR(HI)
+     A                                  1 34'Menu Utilisateur'
+     A                                      DSPATR(HI)
+     A                                  3  2'Choisir une des -
+     A                                      options suivantes :'
+     A                                      COLOR(BLU)
+     A* CMDPROMPT  Ne pas supprimer cette spécification DDS.
+     A                                019  2'Option ou commande'
+     A                                  5 17'1.Liste du personnel'
+     A                                  6 17'2.Fiche employé'
+     A                                  7 17'3.Liste des fonctions'
+     A                                  8 17'4.Edition'
+     A                                  9 17'5.Gérer imprimantes'
+     A                                 10 17'6.Voir spoule'
+     A                                 11 17'7.Vider spoule'
+     A                                 12 17'8.Aller au menu principal'
+     A                                 13 17'9.Fin de session'

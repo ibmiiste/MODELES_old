@@ -1,5 +1,5 @@
-000100180502     A          R EMP_REC
-000200180502     A            EMP_NUMBER     5          TEXT(’EMPLOYEE NUMBER’)
-000300180502     A            EMP_NAME      16          TEXT(’EXPLOYEE NAME’)
-000400180502     A            EMP_RATE       5  2       TEXT(’EXPLOYEE RATE’)
-000500180502     A          K EMP_NUMBER
+     A          R EMP_REC
+     A            EMP_NUMBER     5          TEXT(’EMPLOYEE NUMBER’)
+     A            EMP_NAME      16          TEXT(’EXPLOYEE NAME’)
+     A            EMP_RATE       5  2       TEXT(’EXPLOYEE RATE’)
+     A          K EMP_NUMBER

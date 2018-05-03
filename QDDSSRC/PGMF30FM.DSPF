@@ -1,96 +1,96 @@
-0001.00      A                                      DSPSIZ(24 80 *DS3)
-0002.00      A                                      MSGLOC(24)
-0003.00      A                                      PRINT
-0004.00      A                                      HELP
-0005.00      A                                      HLPPNLGRP(’PGMF30’ PGMF30)
-0006.00      A                                      HLPTITLE(’Liste outq’)
-0007.00      A                                      ALTHELP(CA01)
-0008.00      A          R SFL01                     SFL
-0009.00      A  08                                  SFLNXTCHG
-0010.00      A            ZMUSR         10   B  8  6
-0011.00      A                                      COLOR(GRN)
-0012.00      A            ZMDOC         10   B  8 17
-0013.00      A                                      COLOR(GRN)
-0014.00      A            ZMPRT         10   B  8 28
-0015.00      A                                      COLOR(GRN)
-0016.00      A            HNREC         10  0H
-0017.00      A          R FORE1                     SFLCTL(SFL01)
-0018.00      A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR) 
-0019.00      A                                      OVERLAY
-0020.00      A                                      PUTOVR
-0021.00      A N07                                  ROLLUP(02)
-0022.00      A                                      CSRLOC(WLIGN WCOLN)
-0023.00      A                                      CHANGE(91
-0024.00      A N04                                  ERASE(SFL01)
-0025.00      A  04                                  SFLDSP
-0026.00      A  05                                  SFLDSPCTL
-0027.00      A  06                                  SFLCLR
-0028.00      A  07                                  SFLEND
-0029.00      A                                      SFLSIZ(15)
-0030.00      A                                      SFLPAG(14)
-0031.00      A                                      SFLCSRRRN(&WRACSR)
-0032.00      A            WRACSR         5S 0H
-0033.00      A            WRAN01         4S 0H      SFLRCDNBR
-0034.00      A            ZPGM          10   O  1  2
-0035.00      A                                      OVRDTA
-0036.00      A                                  1 31’Liste des Imprimantes’
-0037.00      A                                      COLOR(WHT)
-0038.00      A            ZUSER         10   O  1 70
-0039.00      A                                      OVRDTA
-0040.00      A            ZDATE          8  0O  2  2
-0041.00      A                                      EDTWRD(’  /  /    ’)
-0042.00      A                                      OVRDTA
-0043.00      A            ZHEUR          6  0O  2 14
-0044.00      A                                      EDTWRD(’  :  :  ’)
-0045.00      A                                      OVRDTA
-0046.00      A            ZJOB          10   O  2 70
-0047.00      A                                      OVRDTA
-0048.00      A                                  5  2’Selection User/Doc/Print :’
-0049.00      A            ZSUSR         10   B  5 29
-0050.00      A                                      COLOR(WHT)
-0051.00      A                                      OVRDTA
-0052.00      A            ZSDOC         10   B  5 40
-0053.00      A                                      COLOR(WHT)
-0054.00      A                                      OVRDTA
-0055.00      A            ZSPRT         10   B  5 51
-0056.00      A                                      COLOR(WHT)
-0057.00      A                                      OVRDTA
-0058.00      A                                  7  2’    User       Document
-0059.00      A                                      te
-0060.00      A                                                ’
-0061.00      A                                      COLOR(WHT)
-0062.00      A            WLICSR        10A  H
-0063.00      A            WZOCSR        10A  H
-0064.00      A            WPRCSR         4S 0H
-0065.00      A            WLIGN          3S 0H
-0066.00      A            WCOLN          3S 0H
-0067.00      A          R FORB1
-0068.00      A                                      CF03
-0069.00      A                                      CF06
-0070.00      A                                      CF15
-0071.00      A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
-0072.00      A                                      OVERLAY
-0073.00      A                                      PUTOVR
-0074.00      A                                      CSRLOC(WLIGN WCOLN)
-0075.00      A                                      CHANGE(91)
-0076.00      A                                 23  3’F3=Exit     F6=Créer     F
-0077.00      A                                      yage’
-0078.00      A                                      COLOR(BLU)
-0079.00      A            WLICSR        10A  H
-0080.00      A            WZOCSR        10A  H
-0081.00      A            WPRCSR         4S 0H
-0082.00      A            WLIGN          3S 0H
-0083.00      A            WCOLN          3S 0H
-0084.00      A          R WSFMSG                    SFL
-0085.00      A                                      SFLMSGRCD(24)
-0086.00      A            WMGKEY                    SFLMSGKEY
-0087.00      A            WPGMQ                     SFLPGMQ
-0088.00      A          R WSFCTL                    SFLCTL(WSFMSG)
-0089.00      A                                      SFLSIZ(2)
-0090.00      A                                      SFLPAG(1)
-0091.00      A                                      OVERLAY
-0092.00      A  10                                  SFLINZ
-0093.00      A                                      SFLDSP
-0094.00      A                                      SFLDSPCTL
-0095.00      A  09                                  SFLEND
-0096.00      A            WPGMQ                     SFLPGMQ
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      MSGLOC(24)
+     A                                      PRINT
+     A                                      HELP
+     A                                      HLPPNLGRP('PGMF30' PGMF30)
+     A                                      HLPTITLE('Liste outq')
+     A                                      ALTHELP(CA01)
+     A          R SFL01                     SFL
+     A  08                                  SFLNXTCHG
+     A            ZMUSR         10   B  8  6
+     A                                      COLOR(GRN)
+     A            ZMDOC         10   B  8 17
+     A                                      COLOR(GRN)
+     A            ZMPRT         10   B  8 28
+     A                                      COLOR(GRN)
+     A            HNREC         10  0H
+     A          R FORE1                     SFLCTL(SFL01)
+     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+     A                                      OVERLAY
+     A                                      PUTOVR
+     A N07                                  ROLLUP(02)
+     A                                      CSRLOC(WLIGN WCOLN)
+     A                                      CHANGE(91)
+     A N04                                  ERASE(SFL01)
+     A  04                                  SFLDSP
+     A  05                                  SFLDSPCTL
+     A  06                                  SFLCLR
+     A  07                                  SFLEND
+     A                                      SFLSIZ(15)
+     A                                      SFLPAG(14)
+     A                                      SFLCSRRRN(&WRACSR)
+     A            WRACSR         5S 0H
+     A            WRAN01         4S 0H      SFLRCDNBR
+     A            ZPGM          10   O  1  2
+     A                                      OVRDTA
+     A                                  1 31'Liste des Imprimantes'
+     A                                      COLOR(WHT)
+     A            ZUSER         10   O  1 70
+     A                                      OVRDTA
+     A            ZDATE          8  0O  2  2
+     A                                      EDTWRD('  /  /    ')
+     A                                      OVRDTA
+     A            ZHEUR          6  0O  2 14
+     A                                      EDTWRD('  :  :  ')
+     A                                      OVRDTA
+     A            ZJOB          10   O  2 70
+     A                                      OVRDTA
+     A                                  5  2'Selection User/Doc/Print :'
+     A            ZSUSR         10   B  5 29
+     A                                      COLOR(WHT)
+     A                                      OVRDTA
+     A            ZSDOC         10   B  5 40
+     A                                      COLOR(WHT)
+     A                                      OVRDTA
+     A            ZSPRT         10   B  5 51
+     A                                      COLOR(WHT)
+     A                                      OVRDTA
+     A                                  7  2'    User       Document   Impriman-
+     A                                      te                                 -
+     A                                                '
+     A                                      COLOR(WHT)
+     A            WLICSR        10A  H
+     A            WZOCSR        10A  H
+     A            WPRCSR         4S 0H
+     A            WLIGN          3S 0H
+     A            WCOLN          3S 0H
+     A          R FORB1
+     A                                      CF03
+     A                                      CF06
+     A                                      CF15
+     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+     A                                      OVERLAY
+     A                                      PUTOVR
+     A                                      CSRLOC(WLIGN WCOLN)
+     A                                      CHANGE(91)
+     A                                 23  3'F3=Exit     F6=Cr�er     F15=Netto-
+     A                                      yage'
+     A                                      COLOR(BLU)
+     A            WLICSR        10A  H
+     A            WZOCSR        10A  H
+     A            WPRCSR         4S 0H
+     A            WLIGN          3S 0H
+     A            WCOLN          3S 0H
+     A          R WSFMSG                    SFL
+     A                                      SFLMSGRCD(24)
+     A            WMGKEY                    SFLMSGKEY
+     A            WPGMQ                     SFLPGMQ
+     A          R WSFCTL                    SFLCTL(WSFMSG)
+     A                                      SFLSIZ(2)
+     A                                      SFLPAG(1)
+     A                                      OVERLAY
+     A  10                                  SFLINZ
+     A                                      SFLDSP
+     A                                      SFLDSPCTL
+     A  09                                  SFLEND
+     A            WPGMQ                     SFLPGMQ

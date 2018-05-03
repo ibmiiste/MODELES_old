@@ -1,37 +1,37 @@
-000100180502     A* Free Form Menu: PAYROL
-000200180502     A*
-000300180502     A                                      DSPSIZ(24 80 *DS3                  -
-000400180502     A                                             27 132 *DS4)
-000500180502     A                                      CHGINPDFT
-000600180502     A                                      INDARA
-000700180502     A                                      PRINT(*LIBL/QSYSPRT)
-000800180502     A          R PAYROL
-000900180502     A                                      DSPMOD(*DS3)
-001000180502     A                                      LOCK
-001100180502     A                                      SLNO(01)
-001200180502     A                                      CLRL(*ALL)
-001300180502     A                                      ALWROL
-001400180502     A                                      CF03
-001500180502     A                                      HELP
-001600180502     A                                      HOME
-001700180502     A                                      HLPRTN
-001800180502     A                                  1 34'PAYROLL DEPARTMENT MENU'
-001900180502     A                                      DSPATR(HI)
-002000180502     A                                  3  2'Select one of the following:'
-002100180502     A                                      COLOR(BLU)
-002200180502     A                                  5  7'1.'
-002300180502     A                                  6  7'2.'
-002400180502     A                                  7  7'3.'
-002500180502     A* CMDPROMPT  Do not delete this DDS spec.
-002600180502     A                                019  2'Selection or command              -
-002700180502     A                                          '
-002800180502     A                                  5 11'Inquire'
-002900180502     A                                  5 19'into'
-003000180502     A                                  5 24'employee'
-003100180502     A                                  5 33'master'
-003200180502     A                                  6 11'Change'
-003300180502     A                                  6 18'employee'
-003400180502     A                                  6 27'master'
-003500180502     A                                  7 11'Add'
-003600180502     A                                  7 15'new'
-003700180502     A                                  7 19'employee'
+     A* Free Form Menu: PAYROL
+     A*
+     A                                      DSPSIZ(24 80 *DS3                  -
+     A                                             27 132 *DS4)
+     A                                      CHGINPDFT
+     A                                      INDARA
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A          R PAYROL
+     A                                      DSPMOD(*DS3)
+     A                                      LOCK
+     A                                      SLNO(01)
+     A                                      CLRL(*ALL)
+     A                                      ALWROL
+     A                                      CF03
+     A                                      HELP
+     A                                      HOME
+     A                                      HLPRTN
+     A                                  1 34'PAYROLL DEPARTMENT MENU'
+     A                                      DSPATR(HI)
+     A                                  3  2'Select one of the following:'
+     A                                      COLOR(BLU)
+     A                                  5  7'1.'
+     A                                  6  7'2.'
+     A                                  7  7'3.'
+     A* CMDPROMPT  Do not delete this DDS spec.
+     A                                019  2'Selection or command              -
+     A                                          '
+     A                                  5 11'Inquire'
+     A                                  5 19'into'
+     A                                  5 24'employee'
+     A                                  5 33'master'
+     A                                  6 11'Change'
+     A                                  6 18'employee'
+     A                                  6 27'master'
+     A                                  7 11'Add'
+     A                                  7 15'new'
+     A                                  7 19'employee'

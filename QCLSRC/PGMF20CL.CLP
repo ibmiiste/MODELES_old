@@ -1,0 +1,7 @@
+/* LANCEMENT ÉDITION AVEC PROMPT POUR SAISIR MATRICULE */
+             PGM        PARM(&PMAT)
+             DCL        VAR(&PMAT) TYPE(*CHAR) LEN(10)
+/* ON SOUMET LE JOB AVEC LES ATTRIBUTS USER LE CL FERA LE ROUTAGE */
+             SBMJOB     CMD(CALL PGM(PGMF2SCL) PARM(&PMAT)) +
+                          JOB(EDT_LISP)
+            ENDPGM

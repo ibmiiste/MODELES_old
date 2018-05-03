@@ -1,0 +1,10 @@
+     A*******************************************************
+     A* Fichier outq                                        *
+     A*                                                     *
+     A*******************************************************
+     A                                      UNIQUE
+     A          R FIOF                      PFILE(FIO00P)
+     A                                      FORMAT(FIO00P)
+     A          K FOUSR
+     A          K FODOC
+     A          K FOOUQ

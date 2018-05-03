@@ -1,112 +1,112 @@
-0001.00     A                                     DSPSIZ(24 80 *DS3)
-0002.00     A                                     MSGLOC(24)
-0003.00     A                                     PRINT
-0004.00     A                                     HELP
-0005.00     A                                     HLPPNLGRP(’PGMF01’ PGMF01)
-0006.00     A                                     HLPTITLE(’Aide générale -
-0007.00     A                                     sur PGMF01’)
-0008.00     A                                     ALTHELP(CA01)
-0009.00     A         R SFL01                     SFL
-0010.00     A  08                                 SFLNXTCHG
-0011.00     A           ZOPT           2   B  8  2
-0012.00     A  20                                 DSPATR(PR)
-0013.00     A           ZNOM          35   O  8  6
-0014.00     A  30                                 COLOR(RED)
-0015.00     A           ZPR1          10   O  8 42
-0016.00     A           ZFONC         10   O  8 53
-0017.00     A           ZMATR         10  0O  8 64
-0018.00     A                                     EDTCDE(Z)
-0019.00     A           ZCPO           5   O  8 75
-0020.00     A           HNREC         10  0H
-0021.00     A           HTOUT          1   H
-0022.00     A           HMATR         10  0H
-0023.00     A         R FORE1                     SFLCTL(SFL01)
-0024.00     A                                     RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
-0025.00     A                                     OVERLAY
-0026.00     A                                     PUTOVR
-0027.00     A N07                                 ROLLUP(02)
-0028.00     A                                     CSRLOC(WLIGN WCOLN)
-0029.00     A                                     CHANGE(91)
-0030.00     A N04                                 ERASE(SFL01)
-0031.00     A  04                                 SFLDSP
-0032.00     A  05                                 SFLDSPCTL
-0033.00     A  06                                 SFLCLR
-0034.00     A  07                                 SFLEND
-0035.00     A                                     SFLSIZ(15)
-0036.00     A                                     SFLPAG(14)
-0037.00     A                                     SFLCSRRRN(&WRACSR)
-0038.00     A           WRACSR         5S 0H
-0039.00     A           WRAN01         4S 0H      SFLRCDNBR
-0040.00     A           ZPGM          10   O  1  2
-0041.00     A                                     OVRDTA
-0042.00     A                                 1 31’Liste du personnel’
-0043.00     A                                     COLOR(WHT)
-0044.00     A           ZUSER         10   O  1 70
-0045.00     A                                     OVRDTA
-0046.00     A           ZDATE          8  0O  2  2
-0047.00     A                                     EDTWRD(’  /  /    ’)
-0048.00     A                                     OVRDTA
-0049.00     A           ZHEUR          6  0O  2 14
-0050.00     A                                     EDTWRD(’  :  :  ’)
-0051.00     A                                     OVRDTA
-0052.00     A           ZJOB          10   O  2 70
-0053.00     A                                     OVRDTA
-0054.00     A                                 4  3’Indiquez vos options, puis appuyez-
-0055.00     A                                      sur ENTREE.’
-0056.00     A                                     COLOR(BLU)
-0057.00     A                                 5  3’2=Modifier  3=Copier -
-0058.00     A                                     4=Supprimer   5=Afficher  -
-0059.00     A                                     6=Imprimer  99=Fin de contrat’
-0060.00     A                                     COLOR(BLU)
-0061.00     A                                 6  3’Selection par nom :’
-0062.00     A           ZSNOM         35   B  6 23
-0063.00     A                                     CHECK(LC)
-0064.00     A                                     COLOR(WHT)
-0065.00     A                                     OVRDTA
-0066.00     A                                 7  2’Opt Nom                           -
-0067.00     A                                           Prénom     Fonction   Matricu-
-0068.00     A                                     le  CP’
-0069.00     A                                     COLOR(WHT)
-0070.00     A           WLICSR        10A  H
-0071.00     A           WZOCSR        10A  H
-0072.00     A           WPRCSR         4S 0H
-0073.00     A           WLIGN          3S 0H
-0074.00     A           WCOLN          3S 0H
-0075.00     A         R FORB1
-0076.00     A                                     CF03
-0077.00     A                                     CF05
-0078.00     A                                     CF06
-0079.00     A                                     CF08
-0080.00     A                                     CF12
-0081.00     A                                     RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
-0082.00     A                                     OVERLAY
-0083.00     A                                     PUTOVR
-0084.00     A                                     CSRLOC(WLIGN WCOLN)
-0085.00     A                                     CHANGE(91)
-0086.00     A                                     HLPCLR
-0087.00     A         H                           HLPARA(6 23 6 58)
-0088.00     A                                     HLPPNLGRP(’ZSNOM’ PGMF01)
-0089.00     A         H                           HLPARA(8 2 22 3)
-0090.00     A                                     HLPPNLGRP(’ZOPT’ PGMF01)
-0091.00     A                                23  3’F3=Exit  F5=Réafficher  -
-0092.00     A                                     F6=Créer  F8=Imprimer  -
-0093.00     A                                     F12=Annuler’
-0094.00     A                                     COLOR(BLU)
-0095.00     A           WLICSR        10A  H
-0096.00     A           WZOCSR        10A  H
-0097.00     A           WPRCSR         4S 0H
-0098.00     A           WLIGN          3S 0H
-0099.00     A           WCOLN          3S 0H
-0100.00     A         R WSFMSG                    SFL
-0101.00     A                                     SFLMSGRCD(24)
-0102.00     A           WMGKEY                    SFLMSGKEY
-0103.00     A           WPGMQ                     SFLPGMQ
-0104.00     A         R WSFCTL                    SFLCTL(WSFMSG)
-0105.00     A                                     SFLSIZ(2)
-0106.00     A                                     SFLPAG(1)
-0107.00     A                                     OVERLAY
-0108.00     A  10                                 SFLINZ
-0109.00     A                                     SFLDSP
-0110.00     A                                     SFLDSPCTL
-0111.00     A  09                                 SFLEND
-0112.00     A           WPGMQ                     SFLPGMQ
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      MSGLOC(24)
+     A                                      PRINT
+     A                                      HELP
+     A                                      HLPPNLGRP('PGMF01' PGMF01)
+     A                                      HLPTITLE('Aide g�n�rale -
+     A                                      sur PGMF01')
+     A                                      ALTHELP(CA01)
+     A          R SFL01                     SFL
+     A  08                                  SFLNXTCHG
+     A            ZOPT           2   B  8  2
+     A  20                                  DSPATR(PR)
+     A            ZNOM          35   O  8  6
+     A  30                                  COLOR(RED)
+     A            ZPR1          10   O  8 42
+     A            ZFONC         10   O  8 53
+     A            ZMATR         10  0O  8 64
+     A                                      EDTCDE(Z)
+     A            ZCPO           5   O  8 75
+     A            HNREC         10  0H
+     A            HTOUT          1   H
+     A            HMATR         10  0H
+     A          R FORE1                     SFLCTL(SFL01)
+     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+     A                                      OVERLAY
+     A                                      PUTOVR
+     A N07                                  ROLLUP(02)
+     A                                      CSRLOC(WLIGN WCOLN)
+     A                                      CHANGE(91)
+     A N04                                  ERASE(SFL01)
+     A  04                                  SFLDSP
+     A  05                                  SFLDSPCTL
+     A  06                                  SFLCLR
+     A  07                                  SFLEND
+     A                                      SFLSIZ(15)
+     A                                      SFLPAG(14)
+     A                                      SFLCSRRRN(&WRACSR)
+     A            WRACSR         5S 0H
+     A            WRAN01         4S 0H      SFLRCDNBR
+     A            ZPGM          10   O  1  2
+     A                                      OVRDTA
+     A                                  1 31'Liste du personnel'
+     A                                      COLOR(WHT)
+     A            ZUSER         10   O  1 70
+     A                                      OVRDTA
+     A            ZDATE          8  0O  2  2
+     A                                      EDTWRD('  /  /    ')
+     A                                      OVRDTA
+     A            ZHEUR          6  0O  2 14
+     A                                      EDTWRD('  :  :  ')
+     A                                      OVRDTA
+     A            ZJOB          10   O  2 70
+     A                                      OVRDTA
+     A                                  4  3'Indiquez vos options, puis appuyez-
+     A                                       sur ENTREE.'
+     A                                      COLOR(BLU)
+     A                                  5  3'2=Modifier  3=Copier -
+     A                                      4=Supprimer   5=Afficher  -
+     A                                      6=Imprimer  99=Fin de contrat'
+     A                                      COLOR(BLU)
+     A                                  6  3'Selection par nom :'
+     A            ZSNOM         35   B  6 23
+     A                                      CHECK(LC)
+     A                                      COLOR(WHT)
+     A                                      OVRDTA
+     A                                  7  2'Opt Nom                           -
+     A                                            Pr�nom     Fonction   Matricu-
+     A                                      le  CP'
+     A                                      COLOR(WHT)
+     A            WLICSR        10A  H
+     A            WZOCSR        10A  H
+     A            WPRCSR         4S 0H
+     A            WLIGN          3S 0H
+     A            WCOLN          3S 0H
+     A          R FORB1
+     A                                      CF03
+     A                                      CF05
+     A                                      CF06
+     A                                      CF08
+     A                                      CF12
+     A                                      RTNCSRLOC(&WLICSR &WZOCSR &WPRCSR)
+     A                                      OVERLAY
+     A                                      PUTOVR
+     A                                      CSRLOC(WLIGN WCOLN)
+     A                                      CHANGE(91)
+     A                                      HLPCLR
+     A          H                           HLPARA(6 23 6 58)
+     A                                      HLPPNLGRP('ZSNOM' PGMF01)
+     A          H                           HLPARA(8 2 22 3)
+     A                                      HLPPNLGRP('ZOPT' PGMF01)
+     A                                 23  3'F3=Exit  F5=R�afficher  -
+     A                                      F6=Cr�er  F8=Imprimer  -
+     A                                      F12=Annuler'
+     A                                      COLOR(BLU)
+     A            WLICSR        10A  H
+     A            WZOCSR        10A  H
+     A            WPRCSR         4S 0H
+     A            WLIGN          3S 0H
+     A            WCOLN          3S 0H
+     A          R WSFMSG                    SFL
+     A                                      SFLMSGRCD(24)
+     A            WMGKEY                    SFLMSGKEY
+     A            WPGMQ                     SFLPGMQ
+     A          R WSFCTL                    SFLCTL(WSFMSG)
+     A                                      SFLSIZ(2)
+     A                                      SFLPAG(1)
+     A                                      OVERLAY
+     A  10                                  SFLINZ
+     A                                      SFLDSP
+     A                                      SFLDSPCTL
+     A  09                                  SFLEND
+     A            WPGMQ                     SFLPGMQ

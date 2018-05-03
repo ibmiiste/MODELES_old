@@ -1,41 +1,41 @@
-000100180502     /* >>PRE-COMPILER<<                                                 */
-000200180502     /*   >>CRTCMD<<  CRTDSPF FILE(&LI/&OB) SRCFILE(&SL/&SF) +           */
-000300180502     /*                 SRCMBR(&SM);                                     */
-000400180502     /*   >>IMPORTANT<<                                                  */
-000500180502     /*     >>PARM<<  OPTION(*EVENTF);                                   */
-000600180502     /*   >>END-IMPORTANT<<                                              */
-000700180502     /*   >>EXECUTE<<                                                    */
-000800180502     /* >>END-PRE-COMPILER<<                                             */
-000900180502     A                                      REF(CUSTOMERS)
-001000180502     A                                      INDARA
-001100180502     A          R CUSTSEL
-001200180502     A                                      CA03(03 'F3=Exit')
-001300180502     A                                  1 33'Customer Inquiry'
-001400180502     A                                  3  2'Type value, press Enter.'
-001500180502     A                                  5  2'Customer identifier...'
-001600180502     A            CUSTNO    R        I  5 29
-001700180502     A                                 23  2'F3=Exit'
-001800180502     A          R CUSTINQ
-001900180502     A                                      CA03(03 'F3=exit')
-002000180502     A                                      CA12(12 'F12=Cancel')
-002100180502     A                                  1 31'Customer Information'
-002200180502     A                                  3  2'Customer Identifier:'
-002300180502     A            CUSTNO    R        O  3 24
-002400180502     A                                  4  2'First name . . . . :'
-002500180502     A            CFNAME    R        O  4 24
-002600180502     A                                  5  2'Last name  . . . . :'
-002700180502     A            CLNAME    R        O  5 24
-002800180502     A                                  3  2'Address  . . . . . :'
-002900180502     A            CADDR     R        O  6 24
-003000180502     A                                  6  2'Postal code  . . . :'
-003100180502     A            CZIP      R        O  7 27
-003200180502     A                                  8  2'telephone  . . . . :'
-003300180502     A            CPHONE    R        O  8 24
-003400180502     A                                  9  2'Email  . . . . . . :'
-003500180502     A            CEMAIL    R        O  9 24
-003600180502     A            CDOB      R        O 10 24EDTCDE(Y)
-003700180502     A                                 11  2'gender  . . . . . . :'
-003800180502     A            CGENDER   R        O 11 24
-003900180502     A                                 21  2'Press enter to continue.'
-004000180502     A                                 23  2'F3=Exit'
-004100180502     A                                 23 11'F12=Cancel'
+     /* >>PRE-COMPILER<<                                                 */
+     /*   >>CRTCMD<<  CRTDSPF FILE(&LI/&OB) SRCFILE(&SL/&SF) +           */
+     /*                 SRCMBR(&SM);                                     */
+     /*   >>IMPORTANT<<                                                  */
+     /*     >>PARM<<  OPTION(*EVENTF);                                   */
+     /*   >>END-IMPORTANT<<                                              */
+     /*   >>EXECUTE<<                                                    */
+     /* >>END-PRE-COMPILER<<                                             */
+     A                                      REF(CUSTOMERS)
+     A                                      INDARA
+     A          R CUSTSEL
+     A                                      CA03(03 'F3=Exit')
+     A                                  1 33'Customer Inquiry'
+     A                                  3  2'Type value, press Enter.'
+     A                                  5  2'Customer identifier...'
+     A            CUSTNO    R        I  5 29
+     A                                 23  2'F3=Exit'
+     A          R CUSTINQ
+     A                                      CA03(03 'F3=exit')
+     A                                      CA12(12 'F12=Cancel')
+     A                                  1 31'Customer Information'
+     A                                  3  2'Customer Identifier:'
+     A            CUSTNO    R        O  3 24
+     A                                  4  2'First name . . . . :'
+     A            CFNAME    R        O  4 24
+     A                                  5  2'Last name  . . . . :'
+     A            CLNAME    R        O  5 24
+     A                                  3  2'Address  . . . . . :'
+     A            CADDR     R        O  6 24
+     A                                  6  2'Postal code  . . . :'
+     A            CZIP      R        O  7 27
+     A                                  8  2'telephone  . . . . :'
+     A            CPHONE    R        O  8 24
+     A                                  9  2'Email  . . . . . . :'
+     A            CEMAIL    R        O  9 24
+     A            CDOB      R        O 10 24EDTCDE(Y)
+     A                                 11  2'gender  . . . . . . :'
+     A            CGENDER   R        O 11 24
+     A                                 21  2'Press enter to continue.'
+     A                                 23  2'F3=Exit'
+     A                                 23 11'F12=Cancel'
