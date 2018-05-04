@@ -5,62 +5,63 @@
       /define PSDS_H
 
       *
-     DPsds            SDS
       *                            Nom de la procdure
-     D PROCEDURE         *PROC
+       dcl-ds Psds PSDS;
       *                            code status
-     D ERROR             *STATUS
+        PROCEDURE *PROC;
       *                            code status prcdent
-     D PRV_STATUS             16     20S 0
+        ERROR *STATUS;
       *                            numro line selon source
-     D LINE_NUM               21     28
+        PRV_STATUS zoned(5) pos(16);
       *                            nom routine
-     D ROUTINE           *ROUTINE
+        LINE_NUM char(8) pos(21);
       *                            nombre de paramtres reus
-     D PARMS             *PARMS
+        ROUTINE *ROUTINE;
       *                            type d'exception
-     D EXCP_TYPE              40     42
+        PARMS *PARMS;
       *                            numro d'exception
-     D EXCP_NUM               43     46
+        EXCP_TYPE char(3) pos(40);
       *                            bib du programme
-     D PGM_LIB                81     90
+        EXCP_NUM char(4) pos(43);
       *                            donnes d'exception
-     D EXCP_DATA              91    170
+        PGM_LIB char(10) pos(81);
       *                            ID excpption
-     D EXCP_ID               171    174
+        EXCP_DATA char(80) pos(91);
       *                            date (*DATE fmt)
-     D DATE_JOUR             191    198
+        EXCP_ID char(4) pos(171);
       *                            anne (*YEAR fmt)
-     D YEAR                  199    200S 0
+        DATE_JOUR char(8) pos(191);
       *                            dernier fichier utilis
-     D LAST_FILE             201    208
+        YEAR zoned(2) pos(199);
       *                            infomation erreur fichier
-     D FILE_INFO             209    243
+        LAST_FILE char(8) pos(201);
       *                            nom du travail
-     D JOB_NAME              244    253
+        FILE_INFO char(35) pos(209);
       *                            nom utilisateur
-     D USER                  254    263
+        JOB_NAME char(10) pos(244);
       *                            numro du travail
-     D JOB_NUM               264    269S 0
+        USER char(10) pos(254);
       *                            date du travail  (UDATE fmt)
-     D JOB_DATE              270    275S 0
+        JOB_NUM zoned(6) pos(264);
       *                            date lance travail  (UDATE fmt)
-     D RUN_DATE              276    281S 0
+        JOB_DATE zoned(6) pos(270);
       *                            heure lance travail (UDATE fmt)
-     D RUN_TIME              282    287S 0
+        RUN_DATE zoned(6) pos(276);
       *                            date de cration
-     D CRT_DATE              288    293
+        RUN_TIME zoned(6) pos(282);
       *                            heure de cration
-     D CRT_TIME              294    299
+        CRT_DATE char(6) pos(288);
       *                            niveau de compilation
-     D CPL_LEVEL             300    303
+        CRT_TIME char(6) pos(294);
       *                            fichier source
-     D SRC_FILE              304    313
+        CPL_LEVEL char(4) pos(300);
       *                            bib source
-     D SRC_LIB               314    323
+        SRC_FILE char(10) pos(304);
       *                            membre source
-     D SRC_MBR               324    333
+        SRC_LIB char(10) pos(314);
       *                            prog procedure is in
-     D PROC_PGM              334    343
+        SRC_MBR char(10) pos(324);
       *                            module procedure is in
-     D PROC_MOD              344    353
+        PROC_PGM char(10) pos(334);
+        PROC_MOD char(10) pos(344);
+       end-ds;
