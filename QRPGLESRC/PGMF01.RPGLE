@@ -8,13 +8,34 @@
        dcl-f FIC02L keyed infds(fic);
 
 
-      // Déclaration des variables
-       dcl-s WDAT char(8);
-       dcl-s WHEU char(6);
-       dcl-s W14 packed(14);
-       dcl-s WSNOM char(35);
-       dcl-s WSNOP char(35);
-       dcl-s I packed(3);
+       // Prototypes d'appel
+       Dcl-pr Gestion_Fich Extpgm('PGMF02');
+         PCHX char(2);
+         NREC char(10);
+       end-pr;
+
+       Dcl-pr Gestion_Fich Extpgm('PGMF2SCL');
+         PMAT char(10);
+       End-pr;
+
+       Dcl-pr Gestion_message Extpgm('PGM001CL');
+         PTYP Char(2);
+         PFIM Char(10);
+         PMID Char(7);
+         PMDT Char(99);
+       End-pr;
+
+       // Déclaration des variables
+       Dcl-s WSNOM char(35);
+       Dcl-s WSNOP char(35);
+       Dcl-s I packed(3);
+
+       // Gestion sous-fichier
+       Dcl-s LSTLIG Packed(4:0);
+       // Le compteur de ligne par page
+       Dcl-s NBRLIG Packed(4:0);
+       // Le fameux WRAN01
+       Dcl-s WRAN01 Packed(4:0);
        Dcl-s g_Nblis1 Packed(4:0);
 
        // Gestion des messages
@@ -22,6 +43,10 @@
        Dcl-s PFIM Char(10);
        Dcl-s PMID Char(7);
        Dcl-s PMDT Char(99);
+
+      // Variables personnel
+       Dcl-s PMAT Char(10);
+       Dcl-s PCHX Char(2);
 
       // La DS du programme, noter le S indispensable
        /copy qcpysrc,Psds
@@ -35,7 +60,7 @@
        end-ds;
 
       // Le DS des indicateurs de l'écran
-       dcl-ds IndDs;
+       Dcl-ds IndDs;
         Rollup Ind Pos(2);
         Sflnxtchg Ind Pos(8);
         Zoptpr Ind Pos(20);
@@ -48,6 +73,9 @@
         Sflinz_Msgf Ind Pos(10);
         Sflend_Msgf Ind Pos(09);
        End-ds;
+
+      // Renommage des touches de fonction
+       /Copy Qcpysrc,Fonction
 
       // La DS du fichier
        dcl-ds FIC;
@@ -77,8 +105,8 @@
         WNBRCD int(10) pos(283);
         WNRCFI int(10) pos(397);
        end-ds;
-      // la clé d'accés au fichier
 
+       // la clé d'accés au fichier
        Dcl-ds Key likerec(FICF : *key);
 
        // le nombre de lignes afichables, déclaration a la volée
@@ -140,40 +168,41 @@
          ENDIF;
          //
          IF WSNOP <> ZSNOM And g_Fin_actions;
-      // Test si selection/ si changé on initialise
+         // Test si selection/ si changé on initialise
            EXSR INITSF;
            g_Fin_actions = *OFF;
          ENDIF;
+
          // touches F3 et F12
-         IF *INKC = '1' OR
-               *INKL = '1';
+         IF Sortie = '1' OR
+               Annuler = '1';
            // on met l'indicateur à Off = fin du programme
            g_Sortie = *OFF;
            g_Fin_actions = *OFF;
          ENDIF;
          //
-         IF *INKE = '1';
+         IF Rachaichir = '1';
            // F5 Rafraichissement de l'écran
            EXSR INITSF;
            g_Fin_actions = *OFF;
          ENDIF;
          //
-         IF *INKF = '1';
+         IF Creer = '1';
            // F6 création d'un nouveau matricule
-     C                   MOVEL     'CR'          PCHX
-     C                   MOVEL     *BLANK        NREC
-     C                   CALL      'PGMF02'
-     C                   PARM                    PCHX              2
-     C                   PARM                    NREC             10
+           PCHX = 'CR';
+           Clear NREC;
+
+           Gestion_Fiche( PCHX
+                         :NREC);
+
            EXSR INITSF;
            g_Fin_actions = *OFF;
          ENDIF;
-         IF *INKH = '1';
+         IF Imprimer = '1';
            // F8 impression du fichier
-     C                   MOVEL     *BLANK        PMAT
-      // On appelle le CL de routage sans soumission, sinon PGMF20CL
-     C                   CALL      'PGMF2SCL'
-     C                   PARM                    PMAT             10
+           clear PMAT;
+           // On appelle le CL de routage sans soumission, sinon PGMF20CL
+           Imprimer( PMAT);
            g_Fin_actions = *OFF;
          ENDIF;
          // On ne fait ceci que s'il n'y a eu rien d'autre
@@ -187,33 +216,37 @@
          //    l'indicateur 20 conditionne la zone OPT (protection)
          Zoptpr = *OFF;
          // Initialisation de la variable de sélection
-     C                   MOVEL     ZSNOM         WSNOP
-     C                   MOVEL     *BLANK        WSNOM
+         ZSNOM =  WSNOP;
+         Clear WSNOM;
       // Initialisation de la clé pour positionnement
-     C                   MOVEL     *BLANK        FIFON
-     C                   MOVEL     *BLANK        FINOM
+         Clear FIFON;
+         Clear FINOM;
          g_Selection = *OFF;
          g_Selection_generique = *OFF;
          IF ZSNOM <> *BLANK;
            // Si différent de blank il y a selection
            g_Selection = *ON;
-     C                   Z-ADD     0             I
-     C     '*'           SCAN      ZSNOM         I                      85
+           Reset I;
+           g_Selection_generique = I = %Scan( '*'
+                                             :ZSNOM);
+
            IF I > 0;
-     C     I             SUB       1             I
-     C     I             SUBST (P) ZSNOM:1       WSNOM                  90
-      // On est dans le cas d'une sélection générique
+             I=I-1;
+             WSNOM=%Subst(ZSNOM:1:I);
+             // On est dans le cas d'une sélection générique
              g_Selection_generique = *ON;
              // On se positionnera juste au bon endroit dans le fichier
-     C                   MOVEL     WSNOM         FINOM
+             FINOM = WSNOM;
            ENDIF;
          ENDIF;
+
          // La dernière ligne écrite
-     C                   Z-ADD     0             LSTLIG            4 0
+         Clear LSTLIG;
       // Le compteur de ligne par page
-     C                   Z-ADD     0             NBRLIG            4 0
+         Clear NBRLIG;
       // Le fameux WRAN01
-     C                   Z-ADD     0             WRAN01            4 0
+         Clear WRAN01;
+
       // Effacement du sous=fichier
          Sflclr = *ON;
          Sflend_no_rollup = *ON;
@@ -232,88 +265,91 @@
        // Traitement des options, on ne lit que les enregistrements modifiés
        BEGSR TRTOPT;
          // Lecture des enregistrements modifiés
-     C                   Z-ADD     1             WRAN01
-      // Top pour rafraichir l'écran, si besoin
+         WRAN01=1;
+         // Top pour rafraichir l'écran, si besoin
          g_Selection_OK = *OFF;
 
          If %Found;
            READC SFL01;
          EndIf;
-      //
+         //
          DOW not %Eof;
-     C                   MOVE      HNREC         NREC
+           NREC=HNREC;
            IF HTOUT = '1';
              IF ZOPT='2' OR ZOPT='3' OR ZOPT='4' OR ZOPT='99';
                // Si l'employé à quitté on ne peut plus rien modifier
-     C                   MOVE      '5 '          ZOPT
+               ZOPT = '5 ';
              ENDIF;
            ENDIF;
-           g_Selection_generique = *ON;
+           g_Traitement_option = *ON;
            // Selection en fonction du choix saisi
            SELECT;
            WHEN (ZOPT = '2') OR (ZOPT = ' 2');
-     C                   MOVEL     'MO'          PCHX
-           WHEN (ZOPT = '3') OR (ZOPT = ' 3');
-     C                   MOVEL     'CO'          PCHX
+             PCHX = 'MO';
+            WHEN (ZOPT = '3') OR (ZOPT = ' 3');
+              PCHX = 'CO';
            WHEN (ZOPT = '4') OR (ZOPT = ' 4');
-     C                   MOVEL     'SU'          PCHX
+             PCHX = 'SU';
            WHEN (ZOPT = '5') OR (ZOPT = ' 5');
-     C                   MOVEL     'AF'          PCHX
+             PCHX = 'AF;'
            WHEN (ZOPT = '6') OR (ZOPT = ' 6');
-     C                   MOVE      HMATR         PMAT
-     C                   CALL      'PGMF2SCL'
-     C                   PARM                    PMAT             10
-             g_Selection_generique = *OFF;
+             PMAT =  HMATR;
+             Imprimer( PMAT);
+             g_Traitement_option = *OFF;
            WHEN (ZOPT = '99');
-     C                   MOVEL     'PE'          PCHX
+             PCHX = 'PE';
            OTHER;
              // La saisie ne correspond à rien
-             g_Selection_generique = *OFF;
+             g_Traitement_option = *OFF;
              // Envoyer un message pour dire que l'option n'existe pas
-     C                   MOVEL     '1'           PTYP
-     C                   MOVEL     'FICMSG   '   PFIM
-     C                   MOVEL     'MSG0002'     PMID
-     C                   CALL      'PGM001CL'
-     C                   PARM                    PTYP              1
-     C                   PARM                    PFIM             10
-     C                   PARM                    PMID              7
-     C                   PARM                    PMDT             99
+             PTYP = '1';
+             PFIM = 'FICMSG   ';
+             PMID = 'MSG0002';
+             Gestion_message( PTYP
+                             :PFIM
+                             :PMID
+                             :PMDT);
            ENDSL;
+
            IF HTOUT = '0';
              // Pour ne pas perdre l'attribut couleur
              Znomred = *OFF;
            ELSE;
              Znomred = *ON;
            ENDIF;
+
            // Nettoyage
-     C                   MOVEL     *BLANK        ZOPT
+           Clear ZOPT;
            UPDATE(E) SFL01;
-           *IN90 = %ERROR;
            // On aurait pu aussi faire IF..., en tout cas le choix est bon
-     C   85              CALL      'PGMF02'
-     C                   PARM                    PCHX              2
-     C                   PARM                    NREC             10
-     C   85              SETON                                        86
+           If g_Traitement_option;
+             Gestion_fiche( PCHX
+                           :NREC);
+             g_Selection_OK=*on;
+           EndIf;
+
       // On continue de boucler si autre option
            READC(E) SFL01;
-           *IN70 = %ERROR OR %EOF;
          ENDDO;
+
          // Potentiellement il y a eu mise à jour, on pourrait affiner
-     C   86              EXSR      INITSF
+         If g_Selection_OK;
+           EXSR INITSF;
+         EndIf;
        ENDSR;
+
        // Chargement d'une page
        BEGSR CHGPAG;
          // Il faut positionner correctement les indicateurs et les variables
          Sflnxtchg = *OFF;
          //                  SETON                                        04
-     C                   Z-ADD     LSTLIG        WRAN01
+         Wran1 = LSTLIG;
       // Lexture de l'enregistrement suivant
          READ FICF;
-         *IN70 = %EOF;
          // Remise à zéro du compteur de ligne, mais on pourrait faire autrement
-     C                   Z-ADD     0             NBRLIG            4 0
+         Clear NBRLIG;
       //
-         DOW *IN70 = '0'
+         DOW Not %eof = '0'
          AND NBRLIG < 14;
            // Remplissage des zones écran
            g_Selection_OK = *ON;
@@ -326,75 +362,72 @@
                ENDIF;
              ELSE;
                // On recherche si le nom commence par la valeur avant le '*'
-     C     I             SUBST (P) FINOM:1       WXNOM            35    90
-      // Petite entorse de flemmard WXNOM est déclarée au fil de l'eau
-               IF WXNOM <> WSNOM;
+               IF %Subst(FINOM:1:I) <> WSNOM;
                  g_Selection_OK = *OFF;
                ENDIF;
              ENDIF;
            ENDIF;
            // L'indicateur est à '1' si sélection OK ou pas de sélection
            IF g_Selection_OK;
-     C                   MOVEL     FINOM         ZNOM
-     C                   MOVEL     FIPR1         ZPR1
-     C                   MOVEL     FIFON         ZFONC
-     C                   Z-ADD     FIMAT         ZMATR
-     C                   MOVEL     FICPO         ZCPO
-     C                   MOVEL     FIC           WDSFIC
-     C                   Z-ADD     WNRCFI        HNREC
-     C                   MOVE      FIMAT         HMATR
+             ZNOM = FINOM;
+             ZPR1 = FIPR1;
+             ZFONC = FIFON;
+             ZMATR =  FIMAT;
+             ZCPO  = FICPO;
+             WDSFIC = FIC;
+             WNRCFIC = HNREC;
+             FIMAT = MATR;
              IF FIDAS = 0;
                // Top salarié licencié
-     C                   MOVE      '0'           HTOUT
+               HTOUT = '0';
                Znomred = *OFF;
              ELSE;
-     C                   MOVE      '1'           HTOUT
+               HTOUT = '1';
                Znomred = *ON;
              ENDIF;
              // Les compteurs, attention au WRAN01
-     C                   ADD       1             NBRLIG
-     C                   ADD       1             LSTLIG
-     C                   ADD       1             WRAN01
+             NBRLIG+=1;
+             LSTLIG+=1;
+             WRAN01+=1;
       // Ecriture de la ligne
              WRITE SFL01;
            ENDIF;
            // Lecture du suivant
            READ FICF;
-           *IN70 = %EOF;
+
          ENDDO;
          // On quitte la boucle soit en fin de page
          //                     soit en fin de fichier
-         IF *IN70 = '1';
+         IF %Eof;
            // Le caractère de suite, on est en fin de fichier
            Sflend_no_rollup = *ON;
          ELSE;
            Sflend_no_rollup = *OFF;
          ENDIF;
+
          // Si le fichier est vide
          IF WRAN01 = 0;
-     C                   Z-ADD     1             NBRLIG
-     C                   Z-ADD     1             LSTLIG            4 0
-      // Un petit message
-     C                   Z-ADD     1             WRAN01
-      // Pas de saisie d'option
+           NBRLIG=1;
+           LSTLIG=1;
+           // Un petit message
+           WRAN01=1;
+           // Pas de saisie d'option
            Zoptpr = *ON;
            IF ZSNOM = *BLANK;
-             // Si on a un vieil AS400 du siècle dernier
-     C                   MOVEL     'Fic. Vide'   ZNOM
-           ELSE;
-             // En RPG ILE
              ZNOM = 'Sélection Vide';
            ENDIF;
+
            // Ne pas oublier de remettre à blanc
-     C                   MOVEL     *BLANK        ZPR1
-     C                   MOVEL     *BLANK        ZFONC
-     C                   Z-ADD     0             ZMATR
-     C                   MOVEL     *BLANK        ZCPO
-     C                   MOVEL     *BLANK        WDSFIC
-     C                   Z-ADD     0             HNREC
-      // Ecriture du message sur la première ligne
+           Clear ZPR1;
+           Clear ZFONC;
+           Clear ZMATR;
+           Clear ZCPO;
+           Clear WDSFIC;
+           Clear HNREC;
+
+           // Ecriture du message sur la première ligne
            WRITE SFL01;
          ENDIF;
-         // le WRAN01 à 1 pour afficher le premier enregistrement
-         //                  Z-ADD     LSTLIG        WRAN01
+
+           WRAN01 = LSTLIG;
        ENDSR;
