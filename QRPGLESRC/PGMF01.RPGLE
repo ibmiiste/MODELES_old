@@ -17,11 +17,17 @@
        dcl-s I packed(3);
        Dcl-s g_Nblis1 Packed(4:0);
 
+       // Gestion des messages
+       Dcl-s PTYP Char(1);
+       Dcl-s PFIM Char(10);
+       Dcl-s PMID Char(7);
+       Dcl-s PMDT Char(99);
+
       // La DS du programme, noter le S indispensable
        /copy qcpysrc,Psds
 
       // La DS du sous=fichier
-       dcl-ds DSSFL1;
+       Dcl-ds DSSFL1;
         WPOSC int(5) pos(370);
         WRRNG int(5) pos(376);
         WRNGP int(5) pos(378);
@@ -30,6 +36,7 @@
 
       // Le DS des indicateurs de l'écran
        dcl-ds IndDs;
+        Rollup Ind Pos(2);
         Sflnxtchg Ind Pos(8);
         Zoptpr Ind Pos(20);
         Znomred Ind Pos(30);
@@ -102,14 +109,14 @@
        // Traitement de l'écran
        BEGSR TRTSFL;
          // Effacement du sous=fichier de messages
-     C                   MOVEL     '3'           PTYP
-     C                   MOVEL     *BLANK        PFIM
-     C                   MOVEL     *BLANK        PMID
-     C                   CALL      'PGM001CL'
-     C                   PARM                    PTYP              1
-     C                   PARM                    PFIM             10
-     C                   PARM                    PMID              7
-     C                   PARM                    PMDT             99
+         PTYP = '3';
+         PFIM = *Blank;
+         PMID = *Blank;
+         Gestion_message( PTYP
+                         :PFIM
+                         :PMID
+                         :PMDT);
+
          WRITE WSFCTL;
          // Ecriture de l'écran
          Sfldsp = *ON;
@@ -122,10 +129,11 @@
 
          // Une touche a été actionnée
          // Chargement de l'heure
-     C                   TIME                    ZHEUR
+         ZHEUR=%TIME();
+
       // Indicateur pour ne pas tester d'autres actions
          g_Fin_actions = *ON;
-         IF *IN02 = '1';
+         IF Rollup = '1';
            // page suivante
            EXSR CHGPAG;
            g_Fin_actions = *OFF;
