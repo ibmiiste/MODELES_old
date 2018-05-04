@@ -6,6 +6,7 @@
      A                                      HLPTITLE('Aide générale -
      A                                      sur PGMF01')
      A                                      ALTHELP(CA01)
+     A                                      INDARA
      A          R SFL01                     SFL
      A  08                                  SFLNXTCHG
      A            ZOPT           2   B  8  2
