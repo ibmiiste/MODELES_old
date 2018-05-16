@@ -10,11 +10,6 @@
      FFIC01L    UF A E           K DISK
      F                                     RENAME(FICF      :FICF1)
      FFIF01L    IF   E           K DISK
-     DPGMC01           PR
-     DPCOD                            3
-     DPCPT                            1
-     DPCP1                            6
-     DPMAT                           10
      DWTXT1            C                   '         Modification         '
      DWTXT2            C                   '             Copie            '
      DWTXT3            C                   '         Suppression          '
@@ -115,7 +110,7 @@
      C                   SETOFF                                       141516
      C                   SETOFF                                       17
      C                   WHEN      (PCHX = 'PE')
-     C* direction Pôle Emploi
+     C* direction P™le Emploi
      C                   MOVEL     WTXT6         ZMODE
      C* on saisit simplement la date de fin
      C                   SETOFF                                         18
@@ -190,7 +185,7 @@
      C                             *INKL = '1'
      C                   SETOFF                                       5051
      C                   END
-     C* on met à jour l'heure
+     C* on met ˆ jour l'heure
      C   51              TIME                    ZHEUR
      C   51*INKD         IFEQ      '1'
      C* appui sur la touche F4
@@ -222,7 +217,7 @@
      C                   SETON                                          85
      C                   END
      C                   END
-     C* contrôle des données saisies
+     C* contr™le des données saisies
      C                   IF        *IN51 = '1'
      C                   EXSR      CTLDTA
      C                   IF        *IN88 = '1'
@@ -252,7 +247,7 @@
      C                   END
      C                   END
      C                   ENDSR
-     C*** Création suppression et MàJ selon le cas
+     C*** Création suppression et MˆJ selon le cas
      C     VALID1        BEGSR
      C                   IF        PCHX = 'SU'
      C* La suppression se fait par la touche F15
@@ -262,11 +257,11 @@
      C* On ne crée le matricule qu'en copie ou création
      C                   MOVE      'MAT'         PCOD
      C                   MOVE      '2'           PCPT
-     C                   CALLP     PGMC01  (PCOD : PCPT : PCP1 : PMAT)
-     C*                  PARM                    PCOD              3
-     C*                  PARM                    PCPT              1
-     C*                  PARM                    PCP1              6
-     C*                  PARM                    PMAT             10
+     C                   CALL      'PGMC01'
+     C                   PARM                    PCOD              3
+     C                   PARM                    PCPT              1
+     C                   PARM                    PCP1              6
+     C                   PARM                    PMAT             10
      C                   MOVE      PMAT          FIMAT
      C                   SETON                                        71
      C                   END
@@ -296,7 +291,7 @@
      C                   MOVE      WHEU          FIHEM
      C                   MOVEL     WUSER         FIUSM
      C                   IF        *IN71 = '0'
-     C* on met à jour directement
+     C* on met ˆ jour directement
      C                   UPDATE    FICF1
      C                   ELSE
      C* création
