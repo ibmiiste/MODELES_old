@@ -78,11 +78,11 @@
      C                   WRITE     WSFCTL
      C* Ecriture de l'écran
      C                   SETON                                        0405
-     C                   WRITE     FORE1                                  70
      C                   WRITE     FORB1                                  70
+     C                   WRITE     FORE1                                  70
      C* Attente lecture
      C                   READ      FORE1                                  70
-     C                   READ      FORB1                                  70
+     C*                  READ      FORB1                                  70
      C                   IF        *IN02 = '1'
      C* pour mémoire, on est en chargement total
      C* c'est le système qui s'en occupe
@@ -130,7 +130,7 @@
      C                   Z-ADD     6             WINLIG
      C*                                       colonne 32
      C                   Z-ADD     32            WINCOL
-     C                   Z-ADD     0             WRAN01
+     C                   Z-ADD     1             WRAN01
      C* la partie sensible de l'initialisation
      C                   SETON                                        0607
      C                   SETOFF                                       0405
