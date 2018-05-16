@@ -78,11 +78,11 @@
      C                   WRITE     WSFCTL
      C* Ecriture de l'écran
      C                   SETON                                        0405
-     C                   WRITE     FORB1                                  70
      C                   WRITE     FORE1                                  70
+     C                   WRITE     FORB1                                  70
      C* Attente lecture
      C                   READ      FORE1                                  70
-     C*                  READ      FORB1                                  70
+     C                   READ      FORB1                                  70
      C                   IF        *IN02 = '1'
      C* pour mémoire, on est en chargement total
      C* c'est le système qui s'en occupe
