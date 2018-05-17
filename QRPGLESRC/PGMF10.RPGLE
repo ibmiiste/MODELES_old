@@ -174,6 +174,8 @@
      C                   WRITE     FORE1
      C                   SETOFF                                       06
      C                   SETON                                        0405
+     C     *LOVAL        SETLL     FIFF                                   70
+     C                   READ      FIFF                                   70
      C                   EXSR      CHGPAG
      C*
      C                   ENDSR
@@ -228,8 +230,6 @@
      C                   SETOFF                                       08
      C*                  SETON                                        04
      C                   Z-ADD     LSTLIG        WRAN01
-     C     *LOVAL        SETLL     FIFF                                   70
-     C                   READ      FIFF                                   70
      C                   Z-ADD     0             NBRLIG            4 0
      C*
      C     *IN70         DOWEQ     '0'
@@ -279,7 +279,9 @@
      C     *IN70         IFEQ      '1'
      C* le caractère de suite
      C                   SETON                                        07
-     C                   END
+     C                   ELSE
+     C                   SETOFF                                       07
+     C                   ENDIF
      C* si le fichier est vide
      C     WRAN01        IFEQ      0
      C                   Z-ADD     1             NBRLIG
@@ -294,7 +296,7 @@
      C                   WRITE     SFL01
      C                   END
      C* le WRAN01 à 1 pour afficher le premier enregistrement
-     C                   Z-ADD     1             WRAN01
+     C*                  Z-ADD     1             WRAN01
      C                   ENDSR
      C* chargement de la date et heure système
      C     DATHEU        BEGSR
