@@ -151,4 +151,5 @@
      C                   WRITE     SFL01
      C                   READ      FIFF                                   70
      C                   ENDDO
+     C                   EVAL      WRAN01 = 1
      C                   ENDSR
