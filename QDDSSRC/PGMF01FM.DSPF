@@ -67,8 +67,8 @@
      A            WPRCSR         4S 0H
      A            WLIGN          3S 0H
      A            WCOLN          3S 0H
-     A            ZDATE           L  B  2  2DATFMT(*EUR)
-     A            ZHEUR           T  B  2 13TIMFMT(*EUR)
+     A            ZDATE           L  O  2  2DATFMT(*EUR)
+     A            ZHEUR           T  O  2 13TIMFMT(*EUR)
      A          R FORB1
      A                                      CF03
      A                                      CF05
