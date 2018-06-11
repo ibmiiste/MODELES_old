@@ -44,12 +44,6 @@
      A                                      COLOR(WHT)
      A            ZUSER         10   O  1 70
      A                                      OVRDTA
-     A            ZDATE          8  0O  2  2
-     A                                      EDTWRD('  /  /    ')
-     A                                      OVRDTA
-     A            ZHEUR          6  0O  2 14
-     A                                      EDTWRD('  :  :  ')
-     A                                      OVRDTA
      A            ZJOB          10   O  2 70
      A                                      OVRDTA
      A                                  4  3'Indiquez vos options, puis appuyez-
@@ -73,6 +67,8 @@
      A            WPRCSR         4S 0H
      A            WLIGN          3S 0H
      A            WCOLN          3S 0H
+     A            ZDATE           L  O  2  2DATFMT(*EUR)
+     A            ZHEUR           T  O  2 13TIMFMT(*EUR)
      A          R FORB1
      A                                      CF03
      A                                      CF05
