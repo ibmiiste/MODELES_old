@@ -236,8 +236,8 @@
            // Si différent de blank il y a selection
            g_Selection = *ON;
            Reset I;
-           g_Selection_generique = I = %Scan( '*'
-                                             :ZSNOM);
+
+           I = %Scan( '*':ZSNOM);
 
            IF I > 0;
              I=I-1;
@@ -266,8 +266,20 @@
          Sfldsp = *ON;
          Sfldspctl = *ON;
          // Positionnement en début de fichier
-         SETLL (FIFON:FINOM) FICF;
-         *IN70 = %EQUAL;
+         EXEC SQL CLOSE fic00p_s1;
+
+         EXEC SQL DECLARE fic00p_s1
+               CURSOR FOR
+                   SELECT finom,
+                          fipr1,
+                          fifon,
+                          fimat,
+                          ficpo
+                     FROM fic00p
+                    WHERE fifon>=:fifon
+                      AND finom>=:finom;
+         EXEC SQL OPEN fic00p_s1;
+         *in70 = %equal;
          // Chargement de la première page
          EXSR CHGPAG;
        ENDSR;
@@ -354,7 +366,12 @@
          //                  SETON                                        04
          Wran01 = LSTLIG;
       // Lexture de l'enregistrement suivant
-         READ FICF;
+         EXEC SQL FETCH fic00p_s1 INTO  :finom,
+                                        :fipr1,
+                                        :fifon,
+                                        :fimat,
+                                        :ficpo;
+
          // Remise à zéro du compteur de ligne, mais on pourrait faire autrement
          Clear NBRLIG;
       //
@@ -398,11 +415,15 @@
              NBRLIG+=1;
              LSTLIG+=1;
              WRAN01+=1;
-      // Ecriture de la ligne
+             // Ecriture de la ligne
              WRITE SFL01;
            ENDIF;
            // Lecture du suivant
-           READ FICF;
+           EXEC SQL FETCH fic00p_s1 INTO :finom,
+                                         :fipr1,
+                                         :fifon,
+                                         :fimat,
+                                         :ficpo;
 
          ENDDO;
          // On quitte la boucle soit en fin de page
