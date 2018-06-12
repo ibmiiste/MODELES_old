@@ -5,7 +5,6 @@
       //*********************************************************************
       // Déclaration des fichiers
        dcl-f PGMF01FM workstn sfile(sfl01 :wran01) infds(dssfl1) indds(IndDs);
-       dcl-f FIC02L keyed infds(fic);
 
 
        // Prototypes d'appel
@@ -30,6 +29,9 @@
        Dcl-s WSNOP char(35);
        Dcl-s I packed(3);
 
+       // Numéro relatif d"enregistrement de FIC00P
+       Dcl-s g_Num_rel Like(r_Numero_relatif);
+
        // Gestion sous-fichier
        Dcl-s LSTLIG Packed(4:0);
        // Le compteur de ligne par page
@@ -44,12 +46,12 @@
        Dcl-s PMID Char(7);
        Dcl-s PMDT Char(99);
 
-      // Variables personnel
+       // Variables personnel
        Dcl-s PMAT Char(10);
        Dcl-s PCHX Char(2);
        Dcl-s NREC Char(10);
 
-      // Indicateurs booléens
+       // Indicateurs booléens
        Dcl-s g_Fin_actions Ind;
        Dcl-s g_Selection Ind;
        Dcl-s g_Selection_generique Ind;
@@ -57,10 +59,13 @@
        Dcl-s g_Traitement_option Ind;
        Dcl-s g_Selection_OK Ind;
 
-      // La DS du programme, noter le S indispensable
+       // Valeurs possible de SQLCODE
+       Dcl-c c_trouve 0;
+
+       // La DS du programme, noter le S indispensable
        /copy qcpysrc,Psds
 
-      // La DS du sous=fichier
+       // La DS du sous=fichier
        Dcl-ds DSSFL1;
         WPOSC int(5) pos(370);
         WRRNG int(5) pos(376);
@@ -68,7 +73,7 @@
         WNBRSF int(5) pos(380);
        end-ds;
 
-      // Le DS des indicateurs de l'écran
+       // Le DS des indicateurs de l'écran
        Dcl-ds IndDs;
         Rollup Ind Pos(2);
         Sflnxtchg Ind Pos(8);
@@ -83,40 +88,15 @@
         Sflend_Msgf Ind Pos(09);
        End-ds;
 
-      // Renommage des touches de fonction
+       //
+       // Renommage des touches de fonction
        /Copy Qcpysrc,Fonction
 
-      // La DS du fichier
-       dcl-ds FIC;
-        WNRC01 int(10) pos(397);
-       end-ds;
+       //Héritage des templates
+       /copy qcpysrc,Inhtemplat
 
-
-       dcl-ds WDSFIC;
-        WCDFIL char(8) pos(1);
-        WOPENF char(1) pos(9);
-        WSTSFI zoned(5) pos(11);
-        WOPCOD char(6) pos(16);
-        WRPGSQ char(8) pos(30);
-        WRPGNR char(8) pos(38);
-        WERRFI char(7) pos(46);
-        WNFICH char(10) pos(83);
-        WNLIBR char(10) pos(93);
-        WSPNAM char(10) pos(103);
-        WSPLIB char(10) pos(113);
-        WSPNUM int(5) pos(123);
-        WLIMBR char(10) pos(129);
-        WNBPUT int(10) pos(243);
-        WNBGET int(10) pos(247);
-        WNBPG int(10) pos(251);
-        WNBIO int(10) pos(255);
-        WRCDFT char(10) pos(261);
-        WNBRCD int(10) pos(283);
-        WNRCFI int(10) pos(397);
-       end-ds;
-
-       // la clé d'accés au fichier
-       Dcl-ds Key likerec(FICF : *key);
+       // la ds de la table FIC00P
+       Dcl-ds FIC00P Extname('FIC00P') End-ds;
 
        // le nombre de lignes afichables, déclaration a la volée
        g_Nblis1 = 14;
@@ -225,7 +205,7 @@
          //    l'indicateur 20 conditionne la zone OPT (protection)
          Zoptpr = *OFF;
          // Initialisation de la variable de sélection
-         ZSNOM =  WSNOP;
+         WSNOP=ZSNOM;
          Clear WSNOM;
       // Initialisation de la clé pour positionnement
          Clear FIFON;
@@ -274,7 +254,9 @@
                           fipr1,
                           fifon,
                           fimat,
-                          ficpo
+                          ficpo,
+                          fidas,
+                          RRN( fic00p)
                      FROM fic00p
                     WHERE fifon>=:fifon
                       AND finom>=:finom;
@@ -370,12 +352,14 @@
                                         :fipr1,
                                         :fifon,
                                         :fimat,
-                                        :ficpo;
+                                        :ficpo,
+                                        :fidas,
+                                        :g_num_rel;
 
          // Remise à zéro du compteur de ligne, mais on pourrait faire autrement
-         Clear NBRLIG;
+         clear nbrlig;
       //
-         DOW Not %eof
+         DOW Sqlcode=c_trouve
          AND NBRLIG < 14;
            // Remplissage des zones écran
            g_Selection_OK = *ON;
@@ -400,8 +384,7 @@
              ZFONC = FIFON;
              ZMATR =  FIMAT;
              ZCPO  = FICPO;
-             WDSFIC = FIC;
-             WNRCFI = HNREC;
+             HNREC=g_Num_rel;
              FIMAT = HMATR;
              IF FIDAS = 0;
                // Top salarié licencié
@@ -423,9 +406,11 @@
                                          :fipr1,
                                          :fifon,
                                          :fimat,
-                                         :ficpo;
+                                         :ficpo,
+                                         :fidas,
+                                         :g_num_rel;
 
-         ENDDO;
+         enddo;
          // On quitte la boucle soit en fin de page
          //                     soit en fin de fichier
          IF %Eof;
@@ -452,7 +437,6 @@
            Clear ZFONC;
            Clear ZMATR;
            Clear ZCPO;
-           Clear WDSFIC;
            Clear HNREC;
 
            // Ecriture du message sur la première ligne
