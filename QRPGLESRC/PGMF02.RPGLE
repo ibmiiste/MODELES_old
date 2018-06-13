@@ -67,13 +67,13 @@
         WRECMI int(5) pos(403);
        end-ds;
 
+       Dcl-ds
        Dcl-pi Personnal_detail Extpgm('PGMF02');
          Pchx Char(2);
          Pnrec Char(10);
        End-Pi;
 
-     C     KEY001        KLIST
-     C                   KFLD                    ZMATR
+
      C     KEY002        KLIST
      C                   KFLD                    ZFCOD
       // début du programme
@@ -343,7 +343,7 @@
          IF PCHX = 'SU';
            // La suppression se fait par la touche F15
          ELSE;
-           CHAIN(E) KEY001 FICF1;
+           CHAIN(E) ZMATR FICF1;
            *IN71 = NOT %ERROR AND NOT %FOUND;
            *IN90 = %ERROR;
            IF PCHX = 'CR' OR PCHX = 'CO';
