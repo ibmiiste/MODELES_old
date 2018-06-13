@@ -67,9 +67,11 @@
         WRECMI int(5) pos(403);
        end-ds;
 
-     C     *ENTRY        PLIST
-     C                   PARM                    PCHX
-     C                   PARM                    PNREC
+       Dcl-pi Personnal_detail Extpgm('PGMF02');
+         Pchx Char(2);
+         Pnrec Char(10);
+       End-Pi;
+
      C     KEY001        KLIST
      C                   KFLD                    ZMATR
      C     KEY002        KLIST
