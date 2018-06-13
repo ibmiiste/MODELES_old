@@ -259,7 +259,9 @@
                           RRN( fic00p)
                      FROM fic00p
                     WHERE fifon>=:fifon
-                      AND finom>=:finom;
+                      AND finom>=:finom
+                 ORDER BY fifon,
+                          finom;
          EXEC SQL OPEN fic00p_s1;
          *in70 = %equal;
          // Chargement de la première page
