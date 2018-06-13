@@ -117,7 +117,7 @@
        // Debut du traitement,
        EXSR INITSF;
        // Boucle d'attente de sortie
-       DOW g_Sortie = '1';
+       DOW g_Sortie;
          EXSR TRTSFL;
        ENDDO;
        // Indicateur de fin de programme
@@ -364,8 +364,8 @@
            // Remplissage des zones écran
            g_Selection_OK = *ON;
            // Test s'il y a selection
-           IF g_Selection = '1' OR g_Selection_generique = '1';
-             IF g_Selection = '1' AND g_Selection_generique = '0';
+           IF g_Selection OR g_Selection_generique;
+             IF g_Selection AND g_Selection_generique;
                // On recherche la stricte égalité de nom
                IF FINOM <> ZSNOM;
                  g_Selection_OK = *OFF;
