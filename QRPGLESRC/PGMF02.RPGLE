@@ -73,9 +73,6 @@
          Pnrec Char(10);
        End-Pi;
 
-
-     C     KEY002        KLIST
-     C                   KFLD                    ZFCOD
       // début du programme
      C                   MOVEL     WNMPGM        ZPGM
       /FREE
@@ -175,7 +172,7 @@
      C                   MOVEL     FIFON         ZFCOD
       // fichier des fonctions => libellé
       /FREE
-         CHAIN(E) KEY002 FIFF;
+         CHAIN(E) ZFCOD FIFF;
          *IN70 = NOT %ERROR AND NOT %FOUND;
          *IN90 = %ERROR;
       /END-FREE
@@ -323,7 +320,7 @@
            // on demande confirmation
          ELSE;
            // vérification du code fonction
-           CHAIN(E) KEY002 FIFF;
+           CHAIN(E) ZFCOD FIFF;
            *IN70 = NOT %ERROR AND NOT %FOUND;
            *IN90 = %ERROR;
            IF *IN70 = '1';
