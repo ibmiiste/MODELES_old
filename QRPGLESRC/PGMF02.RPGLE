@@ -30,12 +30,6 @@
         WDATI zoned(8) pos(1);
        end-ds;
 
-       dcl-ds WDE;
-        WJE zoned(2) pos(1);
-        WME zoned(2) pos(3);
-        WSSAE zoned(4) pos(5);
-        WDATE zoned(8) pos(1);
-       end-ds;
 
        dcl-ds WDSPGM PSDS;
         WNMPGM char(10) pos(1);
@@ -74,12 +68,10 @@
        End-Pi;
 
       // début du programme
-     C                   MOVEL     WNMPGM        ZPGM
-      /FREE
-       EXSR DATHEU;
-      /END-FREE
-     C                   MOVE      WDAT          ZDATE
-     C                   MOVE      WHEU          ZHEUR
+         ZPGM=WNMPGM;
+         ZDATE=%DATE();
+         ZHEUR=%TIME();
+
      C                   MOVEL     WUSER         ZUSER
      C                   MOVEL     WJOB          ZJOB
      C                   MOVEL     '*  '         WPGMQ
@@ -188,11 +180,8 @@
      C                   MOVEL     FITEL         ZTEL
      C                   MOVEL     FIPOR         ZPOR
       // traitement des dates
-     C                   Z-ADD     FIDAE         WDATI
-      /FREE
-         EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAE
+     C                   Z-ADD     FIDAE         ZDAE
+
       /FREE
          IF PCHX = 'PE';
       /END-FREE
@@ -200,34 +189,26 @@
       /FREE
          ELSE;
       /END-FREE
-     C                   Z-ADD     FIDAS         WDATI
-      /FREE
-           EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAS
-      /FREE
+     C                   Z-ADD     FIDAS         ZDAS
+
+
          ENDIF;
          // zones d'audit
       /END-FREE
-     C                   Z-ADD     FIDAC         WDATI
-      /FREE
-         EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAC
+     C                   Z-ADD     FIDAC         ZDAC
+
      C                   Z-ADD     FIHEC         ZHEC
      C                   MOVEL     FIUSC         ZUSC
-     C                   Z-ADD     FIDAM         WDATI
-      /FREE
-         EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAM
+     C                   Z-ADD     FIDAM         ZDAM
+
      C                   Z-ADD     FIHEM         ZHEM
      C                   MOVEL     FIUSM         ZUSM
       /FREE
        ELSE;
          // pas grand chose, la date du jour
       /END-FREE
-     C                   MOVE      WDAT          ZDAE
+     C                   time                    ZDAE
+
       /FREE
        ENDIF;
        // Boucle d'attente de fin
@@ -370,26 +351,13 @@
      C                   MOVEL     ZTEL          FITEL
      C                   MOVEL     ZPOR          FIPOR
       // traitement des dates
-     C                   Z-ADD     ZDAE          WDATE
-      /FREE
-           EXSR DATINV;
-      /END-FREE
-     C                   Z-ADD     WDATI         FIDAE
-     C                   Z-ADD     ZDAS          WDATE
-      /FREE
-           EXSR DATINV;
-      /END-FREE
-     C                   Z-ADD     WDATI         FIDAS
+     C                   Z-ADD     ZDAE          FIDAE
+
+     C                   Z-ADD     ZDAS          FIDAS
+
       // zones d'audit
-      /FREE
-           EXSR DATHEU;
-      /END-FREE
-     C                   MOVE      WDAT          WDATE
-      /FREE
-           EXSR DATINV;
-      /END-FREE
-     C                   Z-ADD     WDATI         FIDAM
-     C                   MOVE      WHEU          FIHEM
+        FIDAM=%Date();
+        FIHEM=%Time();
      C                   MOVEL     WUSER         FIUSM
       /FREE
            IF *IN71 = '0';
@@ -398,8 +366,8 @@
            ELSE;
              // création
       /END-FREE
-     C                   Z-ADD     WDATI         FIDAC
-     C                   MOVE      WHEU          FIHEC
+             FIDAC=%Date();
+             FIHEC=%Time();
      C                   MOVEL     WUSER         FIUSC
       /FREE
              WRITE FICF1;
@@ -407,28 +375,7 @@
          ENDIF;
          *IN50 = *OFF;
        ENDSR;
-       // Traitements de la date
-       BEGSR DATHEU;
-      /END-FREE
-     C                   TIME                    W14
-     C                   MOVE      W14           WDAT
-     C                   MOVEL     W14           WHEU
-      /FREE
-       ENDSR;
-       BEGSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WSSAI         WSSAE
-     C                   Z-ADD     WMI           WME
-     C                   Z-ADD     WJI           WJE
-      /FREE
-       ENDSR;
-       BEGSR DATINV;
-      /END-FREE
-     C                   Z-ADD     WSSAE         WSSAI
-     C                   Z-ADD     WME           WMI
-     C                   Z-ADD     WJE           WJI
-      /FREE
-       ENDSR;
+
        //****Envoi d'un message programme
        BEGSR ENVMSG;
       /END-FREE
