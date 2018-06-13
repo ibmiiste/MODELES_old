@@ -49,12 +49,8 @@
      A                                      COLOR(WHT)
      A            ZUSER         10   O  1 70
      A                                      OVRDTA
-     A            ZDATE          8  0O  2  2
-     A                                      EDTWRD('  /  /    ')
-     A                                      OVRDTA
-     A            ZHEUR          6  0O  2 14
-     A                                      EDTWRD('  :  :  ')
-     A                                      OVRDTA
+     A            ZDATE           L  O  2  2DATFMT(*EUR) OVRDTA
+     A            ZHEUR           T  O  2 13TIMFMT(*EUR) OVRDTA
      A            ZMODE         30   O  2 27
      A                                      COLOR(WHT)
      A                                      OVRDTA
