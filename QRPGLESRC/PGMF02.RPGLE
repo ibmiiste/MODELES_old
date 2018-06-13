@@ -68,15 +68,14 @@
        End-Pi;
 
       // début du programme
-         ZPGM=WNMPGM;
-         ZDATE=%DATE();
-         ZHEUR=%TIME();
+       ZPGM=WNMPGM;
+       ZDATE=%DATE();
+       ZHEUR=%TIME();
+       ZUSER=WUSER;
+       ZJOB=WJOB;
+       WPGMQ='*  ';
+       WMGKEY='CC01';
 
-     C                   MOVEL     WUSER         ZUSER
-     C                   MOVEL     WJOB          ZJOB
-     C                   MOVEL     '*  '         WPGMQ
-     C                   MOVEL     'CC01'        WMGKEY
-      /FREE
        *IN09 = *ON;
        *IN10 = *ON;
        *IN14 = *ON;
@@ -87,26 +86,21 @@
        *IN85 = *OFF;
        *IN88 = *OFF;
        // constantes pour ce programme
-      /END-FREE
-     C                   MOVE      '1'           PTYP
-     C                   MOVEL     'FICMSG    '  PFICM
-      /FREE
+       PTYP='1';
+       PFICM='FICMSG    ';
+
        SELECT;
        WHEN (PCHX = 'MO');
          // modification
-      /END-FREE
-     C                   MOVEL     WTXT1         ZMODE
+         ZMODE=WTXT1;
       // on ne peut modifier que ces zones
-      /FREE
          *IN14 = *OFF;
          *IN15 = *OFF;
          *IN16 = *OFF;
        WHEN (PCHX = 'CO');
          // copie
-      /END-FREE
-     C                   MOVEL     WTXT2         ZMODE
+         ZMODE==WTXT2;
       // toutes les zones sont autorisées
-      /FREE
          *IN14 = *OFF;
          *IN15 = *OFF;
          *IN16 = *OFF;
@@ -114,85 +108,63 @@
          *IN18 = *OFF;
        WHEN (PCHX = 'SU');
          // suppression
-      /END-FREE
-     C                   MOVEL     WTXT3         ZMODE
+         ZMODE=WTXT3;
       // aucune zone n'est saisisable
-      /FREE
        WHEN (PCHX = 'AF');
          // affichage
-      /END-FREE
-     C                   MOVEL     WTXT4         ZMODE
+         ZMODE=WTXT4;
       // aucune zone n'est saisisable
-      /FREE
        WHEN (PCHX = 'CR');
          // création
-      /END-FREE
-     C                   MOVEL     WTXT5         ZMODE
+         ZMODE=WTXT5;
       // tout est saisisable sauf date de sortie
-      /FREE
          *IN14 = *OFF;
          *IN15 = *OFF;
          *IN16 = *OFF;
          *IN17 = *OFF;
        WHEN (PCHX = 'PE');
          // direction Ple Emploi
-      /END-FREE
-     C                   MOVEL     WTXT6         ZMODE
-      // on saisit simplement la date de fin
-      /FREE
+         ZMODE=WTXT6;
+         // on saisit simplement la date de fin
          *IN18 = *OFF;
        ENDSL;
        // Initialisation de l'écran si on un numéro d'enregistrement
        IF PNREC <> *BLANK;
-      /END-FREE
-     C                   MOVE      PNREC         WNREC
-      /FREE
+         WNREC=%Dec(PNREC);
          CHAIN(NE) WNREC FICF;
          *IN70 = NOT %ERROR AND NOT %FOUND;
          *IN90 = %ERROR;
          IF PCHX = 'CR' OR PCHX = 'CO';
            // en création ou copie zone non renseignée
-      /END-FREE
-     C                   Z-ADD     0             ZMATR
-      /FREE
+           ZMATR=0;
          ELSE;
-      /END-FREE
-     C                   Z-ADD     FIMAT         ZMATR
-      /FREE
+          ZMATR=FIMAT;
          ENDIF;
-      /END-FREE
-     C                   MOVEL     FIFON         ZFCOD
+
+         ZFCOD=FIFON;
       // fichier des fonctions => libellé
-      /FREE
          CHAIN(E) ZFCOD FIFF;
          *IN70 = NOT %ERROR AND NOT %FOUND;
          *IN90 = %ERROR;
-      /END-FREE
-     C                   MOVEL     MILIB         ZFLIB
-     C                   MOVEL     FINOM         ZNOM
-     C                   MOVEL     FIPR1         ZPR1
-     C                   MOVEL     FIPR2         ZPR2
-     C                   MOVEL     FIAD1         ZAD1
-     C                   MOVEL     FIAD2         ZAD2
-     C                   MOVEL     FIAD3         ZAD3
-     C                   MOVEL     FICPO         ZCPO
-     C                   MOVEL     FIVIL         ZVIL
-     C                   MOVEL     FITEL         ZTEL
-     C                   MOVEL     FIPOR         ZPOR
+         ZFLIB=MILIB
+         ZNOM                 MOVEL     FINOM
+        ZPR1=FIPR1;
+        ZPR2=FIPR2;
+        ZAD1=FIAD1;
+        ZAD2=FIAD2;
+        ZAD3=FIAD3;
+        ZCPO=FICPO;
+        ZVIL=FIVIL;
+        ZTEL=FITEL;
+        ZPOR=FIPOR;
       // traitement des dates
-     C                   Z-ADD     FIDAE         ZDAE
+        ZDAE=FIDAE;
 
-      /FREE
-         IF PCHX = 'PE';
-      /END-FREE
-     C                   Z-ADD     ZDATE         ZDAS
-      /FREE
-         ELSE;
-      /END-FREE
-     C                   Z-ADD     FIDAS         ZDAS
-
-
-         ENDIF;
+        IF PCHX = 'PE';
+          ZDATE=ZDAS;
+        ELSE;
+          ZDAS=FIDAS;
+        ENDIF;
          // zones d'audit
       /END-FREE
      C                   Z-ADD     FIDAC         ZDAC
