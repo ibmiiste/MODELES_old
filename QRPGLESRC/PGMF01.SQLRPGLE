@@ -150,7 +150,7 @@
 
       // Indicateur pour ne pas tester d'autres actions
          g_Fin_actions = *ON;
-         IF Rollup = '1';
+         IF Rollup;
            // page suivante
            EXSR CHGPAG;
            g_Fin_actions = *OFF;
@@ -163,20 +163,20 @@
          ENDIF;
 
          // touches F3 et F12
-         IF Sortie = '1' OR
-               Annuler = '1';
+         IF Sortie OR
+            Annuler;
            // on met l'indicateur à Off = fin du programme
            g_Sortie = *OFF;
            g_Fin_actions = *OFF;
          ENDIF;
          //
-         IF Rachaichir = '1';
+         IF Rachaichir;
            // F5 Rafraichissement de l'écran
            EXSR INITSF;
            g_Fin_actions = *OFF;
          ENDIF;
          //
-         IF Creer = '1';
+         IF Creer;
            // F6 création d'un nouveau matricule
            PCHX = 'CR';
            Clear NREC;
@@ -195,7 +195,7 @@
            g_Fin_actions = *OFF;
          ENDIF;
          // On ne fait ceci que s'il n'y a eu rien d'autre
-         IF g_Fin_actions = '1';
+         IF g_Fin_actions;
            EXSR TRTOPT;
          ENDIF;
          // On recommence la boucle d'attente
