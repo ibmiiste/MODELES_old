@@ -22,7 +22,7 @@
        dcl-s P_INKE pointer inz(%addr(*inke));
        dcl-s F5 ind based(p_inke);
        dcl-s Refresh ind based(p_inke);
-       dcl-s Rachaichir ind based(p_inke);
+       dcl-s Rafraichir ind based(p_inke);
        dcl-s P_INKF pointer inz(%addr(*inkf));
        dcl-s F6 ind based(p_inkf);
        dcl-s Creer ind based(p_inkf);
