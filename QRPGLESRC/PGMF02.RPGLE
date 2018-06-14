@@ -8,6 +8,15 @@
        dcl-f FIC00P usage(*update);
        dcl-f FIC01L keyed usage(*update: *output) rename(ficf      :ficf1);
        dcl-f FIF01L keyed;
+
+       //External procedure Prototypes
+       Dcl-pr compteur_double Extpgm('PGMC01');
+         PCOD Char(3);
+         PCPT Char(1);
+         PCP1 Char(6);
+         PMAT Char(10);
+       End-Pr;
+
        dcl-c WTXT1 '         Modification         ';
        dcl-c WTXT2 '             Copie            ';
        dcl-c WTXT3 '         Suppression          ';
@@ -99,8 +108,8 @@
          *IN16 = *OFF;
        WHEN (PCHX = 'CO');
          // copie
-         ZMODE==WTXT2;
-      // toutes les zones sont autorisées
+         ZMODE=WTXT2;
+       // toutes les zones sont autorisées
          *IN14 = *OFF;
          *IN15 = *OFF;
          *IN16 = *OFF;
@@ -109,7 +118,7 @@
        WHEN (PCHX = 'SU');
          // suppression
          ZMODE=WTXT3;
-      // aucune zone n'est saisisable
+       // aucune zone n'est saisisable
        WHEN (PCHX = 'AF');
          // affichage
          ZMODE=WTXT4;
@@ -138,7 +147,7 @@
            // en création ou copie zone non renseignée
            ZMATR=0;
          ELSE;
-          ZMATR=FIMAT;
+           ZMATR=FIMAT;
          ENDIF;
 
          ZFCOD=FIFON;
@@ -198,18 +207,14 @@
            *IN51 = *OFF;
          ENDIF;
          // on met  jour l'heure
-      /END-FREE
-     C   51              TIME                    ZHEUR
-     C   51*INKD         IFEQ      '1'
-      // appui sur la touche F4
-      /FREE
-           IF WZOCUR = 'ZFCOD';
-             PACT = 'GS';
-      /END-FREE
-     C                   CALL      'PGMI01'
-     C                   PARM                    PACT
-     C                   PARM                    PGFCT
-      /FREE
+         If *In51;
+           ZHEUR=%Time();
+           If *Inkd;
+             IF WZOCUR = 'ZFCOD';
+               PACT = 'GS';
+             Endif;
+             Invite_fonction( PACT
+                             :PGFCT);
              IF PGFCT <> *BLANK;
 
                ZFCOD =PGFCT;
@@ -218,6 +223,7 @@
            ENDIF;
            *IN51 = *OFF;
          ENDIF;
+
          //
          IF PCHX = 'SU';
            *IN51 = *OFF;
@@ -227,9 +233,9 @@
                CHAIN(E) WNREC FICF;
                *IN70 = NOT %ERROR AND NOT %FOUND;
                *IN90 = %ERROR;
-      /END-FREE
-     C  N70              DELETE    FICF
-      /FREE
+               If Not *IN70;
+                 DELETE FICF;
+               Endif;
                *IN50 = *OFF;
                *IN51 = *OFF;
              ENDIF;
@@ -284,14 +290,14 @@
              // On ne crée le matricule qu'en copie ou création
              PCOD='MAT';
              PCPT='2';
-     C                   CALL      'PGMC01'
-     C                   PARM                    PCOD              3
-     C                   PARM                    PCPT              1
-     C                   PARM                    PCP1              6
-     C                   PARM                    PMAT             10
+             compteur_double( PCOD
+                             :PCPT
+                             :PCP1
+                             :PMAT);
              FIMAT=%Int(PMAT);
              *IN71 = *ON;
            ENDIF;
+
            FIFON=ZFCOD;
            FINOM=ZNOM;
            FIPR1=ZPR1;
@@ -328,12 +334,8 @@
 
        //****Envoi d'un message programme
        BEGSR ENVMSG;
-      /END-FREE
-     C                   CALL      'PGM001CL'
-     C                   PARM                    PTYP              1
-     C                   PARM                    PFICM            10
-     C                   PARM                    PMGID             7
-     C                   PARM                    PMGDT            99
-
+         Gestion_message( PTYP
+                         :PFICM
+                         :PMGID
+                         :PMGDT);
        ENDSR;
-
