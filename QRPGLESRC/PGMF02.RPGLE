@@ -146,42 +146,34 @@
          CHAIN(E) ZFCOD FIFF;
          *IN70 = NOT %ERROR AND NOT %FOUND;
          *IN90 = %ERROR;
-         ZFLIB=MILIB
-         ZNOM                 MOVEL     FINOM
-        ZPR1=FIPR1;
-        ZPR2=FIPR2;
-        ZAD1=FIAD1;
-        ZAD2=FIAD2;
-        ZAD3=FIAD3;
-        ZCPO=FICPO;
-        ZVIL=FIVIL;
-        ZTEL=FITEL;
-        ZPOR=FIPOR;
-      // traitement des dates
-        ZDAE=FIDAE;
+         ZFLIB=MILIB;
+         ZNOM=FINOM ;
+         ZPR1=FIPR1;
+         ZPR2=FIPR2;
+         ZAD1=FIAD1;
+         ZAD2=FIAD2;
+         ZAD3=FIAD3;
+         ZCPO=FICPO;
+         ZVIL=FIVIL;
+         ZTEL=FITEL;
+         ZPOR=FIPOR;
+         ZDAE=FIDAE;
 
         IF PCHX = 'PE';
           ZDATE=ZDAS;
         ELSE;
           ZDAS=FIDAS;
         ENDIF;
-         // zones d'audit
-      /END-FREE
-     C                   Z-ADD     FIDAC         ZDAC
-
-     C                   Z-ADD     FIHEC         ZHEC
-     C                   MOVEL     FIUSC         ZUSC
-     C                   Z-ADD     FIDAM         ZDAM
-
-     C                   Z-ADD     FIHEM         ZHEM
-     C                   MOVEL     FIUSM         ZUSM
-      /FREE
+        // zones d'audit
+        ZDAC=FIDAC;
+        ZHEC=FIHEC;
+        ZUSC=FIUSC;
+        ZDAM=FIDAM;
+        ZHEM=FIHEM;
+        ZUSM=FIUSM;
        ELSE;
          // pas grand chose, la date du jour
-      /END-FREE
-     C                   time                    ZDAE
-
-      /FREE
+         ZDAE=%Date();
        ENDIF;
        // Boucle d'attente de fin
        *IN50 = *ON;
@@ -219,9 +211,9 @@
      C                   PARM                    PGFCT
       /FREE
              IF PGFCT <> *BLANK;
-      /END-FREE
-     C                   MOVEL     PGFCT         ZFCOD
-      /FREE
+
+               ZFCOD =PGFCT;
+
              ENDIF;
            ENDIF;
            *IN51 = *OFF;
@@ -242,10 +234,8 @@
                *IN51 = *OFF;
              ENDIF;
            ELSE;
-      /END-FREE
-     C                   MOVEL     'MSG0004'     PMGID
-     C                   MOVEL     *BLANK        PMGDT
-      /FREE
+             PMGID='MSG0004';
+             PMGDT=*BLANK;
              EXSR ENVMSG;
              *IN85 = *ON;
            ENDIF;
@@ -265,10 +255,8 @@
        ENDSR;
        // controle des données/si suppression demande de confirmation
        BEGSR CTLDTA;
-      /END-FREE
-     C                   MOVE      '0'           *IN88
-      // on vérifie que tout est bon
-      /FREE
+         *IN88=*Off;
+         // on vérifie que tout est bon
          IF PCHX = 'SU';
            // on demande confirmation
          ELSE;
@@ -277,14 +265,10 @@
            *IN70 = NOT %ERROR AND NOT %FOUND;
            *IN90 = %ERROR;
            IF *IN70 = '1';
-      /END-FREE
-     C                   MOVE      '0'           *IN88
-     C                   MOVEL     'MSG0003'     PMGID
-      /FREE
+             *IN88=*Off;
+             PMGID='MSG0003' ;
              PMGDT = '&1'+ ZFCOD;
-      /END-FREE
-     C                   MOVE      '1'           *IN88
-      /FREE
+             *IN88=*Off;
            ENDIF;
          ENDIF;
        ENDSR;
@@ -298,51 +282,45 @@
            *IN90 = %ERROR;
            IF PCHX = 'CR' OR PCHX = 'CO';
              // On ne crée le matricule qu'en copie ou création
-      /END-FREE
-     C                   MOVE      'MAT'         PCOD
-     C                   MOVE      '2'           PCPT
+             PCOD='MAT';
+             PCPT='2';
      C                   CALL      'PGMC01'
      C                   PARM                    PCOD              3
      C                   PARM                    PCPT              1
      C                   PARM                    PCP1              6
      C                   PARM                    PMAT             10
-     C                   MOVE      PMAT          FIMAT
-      /FREE
+             FIMAT=%Int(PMAT);
              *IN71 = *ON;
            ENDIF;
-      /END-FREE
-     C                   MOVEL     ZFCOD         FIFON
-     C                   MOVEL     ZNOM          FINOM
-     C                   MOVEL     ZPR1          FIPR1
-     C                   MOVEL     ZPR2          FIPR2
-     C                   MOVEL     ZAD1          FIAD1
-     C                   MOVEL     ZAD2          FIAD2
-     C                   MOVEL     ZAD3          FIAD3
-     C                   MOVEL     ZCPO          FICPO
-     C                   MOVEL     ZVIL          FIVIL
-     C                   MOVEL     ZTEL          FITEL
-     C                   MOVEL     ZPOR          FIPOR
-      // traitement des dates
-     C                   Z-ADD     ZDAE          FIDAE
+           FIFON=ZFCOD;
+           FINOM=ZNOM;
+           FIPR1=ZPR1;
+           FIPR2=ZPR2;
+           FIAD1=ZAD1;
+           FIAD2=ZAD2;
+           FIAD3=ZAD3;
+           FICPO=ZCPO;
+           FIVIL=ZVIL;
+           FITEL=ZTEL;
+           FIPOR=ZPOR;
+           // traitement des dates
+           FIDAE=ZDAE;
 
-     C                   Z-ADD     ZDAS          FIDAS
+           FIDAS=ZDAS;
 
-      // zones d'audit
-        FIDAM=%Date();
-        FIHEM=%Time();
-     C                   MOVEL     WUSER         FIUSM
-      /FREE
-           IF *IN71 = '0';
-             // on met  jour directement
-             UPDATE FICF1;
-           ELSE;
+          // zones d'audit
+          FIDAM=%Date();
+          FIHEM=%Time();
+          FIUSM=WUSER;
+          IF *IN71 = '0';
+            // on met  jour directement
+            UPDATE FICF1;
+          ELSE;
              // création
-      /END-FREE
-             FIDAC=%Date();
-             FIHEC=%Time();
-     C                   MOVEL     WUSER         FIUSC
-      /FREE
-             WRITE FICF1;
+            FIDAC=%Date();
+            FIHEC=%Time();
+            FIUSC=WUSER;
+            WRITE FICF1;
            ENDIF;
          ENDIF;
          *IN50 = *OFF;
@@ -356,6 +334,6 @@
      C                   PARM                    PFICM            10
      C                   PARM                    PMGID             7
      C                   PARM                    PMGDT            99
-      /FREE
+
        ENDSR;
-      /END-FREE
+
