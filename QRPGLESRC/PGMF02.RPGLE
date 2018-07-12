@@ -32,6 +32,8 @@
        dcl-s PACT char(2);
        dcl-s PGFCT char(3);
 
+
+
        dcl-ds WDI;
         WSSAI zoned(4) pos(1);
         WMI zoned(2) pos(5);
@@ -70,7 +72,7 @@
         WRECMI int(5) pos(403);
        end-ds;
 
-       Dcl-ds
+
        Dcl-pi Personnal_detail Extpgm('PGMF02');
          Pchx Char(2);
          Pnrec Char(10);
