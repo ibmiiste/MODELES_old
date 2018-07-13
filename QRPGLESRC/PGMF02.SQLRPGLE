@@ -32,7 +32,9 @@
        dcl-s PACT char(2);
        dcl-s PGFCT char(3);
 
-
+       //Constante SQLCODE
+       Dcl-c c_trouve 0;
+       Dcl-c c_non_trouve 100;
 
        dcl-ds WDI;
         WSSAI zoned(4) pos(1);
@@ -77,6 +79,28 @@
          Pchx Char(2);
          Pnrec Char(10);
        End-Pi;
+
+       // --------------------------------------------------
+       // Prototype for procedure: Lecture_FIC00P
+       // --------------------------------------------------
+       DCL-PR Lecture_FIC00P LIKE(sqlcode);
+         l_nrec PACKED(10:0);
+       END-PR ;
+
+       // --------------------------------------------------
+       // Prototype for procedure: Lecture_FIC00P_MAT
+       // --------------------------------------------------
+       DCL-PR Lecture_FIC00P_MAT LIKE(sqlcode);
+         l_Mat PACKED(10:0);
+       END-PR ;
+
+       // --------------------------------------------------
+       // Prototype for procedure: Lecture_FIF00P
+       // --------------------------------------------------
+       DCL-PR Lecture_FIF00P LIKE(sqlcode);
+         l_fifon CHAR(3);
+       END-PR ;
+
 
       // début du programme
        ZPGM=WNMPGM;
@@ -142,9 +166,9 @@
        // Initialisation de l'écran si on un numéro d'enregistrement
        IF PNREC <> *BLANK;
          WNREC=%Dec(PNREC);
-         CHAIN(NE) WNREC FICF;
-         *IN70 = NOT %ERROR AND NOT %FOUND;
-         *IN90 = %ERROR;
+         sqlcode=Lecture_Fic00p(Wnrec);
+         *in70 = sqlcode > c_trouve AND sqlcode = c_non_trouve;
+         *IN90 = sqlcode < c_trouve;
          IF PCHX = 'CR' OR PCHX = 'CO';
            // en création ou copie zone non renseignée
            ZMATR=0;
@@ -154,9 +178,10 @@
 
          ZFCOD=FIFON;
       // fichier des fonctions => libellé
-         CHAIN(E) ZFCOD FIFF;
-         *IN70 = NOT %ERROR AND NOT %FOUND;
-         *IN90 = %ERROR;
+         SQlcode=Lecture_FIF00P(Zfcod);
+         *in70 = sqlcode > c_trouve AND sqlcode = c_non_trouve;
+         *IN90 = sqlcode < c_trouve;
+
          ZFLIB=MILIB;
          ZNOM=FINOM ;
          ZPR1=FIPR1;
@@ -232,9 +257,9 @@
            IF *IN85 = '1';
              IF *INKP = '1';
                // touche F15 on supprime si indicateur *IN85
-               CHAIN(E) WNREC FICF;
-               *IN70 = NOT %ERROR AND NOT %FOUND;
-               *IN90 = %ERROR;
+               Sqlcode=Lecture_FIC00P(Wnrec);
+               *IN70 = Sqlcode <> c_trouve;
+               *IN90 = Sqlcode < 0;
                If Not *IN70;
                  DELETE FICF;
                Endif;
@@ -269,7 +294,7 @@
            // on demande confirmation
          ELSE;
            // vérification du code fonction
-           CHAIN(E) ZFCOD FIFF;
+           SQlcode=Lecture_FIF00P(Zcod);
            *IN70 = NOT %ERROR AND NOT %FOUND;
            *IN90 = %ERROR;
            IF *IN70 = '1';
@@ -285,9 +310,9 @@
          IF PCHX = 'SU';
            // La suppression se fait par la touche F15
          ELSE;
-           CHAIN(E) ZMATR FICF1;
-           *IN71 = NOT %ERROR AND NOT %FOUND;
-           *IN90 = %ERROR;
+           SQlcode=Lecture_FIC00P_MAT(ZMATR);
+           *IN71 = (Sqlcode = 100);
+           *IN90 = (Sqlcode < 0);
            IF PCHX = 'CR' OR PCHX = 'CO';
              // On ne crée le matricule qu'en copie ou création
              PCOD='MAT';
@@ -341,3 +366,166 @@
                          :PMGID
                          :PMGDT);
        ENDSR;
+
+
+       // --------------------------------------------------
+       // Procedure name: Lecture_FIC00P
+       // Purpose:        Lecture d'un enregistrement de FIC00P avec comme cl...
+       //                          ef le numéro relatif d'enregistrement
+       // Returns:
+       // Parameter:      l_nrec => Numréro relatif d'enregistrement
+       // --------------------------------------------------
+       DCL-PROC Lecture_FIC00P ;
+         DCL-PI *N LIKE(sqlcode);
+           l_nrec PACKED(10:0);
+         END-PI ;
+         // Your local fields go here
+
+         DCL-S retField LIKE(sqlcode);
+         // Your calculation code goes here
+         EXEC SQL SELECT fimat,
+                         fifon,
+                         finom,
+                         fipr1,
+                         fipr2,
+                         fiad1,
+                         fiad2,
+                         fiad3,
+                         ficpo,
+                         fivil,
+                         fitel,
+                         fipor,
+                         fidae,
+                         fidas,
+                         fidac,
+                         fihec,
+                         fiusc,
+                         fidam,
+                         fihem,
+                         fiusm
+                    INTO :fimat,
+                         :fifon,
+                         :finom,
+                         :fipr1,
+                         :fipr2,
+                         :fiad1,
+                         :fiad2,
+                         :fiad3,
+                         :ficpo,
+                         :fivil,
+                         :fitel,
+                         :fipor,
+                         :fidae,
+                         :fidas,
+                         :fidac,
+                         :fihec,
+                         :fiusc,
+                         :fidam,
+                         :fihem,
+                         :fiusm
+                     FROM fic00p
+                    WHERE RRN( fic00p ) = :l_nrec;
+
+         retField=sqlcode;
+
+         return retField ;
+       END-PROC ;
+
+       // --------------------------------------------------
+       // Procedure name: Lecture_FIC00P
+       // Purpose:        Lecture d'un enregistrement de FIC00P avec comme cl...
+       //                          ef le numéro de matricule
+       // Returns:
+       // Parameter:      l_nrec => Numréro relatif d'enregistrement
+       // --------------------------------------------------
+       DCL-PROC Lecture_FIC00P_MAT ;
+         DCL-PI *N LIKE(sqlcode);
+           l_MAT PACKED(10:0);
+         END-PI ;
+         // Your local fields go here
+
+         DCL-S retField LIKE(sqlcode);
+         // Your calculation code goes here
+         EXEC SQL SELECT fimat,
+                         fifon,
+                         finom,
+                         fipr1,
+                         fipr2,
+                         fiad1,
+                         fiad2,
+                         fiad3,
+                         ficpo,
+                         fivil,
+                         fitel,
+                         fipor,
+                         fidae,
+                         fidas,
+                         fidac,
+                         fihec,
+                         fiusc,
+                         fidam,
+                         fihem,
+                         fiusm
+                    INTO :fimat,
+                         :fifon,
+                         :finom,
+                         :fipr1,
+                         :fipr2,
+                         :fiad1,
+                         :fiad2,
+                         :fiad3,
+                         :ficpo,
+                         :fivil,
+                         :fitel,
+                         :fipor,
+                         :fidae,
+                         :fidas,
+                         :fidac,
+                         :fihec,
+                         :fiusc,
+                         :fidam,
+                         :fihem,
+                         :fiusm
+                     FROM fic00p
+                    WHERE fimat = :l_mat;
+
+         retField=sqlcode;
+
+         return retField ;
+       END-PROC ;
+
+
+       // --------------------------------------------------
+       // Procedure name: Lecture_FIF00P
+       // Purpose:        Lecture d'un enregistrement de FIF00P avec la clé FIFON
+       // Returns:
+       // Parameter:      l_fifon => Fonction
+       // --------------------------------------------------
+       DCL-PROC Lecture_FIF00P ;
+         DCL-PI *N LIKE(sqlcode);
+           l_fifon CHAR(3);
+         END-PI ;
+         // Your local fields go here
+
+         DCL-S retField LIKE(sqlcode);
+         // Your calculation code goes here
+         EXEC SQL SELECT mifon,
+                         milib,
+                         mitsc,
+                         miusc,
+                         mitsm,
+                         miusm
+                    INTO :mifon,
+                         :milib,
+                         :mitsc,
+                         :miusc,
+                         :mitsm,
+                         :miusm
+                     FROM fif00p
+                    WHERE mifon = :l_fifon;
+
+         Retfield=Sqlcode;
+         return retField ;
+
+       END-PROC ;
+
