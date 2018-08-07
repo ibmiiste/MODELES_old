@@ -4,9 +4,9 @@
       // Détail personnel                                  *
       //                                                   *
       //****************************************************
-       dcl-f PGMF02FM workstn infds(wdsecr);
+       dcl-f PGMF02FM workstn infds(PGM02FM_INFDS);
        dcl-f FIC00P usage(*update);
-       dcl-f FIC01L keyed usage(*update: *output) rename(ficf      :ficf1);
+       dcl-f FIC01L keyed usage(*update: *output) rename(ficf:ficf1);
        dcl-f FIF01L keyed;
 
        //External procedure Prototypes
@@ -46,13 +46,8 @@
        // Copy de déclaration de la PROGRAM STATUS DATA STRUCTURE
        /Copy Qcpysrc,Psds
 
-       dcl-ds WDSECR;
-        WNLIG int(5) pos(370);
-        WRANP int(5) pos(378);
-        WNBRS int(5) pos(380);
-        WNULC int(5) pos(382);
-        WRECMI int(5) pos(403);
-       end-ds;
+       // Héritage de la data structure info fichier
+       Dcl-ds PGM02FM_INFDS likeDS(FichierDS);
 
 
        Dcl-pi Personnal_detail Extpgm('PGMF02');
