@@ -5,6 +5,7 @@
      A                                      HLPPNLGRP('PGMF02' PGMF02)
      A                                      HLPTITLE('Détail personnel')
      A                                      ALTHELP(CA01)
+     A                                      INDARA
      A          R FORE1
      A                                      CF03
      A                                      CF04
