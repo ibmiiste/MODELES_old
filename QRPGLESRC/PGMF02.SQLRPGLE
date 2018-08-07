@@ -5,9 +5,7 @@
       //                                                   *
       //****************************************************
        dcl-f PGMF02FM workstn infds(PGM02FM_INFDS) Indds(IndDs);
-       dcl-f FIC00P usage(*update);
-       dcl-f FIC01L keyed usage(*update: *output) rename(ficf:ficf1);
-       dcl-f FIF01L keyed;
+
 
        //External procedure Prototypes
        Dcl-pr compteur_double Extpgm('PGMC01');
@@ -33,8 +31,10 @@
        dcl-s PGFCT char(3);
 
        // Indicateurs utilisés dans le programme
-       Dcl-s l_Confirmation_suppression Ind;
-       Dcl-s l_Anomalie Ind;
+       Dcl-s g_Confirmation_suppression Ind;
+       Dcl-s g_Anomalie Ind;
+       Dcl-s g_Fin_traitement Ind;
+       Dcl-s g_Traitement_donnees Ind;
 
        //Constante SQLCODE
        Dcl-c c_trouve 0;
@@ -60,6 +60,12 @@
         Sflinz_Msgf Ind Pos(10);
         Sflend_Msgf Ind Pos(09);
        End-ds;
+
+       // DS table du personnel
+       Dcl-ds DS_FIC00P Extname('FIC00P') End-ds;
+
+       // DS table des fonction
+       Dcl-ds DS_FIC00P Extname('FIF00P') End-ds;
 
        Dcl-pi Personnal_detail Extpgm('PGMF02');
          Pchx Char(2);
@@ -104,8 +110,8 @@
        PR_UL = *ON;
        Date_entree_PR_UL = *ON;
        Date_depart_PR_UL = *ON;
-       l_Confirmation_suppression = *OFF;
-       l_Anomalie = *OFF;
+       g_Confirmation_suppression = *OFF;
+       g_Anomalie = *OFF;
        // constantes pour ce programme
        PTYP='1';
        PFICM='FICMSG    ';
@@ -198,8 +204,8 @@
          ZDAE=%Date();
        ENDIF;
        // Boucle d'attente de fin
-       *IN50 = *ON;
-       DOW *IN50 = '1';
+       g_Fin_traitement = *ON;
+       DOW g_Fin_traitement = '1';
          EXSR TRTSCR;
        ENDDO;
        //
@@ -212,15 +218,15 @@
          // On attend l'appui sur une touche
          READ FORE1;
          *IN70 = %EOF;
-         *IN51 = *ON;
+         g_Traitement_donnees = *ON;
          // F3 ou F12 on termine
          IF *INKC = '1' OR
                *INKL = '1';
-           *IN50 = *OFF;
-           *IN51 = *OFF;
+           g_Fin_traitement = *OFF;
+           g_Traitement_donnees = *OFF;
          ENDIF;
-         // on met  jour l'heure
-         If *In51;
+         // on met à jour l'heure
+         If g_Traitement_donnees;
            ZHEUR=%Time();
            If *Inkd;
              IF WZOCUR = 'ZFCOD';
@@ -234,13 +240,13 @@
 
              ENDIF;
            ENDIF;
-           *IN51 = *OFF;
+           g_Traitement_donnees = *OFF;
          ENDIF;
 
          //
          IF PCHX = 'SU';
-           *IN51 = *OFF;
-           IF l_Confirmation_suppression = '1';
+           g_Traitement_donnees = *OFF;
+           IF g_Confirmation_suppression = '1';
              IF *INKP = '1';
                // touche F15 on supprime si indicateur l_Confirmation_suppression
                Sqlcode=Lecture_FIC00P(Wnrec);
@@ -249,23 +255,23 @@
                If Not *IN70;
                  DELETE FICF;
                Endif;
-               *IN50 = *OFF;
-               *IN51 = *OFF;
+               g_Fin_traitement = *OFF;
+               g_Traitement_donnees = *OFF;
              ENDIF;
            ELSE;
              PMGID='MSG0004';
              PMGDT=*BLANK;
              EXSR ENVMSG;
-             l_Confirmation_suppression = *ON;
+             g_Confirmation_suppression = *ON;
            ENDIF;
          ENDIF;
          // contrle des données saisies
-         IF *IN51 = '1';
+         IF g_Traitement_donnees = '1';
            EXSR CTLDTA;
-           IF l_Anomalie = '1';
+           IF g_Anomalie = '1';
              // anomalie
              EXSR ENVMSG;
-             l_Anomalie = *OFF;
+             g_Anomalie = *OFF;
            ELSE;
              // confirmation  pour suppression
              EXSR VALID1;
@@ -274,7 +280,7 @@
        ENDSR;
        // controle des données/si suppression demande de confirmation
        BEGSR CTLDTA;
-         l_Anomalie=*Off;
+         g_Anomalie=*Off;
          // on vérifie que tout est bon
          IF PCHX = 'SU';
            // on demande confirmation
@@ -284,10 +290,10 @@
            *IN70 = NOT %ERROR AND NOT %FOUND;
            *IN90 = %ERROR;
            IF *IN70 = '1';
-             l_Anomalie=*Off;
+             g_Anomalie=*Off;
              PMGID='MSG0003' ;
              PMGDT = '&1'+ ZFCOD;
-             l_Anomalie=*Off;
+             g_Anomalie=*Off;
            ENDIF;
          ENDIF;
        ENDSR;
@@ -342,7 +348,7 @@
             WRITE FICF1;
            ENDIF;
          ENDIF;
-         *IN50 = *OFF;
+         g_Fin_traitement = *OFF;
        ENDSR;
 
        //****Envoi d'un message programme
