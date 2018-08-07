@@ -4,7 +4,7 @@
       // Détail personnel                                  *
       //                                                   *
       //****************************************************
-       dcl-f PGMF02FM workstn infds(PGM02FM_INFDS);
+       dcl-f PGMF02FM workstn infds(PGM02FM_INFDS) Indds(IndDs);
        dcl-f FIC00P usage(*update);
        dcl-f FIC01L keyed usage(*update: *output) rename(ficf:ficf1);
        dcl-f FIF01L keyed;
@@ -32,23 +32,34 @@
        dcl-s PACT char(2);
        dcl-s PGFCT char(3);
 
+       // Indicateurs utilisés dans le programme
+       Dcl-s l_Confirmation_suppression Ind;
+       Dcl-s l_Anomalie Ind;
+
        //Constante SQLCODE
        Dcl-c c_trouve 0;
        Dcl-c c_non_trouve 100;
 
-       dcl-ds WDI;
-        WSSAI zoned(4) pos(1);
-        WMI zoned(2) pos(5);
-        WJI zoned(2) pos(7);
-        WDATI zoned(8) pos(1);
-       end-ds;
 
        // Copy de déclaration de la PROGRAM STATUS DATA STRUCTURE
        /Copy Qcpysrc,Psds
 
        // Héritage de la data structure info fichier
+       /Copy Qcpysrc,Cpy_infds
+
+       // Data structure du fichier PGM02FM
        Dcl-ds PGM02FM_INFDS likeDS(FichierDS);
 
+       // Le DS des indicateurs de l'écran
+       Dcl-ds IndDs;
+        Code_PR_UL Ind Pos(14);
+        Nom_PR_UL Ind Pos(15);
+        PR_UL Ind Pos(16);
+        Date_entree_PR_UL Ind Pos(17);
+        Date_depart_PR_UL Ind Pos(18);
+        Sflinz_Msgf Ind Pos(10);
+        Sflend_Msgf Ind Pos(09);
+       End-ds;
 
        Dcl-pi Personnal_detail Extpgm('PGMF02');
          Pchx Char(2);
@@ -86,15 +97,15 @@
        WPGMQ='*  ';
        WMGKEY='CC01';
 
-       *IN09 = *ON;
-       *IN10 = *ON;
-       *IN14 = *ON;
-       *IN15 = *ON;
-       *IN16 = *ON;
-       *IN17 = *ON;
-       *IN18 = *ON;
-       *IN85 = *OFF;
-       *IN88 = *OFF;
+       Sflend_Msgf = *ON;
+       Sflinz_Msgf = *ON;
+       Code_PR_UL = *ON;
+       Nom_PR_UL = *ON;
+       PR_UL = *ON;
+       Date_entree_PR_UL = *ON;
+       Date_depart_PR_UL = *ON;
+       l_Confirmation_suppression = *OFF;
+       l_Anomalie = *OFF;
        // constantes pour ce programme
        PTYP='1';
        PFICM='FICMSG    ';
@@ -104,18 +115,18 @@
          // modification
          ZMODE=WTXT1;
       // on ne peut modifier que ces zones
-         *IN14 = *OFF;
-         *IN15 = *OFF;
-         *IN16 = *OFF;
+         Code_PR_UL = *OFF;
+         Nom_PR_UL = *OFF;
+         PR_UL = *OFF;
        WHEN (PCHX = 'CO');
          // copie
          ZMODE=WTXT2;
        // toutes les zones sont autorisées
-         *IN14 = *OFF;
-         *IN15 = *OFF;
-         *IN16 = *OFF;
-         *IN17 = *OFF;
-         *IN18 = *OFF;
+         Code_PR_UL = *OFF;
+         Nom_PR_UL = *OFF;
+         PR_UL = *OFF;
+         Date_entree_PR_UL = *OFF;
+         Date_depart_PR_UL = *OFF;
        WHEN (PCHX = 'SU');
          // suppression
          ZMODE=WTXT3;
@@ -128,15 +139,15 @@
          // création
          ZMODE=WTXT5;
       // tout est saisisable sauf date de sortie
-         *IN14 = *OFF;
-         *IN15 = *OFF;
-         *IN16 = *OFF;
-         *IN17 = *OFF;
+         Code_PR_UL = *OFF;
+         Nom_PR_UL = *OFF;
+         PR_UL = *OFF;
+         Date_entree_PR_UL = *OFF;
        WHEN (PCHX = 'PE');
          // direction Ple Emploi
          ZMODE=WTXT6;
          // on saisit simplement la date de fin
-         *IN18 = *OFF;
+         Date_depart_PR_UL = *OFF;
        ENDSL;
        // Initialisation de l'écran si on un numéro d'enregistrement
        IF PNREC <> *BLANK;
@@ -229,9 +240,9 @@
          //
          IF PCHX = 'SU';
            *IN51 = *OFF;
-           IF *IN85 = '1';
+           IF l_Confirmation_suppression = '1';
              IF *INKP = '1';
-               // touche F15 on supprime si indicateur *IN85
+               // touche F15 on supprime si indicateur l_Confirmation_suppression
                Sqlcode=Lecture_FIC00P(Wnrec);
                *IN70 = Sqlcode <> c_trouve;
                *IN90 = Sqlcode < 0;
@@ -245,16 +256,16 @@
              PMGID='MSG0004';
              PMGDT=*BLANK;
              EXSR ENVMSG;
-             *IN85 = *ON;
+             l_Confirmation_suppression = *ON;
            ENDIF;
          ENDIF;
          // contrle des données saisies
          IF *IN51 = '1';
            EXSR CTLDTA;
-           IF *IN88 = '1';
+           IF l_Anomalie = '1';
              // anomalie
              EXSR ENVMSG;
-             *IN88 = *OFF;
+             l_Anomalie = *OFF;
            ELSE;
              // confirmation  pour suppression
              EXSR VALID1;
@@ -263,7 +274,7 @@
        ENDSR;
        // controle des données/si suppression demande de confirmation
        BEGSR CTLDTA;
-         *IN88=*Off;
+         l_Anomalie=*Off;
          // on vérifie que tout est bon
          IF PCHX = 'SU';
            // on demande confirmation
@@ -273,10 +284,10 @@
            *IN70 = NOT %ERROR AND NOT %FOUND;
            *IN90 = %ERROR;
            IF *IN70 = '1';
-             *IN88=*Off;
+             l_Anomalie=*Off;
              PMGID='MSG0003' ;
              PMGDT = '&1'+ ZFCOD;
-             *IN88=*Off;
+             l_Anomalie=*Off;
            ENDIF;
          ENDIF;
        ENDSR;
