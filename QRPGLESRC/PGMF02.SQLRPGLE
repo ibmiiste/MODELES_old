@@ -159,8 +159,7 @@
        IF PNREC <> *BLANK;
          WNREC=%Dec(PNREC);
          sqlcode=Lecture_Fic00p(Wnrec);
-         *in70 = sqlcode > c_trouve AND sqlcode = c_non_trouve;
-         *IN90 = sqlcode < c_trouve;
+
          IF PCHX = 'CR' OR PCHX = 'CO';
            // en création ou copie zone non renseignée
            ZMATR=0;
@@ -171,8 +170,6 @@
          ZFCOD=FIFON;
       // fichier des fonctions => libellé
          SQlcode=Lecture_FIF00P(Zfcod);
-         *in70 = sqlcode > c_trouve AND sqlcode = c_non_trouve;
-         *IN90 = sqlcode < c_trouve;
 
          ZFLIB=MILIB;
          ZNOM=FINOM ;
@@ -250,9 +247,7 @@
              IF *INKP = '1';
                // touche F15 on supprime si indicateur l_Confirmation_suppression
                Sqlcode=Lecture_FIC00P(Wnrec);
-               *IN70 = Sqlcode <> c_trouve;
-               *IN90 = Sqlcode < 0;
-               If Not *IN70;
+               If Sqlcode=c_trouve;
                  DELETE FICF;
                Endif;
                g_Fin_traitement = *OFF;
@@ -287,9 +282,8 @@
          ELSE;
            // vérification du code fonction
            SQlcode=Lecture_FIF00P(Zcod);
-           *IN70 = NOT %ERROR AND NOT %FOUND;
-           *IN90 = %ERROR;
-           IF *IN70 = '1';
+
+           IF Sqlcode=c_Non_trouve;
              g_Anomalie=*Off;
              PMGID='MSG0003' ;
              PMGDT = '&1'+ ZFCOD;
@@ -303,8 +297,7 @@
            // La suppression se fait par la touche F15
          ELSE;
            SQlcode=Lecture_FIC00P_MAT(ZMATR);
-           *IN71 = (Sqlcode = 100);
-           *IN90 = (Sqlcode < 0);
+
            IF PCHX = 'CR' OR PCHX = 'CO';
              // On ne crée le matricule qu'en copie ou création
              PCOD='MAT';
