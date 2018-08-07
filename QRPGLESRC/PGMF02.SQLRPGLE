@@ -43,28 +43,8 @@
         WDATI zoned(8) pos(1);
        end-ds;
 
-
-       dcl-ds WDSPGM PSDS;
-        WNMPGM char(10) pos(1);
-        WSTATU zoned(5) pos(11);
-        WSTPRE zoned(5) pos(16);
-        WSRCSQ char(8) pos(21);
-        WNMROU char(8) pos(29);
-        WNBPAR zoned(3) pos(37);
-        WTYEXC char(3) pos(40);
-        WLICPF char(7) pos(40);
-        WNUEXC char(4) pos(43);
-        WMIODT char(4) pos(47);
-        WZOMES char(30) pos(51);
-        WBIPGM char(10) pos(81);
-        WRTDTA char(80) pos(91);
-        WCOERR char(4) pos(171);
-        WDERFI char(8) pos(201);
-        WFIINF char(35) pos(209);
-        WJOB char(10) pos(244);
-        WUSER char(10) pos(254);
-        WJOBNM zoned(6) pos(264);
-       end-ds;
+       // Copy de déclaration de la PROGRAM STATUS DATA STRUCTURE
+       /Copy Qcpysrc,Psds
 
        dcl-ds WDSECR;
         WNLIG int(5) pos(370);
@@ -103,11 +83,11 @@
 
 
       // début du programme
-       ZPGM=WNMPGM;
+       ZPGM=PROCEDURE;
        ZDATE=%DATE();
        ZHEUR=%TIME();
-       ZUSER=WUSER;
-       ZJOB=WJOB;
+       ZUSER=USER;
+       ZJOB=JOB_NAME;
        WPGMQ='*  ';
        WMGKEY='CC01';
 
@@ -344,7 +324,7 @@
           // zones d'audit
           FIDAM=%Date();
           FIHEM=%Time();
-          FIUSM=WUSER;
+          FIUSM=USER;
           IF *IN71 = '0';
             // on met  jour directement
             UPDATE FICF1;
@@ -352,7 +332,7 @@
              // création
             FIDAC=%Date();
             FIHEC=%Time();
-            FIUSC=WUSER;
+            FIUSC=USER;
             WRITE FICF1;
            ENDIF;
          ENDIF;
