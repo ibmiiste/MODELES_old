@@ -22,12 +22,21 @@
 
 
        //External procedure Prototypes
+       // Programme gérant les compteurs
        Dcl-pr compteur_double Extpgm('PGMC01');
          PCOD Char(3);
          PCPT Char(1);
          PCP1 Char(6);
          PMAT Char(10);
        End-Pr;
+
+       // Programme de gestion des messages et du sous-fichier de message
+       Dcl-pr Gestion_message Extpgm('PGM001CL');
+         PTYP Char(1);
+         PFIM Char(10);
+         PMID Char(7);
+         PMDT Char(99);
+       End-pr;
 
        dcl-c WTXT1 '         Modification         ';
        dcl-c WTXT2 '             Copie            ';
