@@ -47,8 +47,6 @@
        dcl-s WDAT char(8);
        dcl-s WHEU char(6);
        dcl-s W14 packed(14);
-       dcl-s PCHX char(2);
-       dcl-s PNREC char(10);
        dcl-s WNREC packed(10);
        dcl-s PACT char(2);
        dcl-s PGFCT char(3);
@@ -271,8 +269,9 @@
                // touche F15 on supprime si indicateur l_Confirmation_suppression
                Sqlcode=Lecture_FIC00P(Wnrec);
                If Sqlcode=c_trouve;
-                 DELETE FICF;
-               Endif;
+                 EXEC SQL DELETE fic00p
+                           WHERE RRN( fic00p) = :wnrec;
+               endif;
                g_Fin_traitement = *OFF;
                g_Traitement_donnees = *OFF;
              ENDIF;
@@ -355,7 +354,24 @@
           FIUSM=USER;
           IF *IN71 = '0';
             // on met  jour directement
-            UPDATE FICF1;
+            EXEC SQL UPDATE fic00p
+                        SET fifon=:fifon,
+                            finom=:finom,
+                            fipr1=:fipr1,
+                            fipr2=:fipr2,
+                            fiad1=:fiad1,
+                            fiad2=:fiad2,
+                            fiad3=:fiad3,
+                            ficpo=:ficpo,
+                            fivil=:fivil,
+                            fitel=:fitel,
+                            fipor=:fipor,
+                            fidae=:fidae,
+                            fidas=:fidas,
+                            fidam=:fidam,
+                            fihem=:fihem,
+                            fiusm=:fiusm
+                      WHERE fimat=:zmatr;
           ELSE;
              // création
             FIDAC=%Date();
