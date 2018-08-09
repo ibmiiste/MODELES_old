@@ -1,3 +1,17 @@
+      * >>PRE-COMPILER<<
+      *   >>CRTCMD<<  CRTSQLRPGI SRCFILE(&SL/&SF) SRCMBR(&SM);
+      *   >>IMPORTANT<<
+      *     >>PARM<<  OBJ(&LI/&OB);
+      *     >>PARM<<  COMMIT(*NONE);
+      *     >>PARM<<  OBJTYPE(*PGM);
+      *     >>PARM<<  OPTION(*EVENTF);
+      *     >>PARM<<  RPGPPOPT(*LVL2);
+      *     >>PARM<<  CLOSQLCSR(*ENDACTGRP);
+      *     >>PARM<<  DATFMT(*ISO);
+      *     >>PARM<<  TIMFMT(*ISO);
+      *   >>END-IMPORTANT<<
+      *   >>EXECUTE<<
+      * >>END-PRE-COMPILER<<
        ctl-opt debug decedit('0,') datedit(*dmy.);
       //*********************************************************************
       // CC 01/01/2009
@@ -170,7 +184,7 @@
            g_Fin_actions = *OFF;
          ENDIF;
          //
-         IF Rachaichir;
+         IF Rafraichir;
            // F5 Rafraichissement de l'écran
            EXSR INITSF;
            g_Fin_actions = *OFF;
@@ -388,7 +402,7 @@
              ZCPO  = FICPO;
              HNREC=g_Num_rel;
              FIMAT = HMATR;
-             IF FIDAS = 0;
+             IF FIDAS = %date('0001-01-01');
                // Top salarié licencié
                HTOUT = '0';
                Znomred = *OFF;
