@@ -21,7 +21,7 @@
        dcl-f PGMF02FM workstn infds(PGM02FM_INFDS) Indds(IndDs);
 
 
-       //External procedure Prototypes
+       // External procedure Prototypes
        // Programme gérant les compteurs
        Dcl-pr compteur_double Extpgm('PGMC01');
          PCOD Char(3);
@@ -33,9 +33,15 @@
        // Programme de gestion des messages et du sous-fichier de message
        Dcl-pr Gestion_message Extpgm('PGM001CL');
          PTYP Char(1);
-         PFIM Char(10);
-         PMID Char(7);
-         PMDT Char(99);
+         PFICM Char(10);
+         PMGID Char(7);
+         PMGDT Char(99);
+       End-pr;
+
+       // Programme d'invite des fonctions
+       Dcl-pr Invite_fonction Extpgm('PGMI01');
+         PACT Char(2);
+         PGFCT Char(2);
        End-pr;
 
        dcl-c WTXT1 '         Modification         ';
@@ -62,6 +68,18 @@
        Dcl-c c_non_trouve 100;
 
 
+       // Paramètres appel programme compteur double
+       Dcl-s PCOD Char(3);
+       Dcl-s PCPT Char(1);
+       Dcl-s PCP1 Char(6);
+       Dcl-s PMAT Char(10);
+
+       // Paramètres d'appel du programme de gestion des messages
+       Dcl-s PTYP Char(1);
+       Dcl-s PFICM Char(10);
+       Dcl-s PMGID Char(7);
+       Dcl-s PMGDT Char(99);
+
        // Copy de déclaration de la PROGRAM STATUS DATA STRUCTURE
        /Copy Qcpysrc,Psds
 
@@ -73,20 +91,20 @@
 
        // Le DS des indicateurs de l'écran
        Dcl-ds IndDs;
-        Code_PR_UL Ind Pos(14);
-        Nom_PR_UL Ind Pos(15);
-        PR_UL Ind Pos(16);
-        Date_entree_PR_UL Ind Pos(17);
-        Date_depart_PR_UL Ind Pos(18);
-        Sflinz_Msgf Ind Pos(10);
-        Sflend_Msgf Ind Pos(09);
+         Code_PR_UL Ind Pos(14);
+         Nom_PR_UL Ind Pos(15);
+         PR_UL Ind Pos(16);
+         Date_entree_PR_UL Ind Pos(17);
+         Date_depart_PR_UL Ind Pos(18);
+         Sflinz_Msgf Ind Pos(10);
+         Sflend_Msgf Ind Pos(09);
        End-ds;
 
        // DS table du personnel
        Dcl-ds DS_FIC00P Extname('FIC00P') End-ds;
 
        // DS table des fonction
-       Dcl-ds DS_FIC00P Extname('FIF00P') End-ds;
+       Dcl-ds DS_FIF00P Extname('FIF00P') End-ds;
 
        Dcl-pi Personnal_detail Extpgm('PGMF02');
          Pchx Char(2);
@@ -178,7 +196,7 @@
        ENDSL;
        // Initialisation de l'écran si on un numéro d'enregistrement
        IF PNREC <> *BLANK;
-         WNREC=%Dec(PNREC);
+         WNREC=%Dec(PNREC:10:0);
          sqlcode=Lecture_Fic00p(Wnrec);
 
          IF PCHX = 'CR' OR PCHX = 'CO';
@@ -303,7 +321,7 @@
            // on demande confirmation
          ELSE;
            // vérification du code fonction
-           SQlcode=Lecture_FIF00P(Zcod);
+           SQlcode=Lecture_FIF00P(Zfcod);
 
            IF Sqlcode=c_Non_trouve;
              g_Anomalie=*Off;
@@ -377,8 +395,46 @@
             FIDAC=%Date();
             FIHEC=%Time();
             FIUSC=USER;
-            WRITE FICF1;
-           ENDIF;
+            EXEC SQL INSERT INTO fic00p
+                          ( fifon,
+                            finom,
+                            fipr1,
+                            fipr2,
+                            fiad1,
+                            fiad2,
+                            fiad3,
+                            ficpo,
+                            fivil,
+                            fitel,
+                            fipor,
+                            fidae,
+                            fidas,
+                            fidam,
+                            fihem,
+                            fiusm,
+                            fidac,
+                            fihec,
+                            fiusc)
+                    VALUES( :fifon,
+                            :finom,
+                            :fipr1,
+                            :fipr2,
+                            :fiad1,
+                            :fiad2,
+                            :fiad3,
+                            :ficpo,
+                            :fivil,
+                            :fitel,
+                            :fipor,
+                            :fidae,
+                            :fidas,
+                            :fidam,
+                            :fihem,
+                            :fiusm,
+                            :fidac,
+                            :fihec,
+                            :fiusc);
+           endif;
          ENDIF;
          g_Fin_traitement = *OFF;
        ENDSR;
