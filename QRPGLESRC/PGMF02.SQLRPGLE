@@ -8,6 +8,7 @@
       *   >>CRTCMD<<  CRTSQLRPGI SRCFILE(&SL/&SF) SRCMBR(&SM);
       *   >>IMPORTANT<<
       *     >>PARM<<  OBJ(&LI/&OB);
+      *     >>PARM<<  COMMIT(*NONE);
       *     >>PARM<<  OBJTYPE(*PGM);
       *     >>PARM<<  OPTION(*EVENTF);
       *     >>PARM<<  RPGPPOPT(*LVL2);
@@ -264,16 +265,15 @@
          // on met à jour l'heure
          If g_Traitement_donnees;
            ZHEUR=%Time();
-           If *Inkd;
-             IF WZOCUR = 'ZFCOD';
-               PACT = 'GS';
-             Endif;
+         Endif;
+         If *Inkd
+         And g_Traitement_donnees;
+           IF WZOCUR = 'ZFCOD';
+             PACT = 'GS';
              Invite_fonction( PACT
                              :PGFCT);
              IF PGFCT <> *BLANK;
-
                ZFCOD =PGFCT;
-
              ENDIF;
            ENDIF;
            g_Traitement_donnees = *OFF;
@@ -414,7 +414,8 @@
                             fiusm,
                             fidac,
                             fihec,
-                            fiusc)
+                            fiusc,
+                            fimat)
                     VALUES( :fifon,
                             :finom,
                             :fipr1,
@@ -433,7 +434,8 @@
                             :fiusm,
                             :fidac,
                             :fihec,
-                            :fiusc);
+                            :fiusc,
+                            :fimat);
            endif;
          ENDIF;
          g_Fin_traitement = *OFF;
