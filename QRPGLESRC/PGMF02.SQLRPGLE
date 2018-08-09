@@ -245,7 +245,7 @@
        ENDIF;
        // Boucle d'attente de fin
        g_Fin_traitement = *ON;
-       DOW g_Fin_traitement = '1';
+       DOW g_Fin_traitement;
          EXSR TRTSCR;
        ENDDO;
        //
@@ -285,8 +285,8 @@
          //
          IF PCHX = 'SU';
            g_Traitement_donnees = *OFF;
-           IF g_Confirmation_suppression = '1';
-             IF Confirmer = '1';
+           IF g_Confirmation_suppression;
+             IF Confirmer;
                // touche F15 on supprime si indicateur l_Confirmation_suppression
                Sqlcode=Lecture_FIC00P(Wnrec);
                If Sqlcode=c_trouve;
@@ -304,9 +304,9 @@
            ENDIF;
          ENDIF;
          // contrle des données saisies
-         IF g_Traitement_donnees = '1';
+         IF g_Traitement_donnees';
            EXSR CTLDTA;
-           IF g_Anomalie = '1';
+           IF g_Anomalie';
              // anomalie
              EXSR ENVMSG;
              g_Anomalie = *OFF;
