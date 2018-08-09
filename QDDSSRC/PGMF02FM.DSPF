@@ -3,6 +3,7 @@
      /*                 SRCMBR(&SM);                                     */
      /*   >>IMPORTANT<<                                                  */
      /*     >>PARM<<  OPTION(*EVENTF);                                   */
+     /*     >>PARM<<  RSTDSP(*YES);                                      */
      /*   >>END-IMPORTANT<<                                              */
      /*   >>EXECUTE<<                                                    */
      /* >>END-PRE-COMPILER<<                                             */
@@ -154,21 +155,7 @@
      A                                      OVRDTA
      A                                      OVRATR
      A                                 16  3'Date d''entrée :'
-     A            ZDAE           8Y 0B 16 19
-     A N17                                  DSPATR(UL)
-     A  17                                  DSPATR(PR)
-     A                                      EDTWRD('  /  /    ')
-     A                                      COLOR(WHT)
-     A                                      OVRDTA
-     A                                      OVRATR
      A                                 16 31'Date de départ :'
-     A            ZDAS           8Y 0B 16 48
-     A N18                                  DSPATR(UL)
-     A  18                                  DSPATR(PR)
-     A                                      EDTWRD('  /  /    ')
-     A                                      COLOR(WHT)
-     A                                      OVRDTA
-     A                                      OVRATR
      A                                 18 13'Crée le :'
      A            ZDAC            L  O 18 25
      A                                      COLOR(GRN)
@@ -200,6 +187,10 @@
      A            WPRCUR         4S 0H
      A            WNMLGN         3S 0H
      A            WNMCOL         3S 0H
+     A            ZDAE            L  B 16 20DATFMT(*EUR)
+     A                                      COLOR(WHT)
+     A            ZDAS            L  B 16 49DATFMT(*EUR)
+     A                                      COLOR(WHT)
      A          R WMGSFL                    SFL
      A                                      SFLMSGRCD(24)
      A            WMGKEY                    SFLMSGKEY
