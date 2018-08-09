@@ -81,6 +81,9 @@
        Dcl-s PMGID Char(7);
        Dcl-s PMGDT Char(99);
 
+       // Renommage des touches de fonction
+       /Copy Qcpysrc,Fonction
+
        // Copy de déclaration de la PROGRAM STATUS DATA STRUCTURE
        /Copy Qcpysrc,Psds
 
@@ -257,8 +260,8 @@
          *IN70 = %EOF;
          g_Traitement_donnees = *ON;
          // F3 ou F12 on termine
-         IF *INKC = '1' OR
-               *INKL = '1';
+         IF Sortie OR
+               Precedent;
            g_Fin_traitement = *OFF;
            g_Traitement_donnees = *OFF;
          ENDIF;
@@ -266,7 +269,7 @@
          If g_Traitement_donnees;
            ZHEUR=%Time();
          Endif;
-         If *Inkd
+         If Guide
          And g_Traitement_donnees;
            IF WZOCUR = 'ZFCOD';
              PACT = 'GS';
@@ -283,7 +286,7 @@
          IF PCHX = 'SU';
            g_Traitement_donnees = *OFF;
            IF g_Confirmation_suppression = '1';
-             IF *INKP = '1';
+             IF Confirmer = '1';
                // touche F15 on supprime si indicateur l_Confirmation_suppression
                Sqlcode=Lecture_FIC00P(Wnrec);
                If Sqlcode=c_trouve;

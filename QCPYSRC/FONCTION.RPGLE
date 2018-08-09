@@ -41,12 +41,14 @@
        dcl-s F12 ind based(p_inkl);
        dcl-s Cancel ind based(p_inkl);
        dcl-s Annuler ind based(p_inkl);
+       dcl-s Precedent ind based(p_inkl);
        dcl-s P_INKM pointer inz(%addr(*inkm));
        dcl-s F13 ind based(p_inkm);
        dcl-s P_INKN pointer inz(%addr(*inkn));
        dcl-s F14 ind based(p_inkn);
        dcl-s P_INKP pointer inz(%addr(*inkp));
        dcl-s F15 ind based(p_inkp);
+       dcl-s Confirmer ind based(p_inkp);
        dcl-s P_INKQ pointer inz(%addr(*inkq));
        dcl-s F16 ind based(p_inkq);
        dcl-s P_INKR pointer inz(%addr(*inkr));
