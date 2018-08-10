@@ -227,18 +227,18 @@
          ZPOR=FIPOR;
          ZDAE=FIDAE;
 
-        IF PCHX = 'PE';
-          ZDATE=ZDAS;
-        ELSE;
-          ZDAS=FIDAS;
-        ENDIF;
-        // zones d'audit
-        ZDAC=FIDAC;
-        ZHEC=FIHEC;
-        ZUSC=FIUSC;
-        ZDAM=FIDAM;
-        ZHEM=FIHEM;
-        ZUSM=FIUSM;
+         IF PCHX = 'PE';
+           ZDATE=ZDAS;
+         ELSE;
+           ZDAS=FIDAS;
+         ENDIF;
+         // zones d'audit
+         ZDAC=FIDAC;
+         ZHEC=FIHEC;
+         ZUSC=FIUSC;
+         ZDAM=FIDAM;
+         ZHEM=FIHEM;
+         ZUSM=FIUSM;
        ELSE;
          // pas grand chose, la date du jour
          ZDAE=%Date();
