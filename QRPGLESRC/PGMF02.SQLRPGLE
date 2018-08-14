@@ -373,7 +373,7 @@
           FIDAM=%Date();
           FIHEM=%Time();
           FIUSM=USER;
-          IF *IN71 = '0';
+          IF SQlcode = c_trouve;
             // on met  jour directement
             EXEC SQL UPDATE fic00p
                         SET fifon=:fifon,
