@@ -12,6 +12,10 @@
       //   paramsortie packed(9:6);
       // END-PR;
 
+      // global variables
+      // variables globales
+      // dcl-s donnee3 like(r_ref3);
+
       // dcl-pi programme;
       //   paramentre char(5);
       //   paramsortie packed(9:6);
@@ -34,9 +38,7 @@
       // end-pr;
 
 
-      // global variables
-      // variables globales
-      // dcl-s donnee3 like(r_ref3);
+
 
       // Indicateurs
       // dcl-s g_indic1 ind;
