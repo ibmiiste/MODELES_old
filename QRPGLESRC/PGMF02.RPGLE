@@ -1,9 +1,9 @@
        ctl-opt debug decedit('0,') datedit(*dmy.);
-     F*****************************************************
-     F*                                                   *
-     F* Détail personnel                                  *
-     F*                                                   *
-     F*****************************************************
+      //****************************************************
+      //                                                   *
+      // Détail personnel                                  *
+      //                                                   *
+      //****************************************************
        dcl-f PGMF02FM workstn infds(wdsecr);
        dcl-f FIC00P usage(*update);
        dcl-f FIC01L keyed usage(*update: *output) rename(ficf      :ficf1);
@@ -69,67 +69,109 @@
      C                   KFLD                    ZMATR
      C     KEY002        KLIST
      C                   KFLD                    ZFCOD
-     C* début du programme
+      // début du programme
      C                   MOVEL     WNMPGM        ZPGM
-     C                   EXSR      DATHEU
+      /FREE
+       EXSR DATHEU;
+      /END-FREE
      C                   MOVE      WDAT          ZDATE
      C                   MOVE      WHEU          ZHEUR
      C                   MOVEL     WUSER         ZUSER
      C                   MOVEL     WJOB          ZJOB
      C                   MOVEL     '*  '         WPGMQ
      C                   MOVEL     'CC01'        WMGKEY
-     C                   SETON                                        0910
-     C                   SETON                                        141516
-     C                   SETON                                        1718
-     C                   SETOFF                                       8588
-     C* constantes pour ce programme
+      /FREE
+       *IN09 = *ON;
+       *IN10 = *ON;
+       *IN14 = *ON;
+       *IN15 = *ON;
+       *IN16 = *ON;
+       *IN17 = *ON;
+       *IN18 = *ON;
+       *IN85 = *OFF;
+       *IN88 = *OFF;
+       // constantes pour ce programme
+      /END-FREE
      C                   MOVE      '1'           PTYP
      C                   MOVEL     'FICMSG    '  PFICM
-     C                   SELECT
-     C                   WHEN      (PCHX = 'MO')
-     C* modification
+      /FREE
+       SELECT;
+       WHEN (PCHX = 'MO');
+         // modification
+      /END-FREE
      C                   MOVEL     WTXT1         ZMODE
-     C* on ne peut modifier que ces zones
-     C                   SETOFF                                       141516
-     C                   WHEN      (PCHX = 'CO')
-     C* copie
+      // on ne peut modifier que ces zones
+      /FREE
+         *IN14 = *OFF;
+         *IN15 = *OFF;
+         *IN16 = *OFF;
+       WHEN (PCHX = 'CO');
+         // copie
+      /END-FREE
      C                   MOVEL     WTXT2         ZMODE
-     C* toutes les zones sont autorisées
-     C                   SETOFF                                       141516
-     C                   SETOFF                                       1718
-     C                   WHEN      (PCHX = 'SU')
-     C* suppression
+      // toutes les zones sont autorisées
+      /FREE
+         *IN14 = *OFF;
+         *IN15 = *OFF;
+         *IN16 = *OFF;
+         *IN17 = *OFF;
+         *IN18 = *OFF;
+       WHEN (PCHX = 'SU');
+         // suppression
+      /END-FREE
      C                   MOVEL     WTXT3         ZMODE
-     C* aucune zone n'est saisisable
-     C                   WHEN      (PCHX = 'AF')
-     C* affichage
+      // aucune zone n'est saisisable
+      /FREE
+       WHEN (PCHX = 'AF');
+         // affichage
+      /END-FREE
      C                   MOVEL     WTXT4         ZMODE
-     C* aucune zone n'est saisisable
-     C                   WHEN      (PCHX = 'CR')
-     C* création
+      // aucune zone n'est saisisable
+      /FREE
+       WHEN (PCHX = 'CR');
+         // création
+      /END-FREE
      C                   MOVEL     WTXT5         ZMODE
-     C* tout est saisisable sauf date de sortie
-     C                   SETOFF                                       141516
-     C                   SETOFF                                       17
-     C                   WHEN      (PCHX = 'PE')
-     C* direction Ple Emploi
+      // tout est saisisable sauf date de sortie
+      /FREE
+         *IN14 = *OFF;
+         *IN15 = *OFF;
+         *IN16 = *OFF;
+         *IN17 = *OFF;
+       WHEN (PCHX = 'PE');
+         // direction Ple Emploi
+      /END-FREE
      C                   MOVEL     WTXT6         ZMODE
-     C* on saisit simplement la date de fin
-     C                   SETOFF                                         18
-     C                   ENDSL
-     C* Initialisation de l'écran si on un numéro d'enregistrement
-     C                   IF        PNREC <> *BLANK
+      // on saisit simplement la date de fin
+      /FREE
+         *IN18 = *OFF;
+       ENDSL;
+       // Initialisation de l'écran si on un numéro d'enregistrement
+       IF PNREC <> *BLANK;
+      /END-FREE
      C                   MOVE      PNREC         WNREC
-     C     WNREC         CHAIN (N) FICF                               7090
-     C                   IF        PCHX = 'CR' OR PCHX = 'CO'
-     C* en création ou copie zone non renseignée
+      /FREE
+         CHAIN(NE) WNREC FICF;
+         *IN70 = NOT %ERROR AND NOT %FOUND;
+         *IN90 = %ERROR;
+         IF PCHX = 'CR' OR PCHX = 'CO';
+           // en création ou copie zone non renseignée
+      /END-FREE
      C                   Z-ADD     0             ZMATR
-     C                   ELSE
+      /FREE
+         ELSE;
+      /END-FREE
      C                   Z-ADD     FIMAT         ZMATR
-     C                   END
+      /FREE
+         ENDIF;
+      /END-FREE
      C                   MOVEL     FIFON         ZFCOD
-     C* fichier des fonctions => libellé
-     C     KEY002        CHAIN     FIFF                               7090
+      // fichier des fonctions => libellé
+      /FREE
+         CHAIN(E) KEY002 FIFF;
+         *IN70 = NOT %ERROR AND NOT %FOUND;
+         *IN90 = %ERROR;
+      /END-FREE
      C                   MOVEL     MILIB         ZFLIB
      C                   MOVEL     FINOM         ZNOM
      C                   MOVEL     FIPR1         ZPR1
@@ -141,122 +183,165 @@
      C                   MOVEL     FIVIL         ZVIL
      C                   MOVEL     FITEL         ZTEL
      C                   MOVEL     FIPOR         ZPOR
-     C* traitement des dates
+      // traitement des dates
      C                   Z-ADD     FIDAE         WDATI
-     C                   EXSR      INVDAT
+      /FREE
+         EXSR INVDAT;
+      /END-FREE
      C                   Z-ADD     WDATE         ZDAE
-     C                   IF        PCHX = 'PE'
+      /FREE
+         IF PCHX = 'PE';
+      /END-FREE
      C                   Z-ADD     ZDATE         ZDAS
-     C                   ELSE
+      /FREE
+         ELSE;
+      /END-FREE
      C                   Z-ADD     FIDAS         WDATI
-     C                   EXSR      INVDAT
+      /FREE
+           EXSR INVDAT;
+      /END-FREE
      C                   Z-ADD     WDATE         ZDAS
-     C                   END
-     C* zones d'audit
+      /FREE
+         ENDIF;
+         // zones d'audit
+      /END-FREE
      C                   Z-ADD     FIDAC         WDATI
-     C                   EXSR      INVDAT
+      /FREE
+         EXSR INVDAT;
+      /END-FREE
      C                   Z-ADD     WDATE         ZDAC
      C                   Z-ADD     FIHEC         ZHEC
      C                   MOVEL     FIUSC         ZUSC
      C                   Z-ADD     FIDAM         WDATI
-     C                   EXSR      INVDAT
+      /FREE
+         EXSR INVDAT;
+      /END-FREE
      C                   Z-ADD     WDATE         ZDAM
      C                   Z-ADD     FIHEM         ZHEM
      C                   MOVEL     FIUSM         ZUSM
-     C                   ELSE
-     C* pas grand chose, la date du jour
+      /FREE
+       ELSE;
+         // pas grand chose, la date du jour
+      /END-FREE
      C                   MOVE      WDAT          ZDAE
-     C                   END
-     C* Boucle d'attente de fin
-     C                   SETON                                        50
-     C                   DOW       *IN50 = '1'
-     C                   EXSR      TRTSCR
-     C                   ENDDO
-     C*
-     C                   SETON                                        LR
-     C* Les procédures
-     C     TRTSCR        BEGSR
-     C                   WRITE     WMGCTL
-     C* On écrit l'écran
-     C                   WRITE     FORE1
-     C* On attend l'appui sur une touche
-     C                   READ      FORE1                                  70
-     C                   SETON                                          51
-     C* F3 ou F12 on termine
-     C                   IF        *INKC = '1' OR
-     C                             *INKL = '1'
-     C                   SETOFF                                       5051
-     C                   END
-     C* on met  jour l'heure
+      /FREE
+       ENDIF;
+       // Boucle d'attente de fin
+       *IN50 = *ON;
+       DOW *IN50 = '1';
+         EXSR TRTSCR;
+       ENDDO;
+       //
+       *INLR = *ON;
+       // Les procédures
+       BEGSR TRTSCR;
+         WRITE WMGCTL;
+         // On écrit l'écran
+         WRITE FORE1;
+         // On attend l'appui sur une touche
+         READ FORE1;
+         *IN70 = %EOF;
+         *IN51 = *ON;
+         // F3 ou F12 on termine
+         IF *INKC = '1' OR
+               *INKL = '1';
+           *IN50 = *OFF;
+           *IN51 = *OFF;
+         ENDIF;
+         // on met  jour l'heure
+      /END-FREE
      C   51              TIME                    ZHEUR
      C   51*INKD         IFEQ      '1'
-     C* appui sur la touche F4
-     C                   IF        WZOCUR = 'ZFCOD'
-     C                   EVAL      PACT = 'GS'
+      // appui sur la touche F4
+      /FREE
+           IF WZOCUR = 'ZFCOD';
+             PACT = 'GS';
+      /END-FREE
      C                   CALL      'PGMI01'
      C                   PARM                    PACT
      C                   PARM                    PGFCT
-     C                   IF        PGFCT <> *BLANK
+      /FREE
+             IF PGFCT <> *BLANK;
+      /END-FREE
      C                   MOVEL     PGFCT         ZFCOD
-     C                   END
-     C                   END
-     C                   SETOFF                                         51
-     C                   END
-     C*
-     C                   IF        PCHX = 'SU'
-     C                   SETOFF                                         51
-     C                   IF        *IN85 = '1'
-     C     *INKP         IFEQ      '1'
-     C* touche F15 on supprime si indicateur *IN85
-     C     WNREC         CHAIN     FICF                               7090
+      /FREE
+             ENDIF;
+           ENDIF;
+           *IN51 = *OFF;
+         ENDIF;
+         //
+         IF PCHX = 'SU';
+           *IN51 = *OFF;
+           IF *IN85 = '1';
+             IF *INKP = '1';
+               // touche F15 on supprime si indicateur *IN85
+               CHAIN(E) WNREC FICF;
+               *IN70 = NOT %ERROR AND NOT %FOUND;
+               *IN90 = %ERROR;
+      /END-FREE
      C  N70              DELETE    FICF
-     C                   SETOFF                                       5051
-     C                   END
-     C                   ELSE
+      /FREE
+               *IN50 = *OFF;
+               *IN51 = *OFF;
+             ENDIF;
+           ELSE;
+      /END-FREE
      C                   MOVEL     'MSG0004'     PMGID
      C                   MOVEL     *BLANK        PMGDT
-     C                   EXSR      ENVMSG
-     C                   SETON                                          85
-     C                   END
-     C                   END
-     C* contrle des données saisies
-     C                   IF        *IN51 = '1'
-     C                   EXSR      CTLDTA
-     C                   IF        *IN88 = '1'
-     C* anomalie
-     C                   EXSR      ENVMSG
-     C                   SETOFF                                       88
-     C                   ELSE
-     C* confirmation  pour suppression
-     C                   EXSR      VALID1
-     C                   END
-     C                   END
-     C                   ENDSR
-     C* controle des données/si suppression demande de confirmation
-     C     CTLDTA        BEGSR
+      /FREE
+             EXSR ENVMSG;
+             *IN85 = *ON;
+           ENDIF;
+         ENDIF;
+         // contrle des données saisies
+         IF *IN51 = '1';
+           EXSR CTLDTA;
+           IF *IN88 = '1';
+             // anomalie
+             EXSR ENVMSG;
+             *IN88 = *OFF;
+           ELSE;
+             // confirmation  pour suppression
+             EXSR VALID1;
+           ENDIF;
+         ENDIF;
+       ENDSR;
+       // controle des données/si suppression demande de confirmation
+       BEGSR CTLDTA;
+      /END-FREE
      C                   MOVE      '0'           *IN88
-     C* on vérifie que tout est bon
-     C                   IF        PCHX = 'SU'
-     C* on demande confirmation
-     C                   ELSE
-     C* vérification du code fonction
-     C     KEY002        CHAIN     FIFF                               7090
-     C                   IF        *IN70 = '1'
+      // on vérifie que tout est bon
+      /FREE
+         IF PCHX = 'SU';
+           // on demande confirmation
+         ELSE;
+           // vérification du code fonction
+           CHAIN(E) KEY002 FIFF;
+           *IN70 = NOT %ERROR AND NOT %FOUND;
+           *IN90 = %ERROR;
+           IF *IN70 = '1';
+      /END-FREE
      C                   MOVE      '0'           *IN88
      C                   MOVEL     'MSG0003'     PMGID
-     C                   EVAL      PMGDT = '&1'+ ZFCOD
+      /FREE
+             PMGDT = '&1'+ ZFCOD;
+      /END-FREE
      C                   MOVE      '1'           *IN88
-     C                   END
-     C                   END
-     C                   ENDSR
-     C*** Création suppression et MJ selon le cas
-     C     VALID1        BEGSR
-     C                   IF        PCHX = 'SU'
-     C* La suppression se fait par la touche F15
-     C                   ELSE
-     C     KEY001        CHAIN     FICF1                              7190
-     C                   IF        PCHX = 'CR' OR PCHX = 'CO'
-     C* On ne crée le matricule qu'en copie ou création
+      /FREE
+           ENDIF;
+         ENDIF;
+       ENDSR;
+       //** Création suppression et MJ selon le cas
+       BEGSR VALID1;
+         IF PCHX = 'SU';
+           // La suppression se fait par la touche F15
+         ELSE;
+           CHAIN(E) KEY001 FICF1;
+           *IN71 = NOT %ERROR AND NOT %FOUND;
+           *IN90 = %ERROR;
+           IF PCHX = 'CR' OR PCHX = 'CO';
+             // On ne crée le matricule qu'en copie ou création
+      /END-FREE
      C                   MOVE      'MAT'         PCOD
      C                   MOVE      '2'           PCPT
      C                   CALL      'PGMC01'
@@ -265,8 +350,10 @@
      C                   PARM                    PCP1              6
      C                   PARM                    PMAT             10
      C                   MOVE      PMAT          FIMAT
-     C                   SETON                                        71
-     C                   END
+      /FREE
+             *IN71 = *ON;
+           ENDIF;
+      /END-FREE
      C                   MOVEL     ZFCOD         FIFON
      C                   MOVEL     ZNOM          FINOM
      C                   MOVEL     ZPR1          FIPR1
@@ -278,54 +365,74 @@
      C                   MOVEL     ZVIL          FIVIL
      C                   MOVEL     ZTEL          FITEL
      C                   MOVEL     ZPOR          FIPOR
-     C* traitement des dates
+      // traitement des dates
      C                   Z-ADD     ZDAE          WDATE
-     C                   EXSR      DATINV
+      /FREE
+           EXSR DATINV;
+      /END-FREE
      C                   Z-ADD     WDATI         FIDAE
      C                   Z-ADD     ZDAS          WDATE
-     C                   EXSR      DATINV
+      /FREE
+           EXSR DATINV;
+      /END-FREE
      C                   Z-ADD     WDATI         FIDAS
-     C* zones d'audit
-     C                   EXSR      DATHEU
+      // zones d'audit
+      /FREE
+           EXSR DATHEU;
+      /END-FREE
      C                   MOVE      WDAT          WDATE
-     C                   EXSR      DATINV
+      /FREE
+           EXSR DATINV;
+      /END-FREE
      C                   Z-ADD     WDATI         FIDAM
      C                   MOVE      WHEU          FIHEM
      C                   MOVEL     WUSER         FIUSM
-     C                   IF        *IN71 = '0'
-     C* on met  jour directement
-     C                   UPDATE    FICF1
-     C                   ELSE
-     C* création
+      /FREE
+           IF *IN71 = '0';
+             // on met  jour directement
+             UPDATE FICF1;
+           ELSE;
+             // création
+      /END-FREE
      C                   Z-ADD     WDATI         FIDAC
      C                   MOVE      WHEU          FIHEC
      C                   MOVEL     WUSER         FIUSC
-     C                   WRITE     FICF1
-     C                   END
-     C                   END
-     C                   SETOFF                                       50
-     C                   ENDSR
-     C* Traitements de la date
-     C     DATHEU        BEGSR
+      /FREE
+             WRITE FICF1;
+           ENDIF;
+         ENDIF;
+         *IN50 = *OFF;
+       ENDSR;
+       // Traitements de la date
+       BEGSR DATHEU;
+      /END-FREE
      C                   TIME                    W14
      C                   MOVE      W14           WDAT
      C                   MOVEL     W14           WHEU
-     C                   ENDSR
-     C     INVDAT        BEGSR
+      /FREE
+       ENDSR;
+       BEGSR INVDAT;
+      /END-FREE
      C                   Z-ADD     WSSAI         WSSAE
      C                   Z-ADD     WMI           WME
      C                   Z-ADD     WJI           WJE
-     C                   ENDSR
-     C     DATINV        BEGSR
+      /FREE
+       ENDSR;
+       BEGSR DATINV;
+      /END-FREE
      C                   Z-ADD     WSSAE         WSSAI
      C                   Z-ADD     WME           WMI
      C                   Z-ADD     WJE           WJI
-     C                   ENDSR
-     C*****Envoi d'un message programme
-     C     ENVMSG        BEGSR
+      /FREE
+       ENDSR;
+       //****Envoi d'un message programme
+       BEGSR ENVMSG;
+      /END-FREE
      C                   CALL      'PGM001CL'
      C                   PARM                    PTYP              1
      C                   PARM                    PFICM            10
      C                   PARM                    PMGID             7
      C                   PARM                    PMGDT            99
-     C                   ENDSR
+      /FREE
+       ENDSR;
+      /END-FREE
