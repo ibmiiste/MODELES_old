@@ -19,7 +19,7 @@
       // end-pr;
 
       // Internal subprocedures prototypes globales
-      // Prototype sous-procédures internes
+      // Prototype sous-procédures internes globales
       // dcl-pr proc_int varchar(150);
       //   donnees1 packed(10:0);
       // end-pr;

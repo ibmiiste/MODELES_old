@@ -1,65 +1,67 @@
-     H DEBUG DECEDIT('0,') DATEDIT(*DMY.)
+       ctl-opt debug decedit('0,') datedit(*dmy.);
      F*****************************************************
      F*                                                   *
      F* Détail personnel                                  *
      F*                                                   *
      F*****************************************************
-     FPGMF02FM  CF   E             WORKSTN
-     F                                     INFDS(WDSECR)
-     FFIC00P    UF   E             DISK
-     FFIC01L    UF A E           K DISK
-     F                                     RENAME(FICF      :FICF1)
-     FFIF01L    IF   E           K DISK
-     DWTXT1            C                   '         Modification         '
-     DWTXT2            C                   '             Copie            '
-     DWTXT3            C                   '         Suppression          '
-     DWTXT4            C                   '           Affichage          '
-     DWTXT5            C                   '           Création           '
-     DWTXT6            C                   '        Fin de contrat        '
-     DWDAT             S              8
-     DWHEU             S              6
-     DW14              S             14  0
-     DPCHX             S              2
-     DPNREC            S             10
-     DWNREC            S             10  0
-     DPACT             S              2
-     DPGFCT            S              3
-     DWDI              DS
-     DWSSAI                    1      4  0
-     DWMI                      5      6  0
-     DWJI                      7      8  0
-     DWDATI                    1      8  0
-     DWDE              DS
-     DWJE                      1      2  0
-     DWME                      3      4  0
-     DWSSAE                    5      8  0
-     DWDATE                    1      8  0
-     DWDSPGM          SDS
-     DWNMPGM                   1     10
-     DWSTATU                  11     15  0
-     DWSTPRE                  16     20  0
-     DWSRCSQ                  21     28
-     DWNMROU                  29     36
-     DWNBPAR                  37     39  0
-     DWTYEXC                  40     42
-     DWLICPF                  40     46
-     DWNUEXC                  43     46
-     DWMIODT                  47     50
-     DWZOMES                  51     80
-     DWBIPGM                  81     90
-     DWRTDTA                  91    170
-     DWCOERR                 171    174
-     DWDERFI                 201    208
-     DWFIINF                 209    243
-     DWJOB                   244    253
-     DWUSER                  254    263
-     DWJOBNM                 264    269  0
-     DWDSECR           DS
-     DWNLIG                  370    371B 0
-     DWRANP                  378    379B 0
-     DWNBRS                  380    381B 0
-     DWNULC                  382    383B 0
-     DWRECMI                 403    404B 0
+       dcl-f PGMF02FM workstn infds(wdsecr);
+       dcl-f FIC00P usage(*update);
+       dcl-f FIC01L keyed usage(*update: *output) rename(ficf      :ficf1);
+       dcl-f FIF01L keyed;
+       dcl-c WTXT1 '         Modification         ';
+       dcl-c WTXT2 '             Copie            ';
+       dcl-c WTXT3 '         Suppression          ';
+       dcl-c WTXT4 '           Affichage          ';
+       dcl-c WTXT5 '           Création           ';
+       dcl-c WTXT6 '        Fin de contrat        ';
+       dcl-s WDAT char(8);
+       dcl-s WHEU char(6);
+       dcl-s W14 packed(14);
+       dcl-s PCHX char(2);
+       dcl-s PNREC char(10);
+       dcl-s WNREC packed(10);
+       dcl-s PACT char(2);
+       dcl-s PGFCT char(3);
+       dcl-ds WDI;
+        WSSAI zoned(4) pos(1);
+        WMI zoned(2) pos(5);
+        WJI zoned(2) pos(7);
+        WDATI zoned(8) pos(1);
+       end-ds;
+       dcl-ds WDE;
+        WJE zoned(2) pos(1);
+        WME zoned(2) pos(3);
+        WSSAE zoned(4) pos(5);
+        WDATE zoned(8) pos(1);
+       end-ds;
+       dcl-ds WDSPGM PSDS;
+        WNMPGM char(10) pos(1);
+        WSTATU zoned(5) pos(11);
+        WSTPRE zoned(5) pos(16);
+        WSRCSQ char(8) pos(21);
+        WNMROU char(8) pos(29);
+        WNBPAR zoned(3) pos(37);
+        WTYEXC char(3) pos(40);
+        WLICPF char(7) pos(40);
+        WNUEXC char(4) pos(43);
+        WMIODT char(4) pos(47);
+        WZOMES char(30) pos(51);
+        WBIPGM char(10) pos(81);
+        WRTDTA char(80) pos(91);
+        WCOERR char(4) pos(171);
+        WDERFI char(8) pos(201);
+        WFIINF char(35) pos(209);
+        WJOB char(10) pos(244);
+        WUSER char(10) pos(254);
+        WJOBNM zoned(6) pos(264);
+       end-ds;
+       dcl-ds WDSECR;
+        WNLIG int(5) pos(370);
+        WRANP int(5) pos(378);
+        WNBRS int(5) pos(380);
+        WNULC int(5) pos(382);
+        WRECMI int(5) pos(403);
+       end-ds;
      C     *ENTRY        PLIST
      C                   PARM                    PCHX
      C                   PARM                    PNREC
@@ -110,7 +112,7 @@
      C                   SETOFF                                       141516
      C                   SETOFF                                       17
      C                   WHEN      (PCHX = 'PE')
-     C* direction P™le Emploi
+     C* direction Ple Emploi
      C                   MOVEL     WTXT6         ZMODE
      C* on saisit simplement la date de fin
      C                   SETOFF                                         18
@@ -185,7 +187,7 @@
      C                             *INKL = '1'
      C                   SETOFF                                       5051
      C                   END
-     C* on met ˆ jour l'heure
+     C* on met  jour l'heure
      C   51              TIME                    ZHEUR
      C   51*INKD         IFEQ      '1'
      C* appui sur la touche F4
@@ -217,7 +219,7 @@
      C                   SETON                                          85
      C                   END
      C                   END
-     C* contr™le des données saisies
+     C* contrle des données saisies
      C                   IF        *IN51 = '1'
      C                   EXSR      CTLDTA
      C                   IF        *IN88 = '1'
@@ -247,7 +249,7 @@
      C                   END
      C                   END
      C                   ENDSR
-     C*** Création suppression et MˆJ selon le cas
+     C*** Création suppression et MJ selon le cas
      C     VALID1        BEGSR
      C                   IF        PCHX = 'SU'
      C* La suppression se fait par la touche F15
@@ -291,7 +293,7 @@
      C                   MOVE      WHEU          FIHEM
      C                   MOVEL     WUSER         FIUSM
      C                   IF        *IN71 = '0'
-     C* on met ˆ jour directement
+     C* on met  jour directement
      C                   UPDATE    FICF1
      C                   ELSE
      C* création
