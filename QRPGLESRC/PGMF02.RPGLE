@@ -71,16 +71,13 @@
      C                   KFLD                    ZFCOD
       // début du programme
      C                   MOVEL     WNMPGM        ZPGM
-      /FREE
        EXSR DATHEU;
-      /END-FREE
-     C                   MOVE      WDAT          ZDATE
-     C                   MOVE      WHEU          ZHEUR
-     C                   MOVEL     WUSER         ZUSER
-     C                   MOVEL     WJOB          ZJOB
-     C                   MOVEL     '*  '         WPGMQ
-     C                   MOVEL     'CC01'        WMGKEY
-      /FREE
+       ZDATE=WDAT ;
+       ZHEUR=WHEU;
+       ZUSER=WUSER;
+       ZJOB=WJOB;
+       WPGMQ='*  ';
+       WMGKEY='CC01';
        *IN09 = *ON;
        *IN10 = *ON;
        *IN14 = *ON;
@@ -91,26 +88,22 @@
        *IN85 = *OFF;
        *IN88 = *OFF;
        // constantes pour ce programme
-      /END-FREE
-     C                   MOVE      '1'           PTYP
-     C                   MOVEL     'FICMSG    '  PFICM
-      /FREE
+
+       PTYP='1';
+       PFICM='FICMSG    ';
        SELECT;
        WHEN (PCHX = 'MO');
          // modification
-      /END-FREE
-     C                   MOVEL     WTXT1         ZMODE
+
+         ZMODE=WTXT1;
       // on ne peut modifier que ces zones
-      /FREE
          *IN14 = *OFF;
          *IN15 = *OFF;
          *IN16 = *OFF;
        WHEN (PCHX = 'CO');
          // copie
-      /END-FREE
-     C                   MOVEL     WTXT2         ZMODE
+         ZMODE=WTXT2;
       // toutes les zones sont autorisées
-      /FREE
          *IN14 = *OFF;
          *IN15 = *OFF;
          *IN16 = *OFF;
@@ -118,113 +111,79 @@
          *IN18 = *OFF;
        WHEN (PCHX = 'SU');
          // suppression
-      /END-FREE
-     C                   MOVEL     WTXT3         ZMODE
-      // aucune zone n'est saisisable
-      /FREE
+         ZMODE=WTXT3;
+       // aucune zone n'est saisisable
        WHEN (PCHX = 'AF');
-         // affichage
-      /END-FREE
-     C                   MOVEL     WTXT4         ZMODE
+        // affichage
+         ZMODE=WTXT4;
       // aucune zone n'est saisisable
-      /FREE
        WHEN (PCHX = 'CR');
          // création
-      /END-FREE
-     C                   MOVEL     WTXT5         ZMODE
+         ZMODE=WTXT5;
       // tout est saisisable sauf date de sortie
-      /FREE
          *IN14 = *OFF;
          *IN15 = *OFF;
          *IN16 = *OFF;
          *IN17 = *OFF;
        WHEN (PCHX = 'PE');
          // direction Ple Emploi
-      /END-FREE
-     C                   MOVEL     WTXT6         ZMODE
+         ZMODE=WTXT6;
       // on saisit simplement la date de fin
-      /FREE
          *IN18 = *OFF;
        ENDSL;
        // Initialisation de l'écran si on un numéro d'enregistrement
        IF PNREC <> *BLANK;
-      /END-FREE
-     C                   MOVE      PNREC         WNREC
-      /FREE
+         WNREC=PNREC;
          CHAIN(NE) WNREC FICF;
          *IN70 = NOT %ERROR AND NOT %FOUND;
          *IN90 = %ERROR;
          IF PCHX = 'CR' OR PCHX = 'CO';
            // en création ou copie zone non renseignée
-      /END-FREE
-     C                   Z-ADD     0             ZMATR
-      /FREE
+           ZMATR=0;
          ELSE;
-      /END-FREE
-     C                   Z-ADD     FIMAT         ZMATR
-      /FREE
+           ZMATR=FIMAT;
          ENDIF;
-      /END-FREE
-     C                   MOVEL     FIFON         ZFCOD
+         ZFCOD=FIFON;
       // fichier des fonctions => libellé
-      /FREE
          CHAIN(E) KEY002 FIFF;
          *IN70 = NOT %ERROR AND NOT %FOUND;
          *IN90 = %ERROR;
-      /END-FREE
-     C                   MOVEL     MILIB         ZFLIB
-     C                   MOVEL     FINOM         ZNOM
-     C                   MOVEL     FIPR1         ZPR1
-     C                   MOVEL     FIPR2         ZPR2
-     C                   MOVEL     FIAD1         ZAD1
-     C                   MOVEL     FIAD2         ZAD2
-     C                   MOVEL     FIAD3         ZAD3
-     C                   MOVEL     FICPO         ZCPO
-     C                   MOVEL     FIVIL         ZVIL
-     C                   MOVEL     FITEL         ZTEL
-     C                   MOVEL     FIPOR         ZPOR
+         ZFLIB=MILIB;
+         ZNOM=FINOM;
+         ZPR1=FIPR1;
+         ZPR2=FIPR2;
+         ZAD1=FIAD1;
+         ZAD2=FIAD2;
+         ZAD3=FIAD3;
+         ZCPO=FICPO;
+         ZVIL=FIVIL;
+         ZTEL=FITEL;
+         ZPOR=FIPOR;
       // traitement des dates
-     C                   Z-ADD     FIDAE         WDATI
-      /FREE
+         WDATI=FIDAE;
          EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAE
-      /FREE
+         ZDAE=WDATE;
          IF PCHX = 'PE';
-      /END-FREE
-     C                   Z-ADD     ZDATE         ZDAS
-      /FREE
+           ZDAS=ZDATE;
          ELSE;
-      /END-FREE
-     C                   Z-ADD     FIDAS         WDATI
-      /FREE
+           WDATI=FIDAS;
            EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAS
-      /FREE
+           ZDAS=WDATE;
          ENDIF;
          // zones d'audit
-      /END-FREE
-     C                   Z-ADD     FIDAC         WDATI
-      /FREE
+         WDATI=FIDAC;
          EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAC
-     C                   Z-ADD     FIHEC         ZHEC
-     C                   MOVEL     FIUSC         ZUSC
-     C                   Z-ADD     FIDAM         WDATI
-      /FREE
+         ZDAC=WDATE;
+         ZHEC=FIHEC;
+         ZUSC=FIUSC;
+         WDATI=FIDAM;
          EXSR INVDAT;
-      /END-FREE
-     C                   Z-ADD     WDATE         ZDAM
-     C                   Z-ADD     FIHEM         ZHEM
-     C                   MOVEL     FIUSM         ZUSM
-      /FREE
+         ZDAM=WDATE;
+         ZHEM=FIHEM;
+         ZUSM=FIUSM;
        ELSE;
          // pas grand chose, la date du jour
-      /END-FREE
-     C                   MOVE      WDAT          ZDAE
-      /FREE
+         ZDAE=WDAT;
        ENDIF;
        // Boucle d'attente de fin
        *IN50 = *ON;
