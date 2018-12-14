@@ -31,6 +31,11 @@
        dcl-s SpaceText char(50);
       // Remplacement du User Space
        dcl-s SpaceReplc char(10) inz('*YES');
+      // Position dans le User Space
+       dcl-s StartPosit bindec(9);
+
+      // Longueur dans le User Space
+       dcl-s StartLen bindec(9);
 
       // Paramètres API liste objets
        dcl-s FormatName char(8);
@@ -43,19 +48,24 @@
       // Type d'objet
        dcl-s ObjectType char(10) inz('*ALL');
 
-      //-----------------------------------------------------
-      // Format de l'en-tête générique
-      //
-      // Il existe de nombreuses infos dans l'en-tête
-      // générique mais tout ce qui m'intéresse sont les
-      // offsets dont j'ai besoin pour accéder à liste
-      // proprement dite.
-      //-----------------------------------------------------
-       dcl-s p_ListHeader pointer;
-       dcl-ds ListHeader based(p_listheader);
-        DataOffset int(10) pos(125);
-        NumEntries int(10) pos(133);
-        EntrySize int(10) pos(137);
+      // Cette DS correspond au format
+      // OBJL0100 de l'API QUSLJOB.
+       dcl-ds OBJL0100;
+         Object_name_used char(10);
+         Object_library_name_used char(10);
+         Object_type_used char(10);
+       End-ds;
+
+
+     ?**---Entête d'un User Space---------------------------------------------**
+       dcl-ds GenHeadDs based(puserspace);
+        InputSize int(10) pos(113); // Taille de l'entête
+        *n int(10) pos(117); // Offset de l'entête H
+        *n int(10) pos(121); // Taille de l'entête H
+        ListOffset int(10) pos(125); // Offset des données
+        *n int(10) pos(129); // Taille de la liste L
+        NumberList int(10) pos(133); // Nombre de données
+        EntrySize int(10) pos(137); // Taille des données
        end-ds;
 
       //-----------------------------------------------------
@@ -69,15 +79,6 @@
       // optional group 1:
          ErrorCode Char(8000) options(*varsize: *nopass);
        end-pr;
-
-      // Cette DS correspond au format
-      // OBJL0100 de l'API QUSLJOB.
-       dcl-s p_ListEntry pointer;
-       dcl-ds OBJL0100 based(p_listentry);
-         Object_name_used char(10);
-         Object_library_name_used char(10);
-         Object_type_used char(10);
-       End-ds;
 
       //-----------------------------------------------------
       // Create User Space (QUSCRTUS) API
@@ -108,13 +109,20 @@
         ErrorCode char(8000) options(*varsize: *nopass); // ErrorCode
        end-pr;
 
+      //---Réception d'un User Space------------------------------------------**
+       dcl-pr Qusrtvus extpgm('QUSRTVUS');
+        UserSpace char(20); // parm
+        StartPosit bindec(9); // parm
+        StartLen bindec(9); // parm
+        GenHeadDs char(2000) options(*varsize); // parm
+       end-pr;
       //-----------------------------------------------------
       // Main Procedure modèle API avec USRSPACE
       //-----------------------------------------------------
       //-----------------------------------------------------
       // API error code data structure
       //-----------------------------------------------------
-       dcl-pi Modele_API_USRSPC extpgm('USRSPCAPI');
+       dcl-pi Modele_API_USRSPC_2 extpgm('USRSPCAPI2');
          P_Nom_Lib char(10); // Library Name
          P_Nom_Objet char(10); // Object Name
          P_Type_Objet char(10); // Object type
@@ -176,15 +184,24 @@
       //  mise à zéro et le programme se plantera avec une
       //  erreur "CPFxxxx" si quelque chose ne va pas:
        BytesProv = 0;
+
+       StartPosit = 1;
+       StartLen = 1024;
        QUSPTRUS( UserSpace
-                :p_ListHeader);
+                :pUserSpace);
+       QUsRtvUs( UserSpace
+                :StartPosit
+                :StartLen
+                :GenHeadDs);
+      //---Retrieve user space Detail information--------------
+         StartPosit = ListOffset + 1;
+         StartLen = EntrySize;
 
-       p_ListEntry = p_ListHeader + DataOffset;
-
-       for EntryNo = 1 to NumEntries;
+       for EntryNo = 1 to NumberList;
       // à ce niveau, la DS JOBL0100 contient
       // l'une des entrées de la liste.
-         p_ListEntry = p_ListEntry + EntrySize;
+         QUsRtvUs(UserSpace:StartPosit:StartLen:OBJL0100);
+         StartPosit = StartPosit + StartLen;
        endfor;
 
        Return;
