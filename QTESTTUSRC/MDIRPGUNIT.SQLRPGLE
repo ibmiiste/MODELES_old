@@ -2,7 +2,6 @@
       *  Empty Unit Test Case. Prints a protocol of the execution flow.     *
       *=====================================================================*
       *  Command to create the service program:                             *
-      *  RUCRTTST TSTPGM(RPGUNIT/TEMPLATE) SRCFILE(RPGUNIT/RPGUNIT1)        *
       *=====================================================================*
       *  Tools/400 STRPREPRC instructions:                                  *
       *   >>PRE-COMPILER<<                                                  *
