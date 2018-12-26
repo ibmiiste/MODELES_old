@@ -10,7 +10,6 @@
       *     >>COMPILE<<                                                     *
       *       >>PARM<< COPTION(*SRCSTMT);                                   *
       *       >>PARM<< DBGVIEW(*LIST);                                      *
-      *       >>PARM<< BNDDIR(&LI/HTTPAPIR4);                               *
       *     >>END-COMPILE<<                                                 *
       *     >>EXECUTE<<                                                     *
       *   >>END-PRE-COMPILER<<                                              *
