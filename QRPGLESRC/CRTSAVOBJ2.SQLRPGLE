@@ -193,6 +193,12 @@
          QUSBPrv = 0;
          ErrCde.Hdr.QUSBPrv = %size(ErrCde);
 
+         // pavé de création de LstObjSpc user space QTEMP/PFLIST utilisé par l'API List Objects
+         // QUSLOBJ
+         // Vérification que le User space n'existe pas avec l'API Retrieve Pointer to User Space
+         // QUSPTRUS
+         // S'il n'existe pas, il est créé avec l'API Create User Space (QUSCRTUS)
+         // et récupére le pointeur du User space
          RtvUsrSpcPtr(LstObjSpc :ObjLHdrPtr :ErrCde);
 
          select;
@@ -218,6 +224,8 @@
              SndAPIMsg();
          endsl;
 
+         // Alimentation du User space LstObjSpc user space QTEMP/PFLIST
+         // avec l'API List Objects (QUSLOBJ)
          LstObj(LstObjSpc :'OBJL0200'
                     :('*ALL      ' + Lib_In) :'*FILE' :ErrCde);
 
@@ -240,6 +248,7 @@
                             :MsgTxt :%len(%trimr(MsgTxt)));
          endsl;
 
+         // Pavé de création du User space QTEMP/SAVLIST
          RtvUsrSpcPtr(SavObjSpc :SavHdrPtr :ErrCde);
 
          select;
