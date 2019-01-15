@@ -326,7 +326,7 @@
       *******************************************************
        dcl-proc FinishEntry;
        dcl-pi FinishEntry end-pi;
-     d
+
        if %rem(SavRcd.QSRDL :AlignOn) <> 0;
           SavRcd.QSRRL00 = %size(SavRcd) + SavRcd.QSRDL +
                                (AlignOn - %rem(SavRcd.QSRDL :AlignOn));
