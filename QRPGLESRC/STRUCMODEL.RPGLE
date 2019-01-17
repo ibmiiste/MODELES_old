@@ -1,6 +1,6 @@
 **FREE
 // Option de compilation et de programme
-// ctl-opt;
+ /Copy Qcpysrc,Cpyctlstm
 
 
 // Déclaration des fichiers
