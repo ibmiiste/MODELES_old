@@ -35,7 +35,7 @@
 
 // global variables
 // variables globales
-// dcl-s donnee3 like(r_ref3);
+// Dcl-s g_Donnee3 like(r_ref3);
 
 // Program status data structure
 // Data Structure d'information programme
@@ -69,6 +69,9 @@
   //   donneeds2 like(r_ref5);
   // end-ds;
 
+  // Local variables
+  // variables locales
+  // Dcl-s l_Donnee4 like(r_ref4);
 
   // inherited variables
   // héritage des types
